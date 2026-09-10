@@ -15,7 +15,13 @@ const envSchema = z.object({
     .string()
     .regex(/^[a-f0-9]+:[a-f0-9]+$/i, "Formato esperado: salt:hash (ver scripts/hash-password.mjs)."),
   TRANHAUS_DATA_DIR: z.string().optional(),
-  NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
+  // Coerce "" to undefined first — Vercel lets an env var exist but be
+  // left blank, which `.default()` alone doesn't catch (it only applies
+  // to `undefined`), and that blank value would otherwise fail `.url()`.
+  NEXT_PUBLIC_SITE_URL: z.preprocess(
+    (value) => (typeof value === "string" && value.trim() === "" ? undefined : value),
+    z.string().url().default("http://localhost:3000"),
+  ),
 });
 
 function loadEnv() {

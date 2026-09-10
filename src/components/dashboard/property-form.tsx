@@ -63,9 +63,6 @@ export function PropertyForm({
 
   useEffect(() => {
     if (state.status === "success") {
-      // Create redirects server-side (redirect() inside the action means
-      // this branch is effectively unreachable for it); edit stays on the
-      // page and just confirms the save.
       toast.success(state.message);
     } else if (state.status === "error" && !errors) {
       toast.error(state.message);

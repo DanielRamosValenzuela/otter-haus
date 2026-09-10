@@ -5,10 +5,6 @@ import type { AdminUser } from "@/lib/types/session";
 
 const ADMIN_ID = "admin-tranhaus";
 
-// Best-effort in-memory throttle — resets on redeploy/restart and isn't
-// shared across serverless instances. Real brute-force protection needs
-// a shared store (e.g. the future database); this just slows down the
-// obvious case for a single-admin MVP.
 const attempts = new Map<string, { count: number; resetAt: number }>();
 const MAX_ATTEMPTS = 5;
 const WINDOW_MS = 15 * 60 * 1000;
@@ -36,7 +32,6 @@ function safeEqualStrings(a: string, b: string): boolean {
   const bufA = Buffer.from(a);
   const bufB = Buffer.from(b);
   if (bufA.length !== bufB.length) {
-    // Still run a comparison so the timing doesn't leak the length check.
     timingSafeEqual(bufA, bufA);
     return false;
   }

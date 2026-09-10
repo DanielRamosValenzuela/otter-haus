@@ -1,8 +1,5 @@
 import type { SVGProps } from "react";
 
-// lucide-react ships no brand marks, so these are hand-drawn — filled
-// glyphs (not stroke-style, unlike the rest of the icon set) since brand
-// recognizability matters more than visual consistency for these.
 type IconProps = SVGProps<SVGSVGElement>;
 
 export function WhatsAppIcon(props: IconProps) {

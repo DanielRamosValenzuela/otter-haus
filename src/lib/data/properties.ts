@@ -43,7 +43,6 @@ function sortProperties(items: Property[], sort: PropertyQuery["sort"]): Propert
   }
 }
 
-/** Cached, public-facing catalog read. */
 export async function listProperties(query: PropertyQuery = {}): Promise<PropertyListResult> {
   "use cache";
   cacheTag("properties");
@@ -65,7 +64,6 @@ export async function listProperties(query: PropertyQuery = {}): Promise<Propert
   return { items, total, page, perPage, totalPages };
 }
 
-/** Cached — returns null for unpublished properties (not reachable by URL guessing). */
 export async function getPropertyBySlug(slug: string): Promise<Property | null> {
   "use cache";
   cacheTag("properties");
@@ -78,7 +76,6 @@ export async function getPropertyBySlug(slug: string): Promise<Property | null> 
   return property;
 }
 
-/** Cached — used by the admin edit form, which needs drafts too. */
 export async function getPropertyById(id: string): Promise<Property | null> {
   "use cache";
   cacheTag("properties");
@@ -117,9 +114,6 @@ export async function getRelatedProperties(id: string, limit = 3): Promise<Prope
   return [...sameType, ...rest].slice(0, limit);
 }
 
-// --- Dashboard reads — uncached, always behind auth + Suspense, so the
-// admin always sees their own just-made writes immediately. ---
-
 export async function listAllPropertiesForAdmin(): Promise<Property[]> {
   const db = await readDb();
   return sortProperties(db.properties, "recientes");
@@ -129,9 +123,6 @@ export async function getPropertyByIdForAdmin(id: string): Promise<Property | nu
   const db = await readDb();
   return db.properties.find((p) => p.id === id) ?? null;
 }
-
-// --- Writes. No cache calls here — invalidation (updateTag) is only
-// legal inside a Server Action, so it lives in src/lib/actions/properties.ts. ---
 
 function uniqueSlug(base: string, existing: Property[], ignoreId?: string): string {
   const root = slugify(base) || "propiedad";

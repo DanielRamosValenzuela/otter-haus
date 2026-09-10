@@ -35,8 +35,6 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-// Runs before hydration so the stored theme applies before first paint —
-// without it, a light-mode visitor would see a flash of the dark default.
 const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

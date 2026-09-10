@@ -1,7 +1,3 @@
-// Contenido estático (no editable desde el panel en este MVP — ver
-// docs/02-negocio.md, pregunta abierta #1). Estructurado como secciones
-// tipadas para que, si más adelante se vuelve editable, el cambio sea de
-// capa de datos y no de UI.
 export interface LegalGuideSection {
   id: string;
   title: string;

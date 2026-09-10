@@ -22,13 +22,10 @@ export interface PropertyImage {
 }
 
 export interface PropertyLocation {
-  /** Display label, sourced from the editable zones catalog: "Zona Norte". */
   zone: string;
-  /** URL/filter key for the zone: "zona-norte". */
   zoneSlug: string;
   commune: string;
   city?: string;
-  /** Approximate area reference — never an exact street address. */
   addressHint?: string;
 }
 
@@ -81,11 +78,10 @@ export interface PropertyQuery {
   zoneSlug?: string;
   minPrice?: number;
   maxPrice?: number;
-  bedrooms?: number; // interpreted as "N+"
+  bedrooms?: number;
   sort?: PropertySort;
   page?: number;
   perPage?: number;
-  /** Dashboard only — defaults to false for every public read. */
   includeUnpublished?: boolean;
 }
 

@@ -3,9 +3,6 @@ import { LoginForm } from "@/components/dashboard/login-form";
 
 export const metadata: Metadata = { title: "Ingresar" };
 
-// One-off, always-dynamic page — reads searchParams directly, and gets
-// nothing from static-shell prerendering (see the dashboard shell layout
-// for the same reasoning).
 export const instant = false;
 
 export default async function LoginPage({

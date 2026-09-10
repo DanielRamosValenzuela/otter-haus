@@ -16,9 +16,6 @@ function getSnapshot(): Theme {
   return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
 }
 
-// Matches the init script's default so hydration has nothing to reconcile
-// visually — useSyncExternalStore re-syncs to the real client value right
-// after mount without going through a setState-in-effect.
 function getServerSnapshot(): Theme {
   return "dark";
 }
@@ -31,9 +28,7 @@ export function ThemeToggle() {
     document.documentElement.setAttribute("data-theme", next);
     try {
       localStorage.setItem("theme", next);
-    } catch {
-      // Private browsing / storage disabled — theme just won't persist.
-    }
+    } catch {}
     window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   }
 

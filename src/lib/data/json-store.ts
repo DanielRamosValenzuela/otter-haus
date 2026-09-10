@@ -12,10 +12,6 @@ import type { Agent } from "@/lib/types/agent";
 import type { ZoneInput } from "@/lib/types/zone";
 import type { Lead } from "@/lib/types/lead";
 
-// The ONLY module in the app that knows the data lives in a JSON file.
-// See docs/04-tecnico.md: this is dev/demo-grade persistence by design —
-// swapping it for a real database later is a change confined to this
-// directory, not to pages/components/Server Actions.
 export interface Db {
   properties: Property[];
   agent: Agent;
@@ -55,25 +51,15 @@ async function readDbFile(): Promise<Db | null> {
 
 async function writeDbFile(db: Db): Promise<void> {
   await mkdir(DATA_DIR, { recursive: true });
-  // Unique per call (not just per-process) — several cached reads can race
-  // to seed the store concurrently within the same process/pid, and a
-  // shared tmp name meant the first rename() could steal the file out from
-  // under the second, throwing ENOENT.
   const tmpPath = `${DB_PATH}.${process.pid}.${crypto.randomUUID()}.tmp`;
   await writeFile(tmpPath, JSON.stringify(db, null, 2), "utf-8");
   await rename(tmpPath, DB_PATH);
 }
 
-// Serializes every read-that-might-seed and every write through one queue,
-// so concurrent callers (several "use cache" reads hitting an empty store
-// at once, or two Server Actions racing) can't interleave file operations.
-// A real database would use transactions instead — this is the JSON-mock
-// equivalent, and is one of the things a DB migration removes entirely.
 let queue: Promise<unknown> = Promise.resolve();
 
 function enqueue<T>(fn: () => Promise<T>): Promise<T> {
   const run = queue.then(fn);
-  // Never let a failed run poison the queue for subsequent callers.
   queue = run.then(
     () => undefined,
     () => undefined,
@@ -81,13 +67,6 @@ function enqueue<T>(fn: () => Promise<T>): Promise<T> {
   return run;
 }
 
-/**
- * Reads the current store, seeding it on first access. Must be called
- * from inside the "use cache" function that needs it — never imported or
- * read at module scope, or mutations made after the process starts would
- * never be observed (see docs/04-tecnico.md / Next.js Cache Components
- * "predictable values").
- */
 export async function readDb(): Promise<Db> {
   return enqueue(async () => {
     const existing = await readDbFile();
@@ -98,10 +77,6 @@ export async function readDb(): Promise<Db> {
   });
 }
 
-/**
- * Reads, applies `mutate`, and persists the result — atomically with
- * respect to every other call to `readDb`/`writeDb` in this process.
- */
 export async function writeDb(mutate: (db: Db) => Db | Promise<Db>): Promise<Db> {
   return enqueue(async () => {
     const current = (await readDbFile()) ?? seedDb();

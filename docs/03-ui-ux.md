@@ -46,7 +46,7 @@ Esto es un foco explícito del proyecto, así que se documenta con intención en
    - Botones/CTAs: cambio de color + subrayado animado o "fill" que se desliza.
    - Links de navegación: subrayado animado que crece desde el centro o izquierda.
    - Íconos (zonas, specs): rotación/bounce sutil.
-2. **Scroll-reveal**: secciones del Home y del catálogo aparecen con fade+slide al entrar en viewport (no todo a la vez — genera sensación de producto cuidado sin ser lento).
+2. **Scroll-reveal**: secciones del Home y del catálogo aparecen con fade+slide al entrar en viewport (no todo a la vez — genera sensación de producto cuidado sin ser lento). En desktop, el Home además tiene un fondo fijo con video real sincronizado al scroll (recorrido de una propiedad) — ver `04-tecnico.md`; en mobile se reemplaza por una imagen estática estándar por peso/rendimiento.
 3. **Transiciones de página**: transición suave entre catálogo → detalle de propiedad (idealmente compartiendo la imagen mediante una transición tipo "shared element" si el enfoque técnico lo permite — ver `04-tecnico.md` sobre View Transitions).
 4. **Estados de carga**: skeletons con shimmer (no spinners genéricos) para listados y detalle, coherentes con la paleta oscura.
 5. **Feedback de formularios** (panel admin y contacto): validación inline animada, toast de confirmación al guardar/publicar una propiedad.

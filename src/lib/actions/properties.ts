@@ -67,8 +67,6 @@ function invalidatePropertyCaches(property?: Property) {
   updateTag("properties");
   updateTag("zones");
   if (property) updateTag(`property:${property.slug}`);
-  // The admin list/table reads are intentionally uncached (read-your-own-
-  // writes); refresh() re-renders them without touching the tag cache.
   refresh();
 }
 

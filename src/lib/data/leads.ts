@@ -16,7 +16,6 @@ export async function createLead(input: LeadInput): Promise<Lead> {
   return created;
 }
 
-// Uncached — dashboard-only, read-your-own-writes.
 export async function listLeads(): Promise<Lead[]> {
   const db = await readDb();
   return [...db.leads].sort(

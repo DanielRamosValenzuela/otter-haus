@@ -10,11 +10,6 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { HomeCinematicScene } from "@/components/marketing/home-cinematic-scene";
 
-// Real handheld/dolly footage of one property (Kindel Media, Pexels —
-// free license, no attribution required) — exterior approach, hallway,
-// living/dining, home bar, in that walkthrough order. Durations are
-// read from each file (`ffprobe`-equivalent via the browser) so
-// scroll-scrubbing maps 1:1 onto the actual clip length.
 const SCENE_CLIPS = [
   { src: "/videos/home-scene/01-exterior.mp4", duration: 20.07 },
   { src: "/videos/home-scene/02-hallway.mp4", duration: 7.615 },
@@ -63,8 +58,6 @@ export default function HomePage() {
         <AgentTeaser />
       </Suspense>
 
-      {/* Spacer so the fixed backdrop has room to finish its drift/zoom
-          before the (opaque) footer scrolls up and naturally covers it. */}
       <div className="h-24" aria-hidden />
     </HomeCinematicScene>
   );

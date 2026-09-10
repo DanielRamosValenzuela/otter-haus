@@ -29,7 +29,7 @@ Para crear/editar/eliminar una propiedad desde el panel, el patrón recomendado 
 
 Mismo rol (intercepción de requests a nivel de ruta — ej. redirigir a alguien no autenticado que intenta entrar a `/dashboard`), pero el archivo se llama `proxy.ts`. Es solo para checks "optimistas"/gruesos; la autorización real debe vivir cerca de los datos (una Data Access Layer con algo como `verifySession()`, memoizada con `cache()` de React, que se llama en cada Server Action y en cada carga de datos del dashboard — no solo confiar en el proxy).
 
-La documentación de esta versión enseña los conceptos (cookies firmadas/encriptadas vía `next/headers`, DTOs para no filtrar objetos completos al cliente) pero recomienda apoyarse en una librería en vez de construir auth a mano. Dado que es **un solo corredor** (una sola cuenta), el caso de uso es simple: login con credenciales, sesión persistente. Candidatas: **Auth.js (NextAuth)** o **Better Auth** — ambas soportan credentials provider sin necesidad de OAuth de terceros. Se decide la librería concreta al implementar (no bloquea el plan).
+**Resuelto**: se implementó con **`iron-session`** (cookie cifrada, `HttpOnly`) en vez de Auth.js/Better Auth. Dado que es **un solo corredor** (una sola cuenta hardcodeada vía variables de entorno), esas librerías asumen un modelo de usuarios en base de datos que no existe todavía — iron-session cubre el caso real (login con credenciales, sesión persistente) sin esa sobrecarga. La contraseña se valida con `scrypt` (`node:crypto`, sin dependencia de `bcrypt`). Migrar a Auth.js/Better Auth si el proyecto se vuelve multi-usuario queda aislado a `src/lib/auth/*`.
 
 ### "Adapters" (`07-adapters` en los docs)
 
@@ -58,8 +58,20 @@ Nota técnica para la implementación (no bloquea el plan, es un detalle a tener
 
 ## Imágenes
 
-- MVP: URLs externas (bancos de imágenes) referenciadas dentro del JSON/DB, renderizadas con `next/image` (requiere configurar `remotePatterns` en `next.config.ts` para los dominios usados).
+- MVP: URLs externas (bancos de imágenes) referenciadas dentro del JSON/DB, renderizadas con `next/image` (requiere configurar `remotePatterns` en `next.config.ts` para los dominios usados, ver `src/lib/images/allowed-hosts.ts`).
 - El formulario de "subir imagen" en el panel se diseña ya pensando en la interfaz final (selector de archivos, preview, reordenar galería), pero el backend detrás puede empezar simplemente guardando una URL pegada por el corredor, y evolucionar a subida real (Vercel Blob / Supabase Storage / S3) sin cambiar el formulario.
+
+## Fondo cinematográfico del Home (solo desktop)
+
+El Home (`src/app/(public)/page.tsx`) usa `HomeCinematicScene` (`src/components/marketing/home-cinematic-scene.tsx`) como fondo fijo detrás de todas las secciones: 4 clips de video reales (exterior → pasillo → living → bar, mismo shoot de una sola propiedad, Kindel Media / Pexels, licencia libre sin atribución) cuyo `currentTime` se sincroniza 1:1 con el scroll — no hay autoplay, la "cámara" avanza y retrocede exactamente con el usuario. Los archivos viven en `public/videos/home-scene/`.
+
+Este efecto es **solo desktop** (`min-width: 768px`, detectado con `useSyncExternalStore` para evitar el error de hidratación de Next/Motion y el warning de `react-hooks/set-state-in-effect`). En mobile no se monta ningún `<video>` — no se descarga nada — y `Hero` (`src/components/marketing/hero.tsx`) vuelve a mostrar su propia imagen de fondo estática (`md:hidden`), como era antes de este feature.
+
+Detalle no obvio: el `<footer>` necesita `position: relative` explícito para pintar por encima del fondo fijo — un elemento `static` siempre pinta *debajo* de cualquier elemento posicionado con `z-index: auto` según las reglas de stacking de CSS, sin importar el orden en el DOM.
+
+## Registro de npm
+
+`.npmrc` en la raíz fija `registry=https://registry.npmjs.org/` explícitamente. No es config redundante: si la máquina donde se corre `npm install` (local o CI) está autenticada contra un registro privado a nivel de usuario/sistema, este archivo evita que esa config se filtre al build de este proyecto, que no tiene ninguna dependencia de un registro privado.
 
 ## Estructura de carpetas propuesta (borrador)
 
@@ -102,5 +114,5 @@ Vercel es la opción por defecto dado que es Next.js — no requiere configuraci
 
 1. ~~Persistencia real del panel~~ → **Resuelto**: datos ficticios (JSON mock) por ahora, arquitectura lista para migrar a DB real cuando se necesite.
 2. **Proveedor de base de datos / hosting** (para cuando llegue ese momento): ¿hay preferencia (Vercel + Postgres tipo Neon/Supabase es la ruta de menor fricción), o alguna restricción (presupuesto, hosting ya contratado)?
-3. **Librería de auth**: ¿alguna preferencia entre Auth.js/Better Auth, o delego la elección a criterio técnico al implementar?
+3. ~~Librería de auth~~ → **Resuelto**: iron-session (ver sección de autenticación arriba).
 4. **Dominio**: ¿ya existe un dominio propio (ej. tranhaus.cl) o seguimos en un subdominio de hosting mientras tanto?

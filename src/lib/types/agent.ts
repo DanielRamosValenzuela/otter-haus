@@ -22,13 +22,10 @@ export interface Agent {
   name: string;
   role: string;
   photoUrl: string;
-  /** Long bio, paragraphs separated by "\n\n". */
   bio: string;
-  /** Short teaser shown on Home. */
   shortBio: string;
   email: string;
   phone: string;
-  /** Digits only, E.164, used to build wa.me links. */
   whatsapp: string;
   coverageZones: string[];
   credentials: string[];

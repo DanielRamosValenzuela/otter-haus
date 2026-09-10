@@ -1,10 +1,6 @@
 import "server-only";
 import { z } from "zod";
 
-// Only this module (and the auth layer, which imports from here) reads
-// `process.env` directly — everything else imports `env` from here, so a
-// missing/invalid var fails loudly at first use instead of silently at
-// login time. See docs/04-tecnico.md (data-security guidance).
 const envSchema = z.object({
   SESSION_PASSWORD: z
     .string()
@@ -15,11 +11,6 @@ const envSchema = z.object({
     .string()
     .regex(/^[a-f0-9]+:[a-f0-9]+$/i, "Formato esperado: salt:hash (ver scripts/hash-password.mjs)."),
   TRANHAUS_DATA_DIR: z.string().optional(),
-  // Normalize before validating: Vercel lets an env var exist but be left
-  // blank ("" isn't caught by `.default()`, which only applies to
-  // `undefined`), and it's easy to set this without a protocol (e.g.
-  // "my-app.vercel.app") — both would otherwise fail `.url()` and break
-  // the build. A value that's still invalid after this still fails loudly.
   NEXT_PUBLIC_SITE_URL: z.preprocess((value) => {
     if (typeof value !== "string" || value.trim() === "") return undefined;
     try {

@@ -1,9 +1,5 @@
 const DEFAULT_SITE_URL = "http://localhost:3000";
 
-// `new URL(SITE.url)` runs at module load (see app/layout.tsx metadata),
-// so this must never throw — Vercel env vars are easy to leave empty or
-// set without a protocol (e.g. "my-app.vercel.app"), and either one
-// would otherwise crash the whole build with "Invalid URL".
 function resolveSiteUrl(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL;
   if (!raw) return DEFAULT_SITE_URL;
@@ -36,10 +32,8 @@ export const NAV_LINKS = [
 
 export const CTA_LINK = { href: "/contacto", label: "Contacto" } as const;
 
-// Placeholder de contacto — dato ficticio, ver docs/02-negocio.md
-// (pregunta abierta #4: reemplazar por datos reales del corredor).
 export const CONTACT = {
-  whatsapp: "56912345678", // E.164 sin "+", para wa.me
+  whatsapp: "56912345678",
   phoneDisplay: "+56 9 1234 5678",
   email: "contacto@tranhaus.cl",
 } as const;

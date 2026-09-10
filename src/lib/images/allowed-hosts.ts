@@ -1,8 +1,3 @@
-// Single source of truth for which external image hosts are allowed.
-// Consumed by next.config.ts (remotePatterns) and by the property Zod
-// schema (src/lib/validation/property-schema.ts), so a mock image URL
-// from a blocked host fails with a clear validation error instead of a
-// broken next/image request.
 export const ALLOWED_IMAGE_HOSTS = [
   "images.unsplash.com",
   "plus.unsplash.com",

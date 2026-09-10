@@ -10,32 +10,21 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { HomeCinematicScene } from "@/components/marketing/home-cinematic-scene";
 
-const SCENE_IMAGES = [
-  {
-    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
-    alt: "Fachada de casa moderna de lujo al atardecer",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=2000&auto=format&fit=crop",
-    alt: "Living moderno y acogedor con decoración de lujo",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?q=80&w=2000&auto=format&fit=crop",
-    alt: "Cocina moderna con terminaciones de lujo",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1521783988139-89397d761dce?q=80&w=2000&auto=format&fit=crop",
-    alt: "Dormitorio principal luminoso y elegante",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2000&auto=format&fit=crop",
-    alt: "Baño moderno con terminaciones de alto estándar",
-  },
+// Real handheld/dolly footage of one property (Kindel Media, Pexels —
+// free license, no attribution required) — exterior approach, hallway,
+// living/dining, home bar, in that walkthrough order. Durations are
+// read from each file (`ffprobe`-equivalent via the browser) so
+// scroll-scrubbing maps 1:1 onto the actual clip length.
+const SCENE_CLIPS = [
+  { src: "/videos/home-scene/01-exterior.mp4", duration: 20.07 },
+  { src: "/videos/home-scene/02-hallway.mp4", duration: 7.615 },
+  { src: "/videos/home-scene/03-living.mp4", duration: 20.95 },
+  { src: "/videos/home-scene/04-bar.mp4", duration: 23.85 },
 ];
 
 export default function HomePage() {
   return (
-    <HomeCinematicScene images={SCENE_IMAGES}>
+    <HomeCinematicScene clips={SCENE_CLIPS}>
       <Hero />
 
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">

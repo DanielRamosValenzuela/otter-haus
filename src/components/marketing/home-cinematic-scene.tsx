@@ -1,18 +1,23 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import Image from "next/image";
-import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+  useReducedMotion,
+} from "motion/react";
 
-export interface SceneImage {
+export interface SceneClip {
   src: string;
-  alt: string;
+  /** Seconds — known ahead of time so playback can start scrubbing the
+   * instant metadata loads, instead of racing `loadedmetadata`. */
+  duration: number;
 }
 
-const ZOOM_TARGET = 1.4;
-
-/** Crossfade window for image `index` of `total`, evenly spaced with a
- * soft overlap at each boundary — the first image starts fully visible,
+/** Crossfade window for clip `index` of `total`, evenly spaced with a
+ * soft overlap at each boundary — the first clip starts fully visible,
  * the last stays fully visible through the end, so there's no dead zone
  * before/after the sequence. */
 function crossfadeStops(index: number, total: number, overlap: number) {
@@ -31,83 +36,82 @@ function crossfadeStops(index: number, total: number, overlap: number) {
   };
 }
 
-/** Each image keeps pushing the camera forward (zooming in) for its
- * whole time on screen, reaching maximum zoom right as it hands off to
- * the next one — the "hidden cut" trick: swapping images while one is
- * zoomed in and blown-past-detail reads as crossing a threshold (the
- * exterior "pushes through the door") rather than a photo change. */
-function zoomStops(index: number, total: number, overlap: number) {
-  const segment = 1 / total;
-  const start = index * segment;
-  const end = Math.min((index + 1) * segment + overlap, 1);
-  return { input: [start, end], output: [1, ZOOM_TARGET] };
-}
-
 /**
  * A walkthrough backdrop that stays fixed behind the entire home page:
- * one continuous image sequence (exterior → living room → kitchen → …)
- * that never visibly cuts — each frame zooms forward into the next,
- * crossfading only at its zoomed-in peak, so the whole scroll reads as
- * one unbroken camera move deeper into the house instead of a slideshow.
- * Content scrolls normally on top; the sticky navbar (z-40) and
- * WhatsApp button (z-30) stack above it since they declare a higher
- * z-index, and the footer — a normal opaque block later in the DOM —
- * naturally covers it once scrolled into view.
+ * real handheld/dolly footage (exterior → hallway → living → bar), each
+ * clip's own `currentTime` scrubbed to match scroll position — so the
+ * camera is always genuinely moving, tied 1:1 to how far the visitor has
+ * scrolled, not autoplaying on its own clock. Clips crossfade into each
+ * other rather than cutting. Content scrolls normally on top; the sticky
+ * navbar (z-40) and WhatsApp button (z-30) stack above it since they
+ * declare a higher z-index, and the footer — made `relative` precisely
+ * so it joins this same positioned-elements paint order — naturally
+ * covers it once scrolled into view.
  */
 export function HomeCinematicScene({
-  images,
+  clips,
   children,
 }: {
-  images: SceneImage[];
+  clips: SceneClip[];
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
-  const overlap = 0.05;
-  const fades = images.map((_, i) => crossfadeStops(i, images.length, overlap));
-  const zooms = images.map((_, i) => zoomStops(i, images.length, overlap));
+  const overlap = 0.04;
+  const fades = clips.map((_, i) => crossfadeStops(i, clips.length, overlap));
 
   // Rules of Hooks needs a fixed call count — the scene is authored with
-  // exactly 5 images, so these are explicit rather than looped.
+  // exactly 4 clips, so these are explicit rather than looped.
   const opacity0 = useTransform(scrollYProgress, fades[0]?.input ?? [0, 1], fades[0]?.output ?? [1, 1]);
   const opacity1 = useTransform(scrollYProgress, fades[1]?.input ?? [0, 1], fades[1]?.output ?? [0, 0]);
   const opacity2 = useTransform(scrollYProgress, fades[2]?.input ?? [0, 1], fades[2]?.output ?? [0, 0]);
   const opacity3 = useTransform(scrollYProgress, fades[3]?.input ?? [0, 1], fades[3]?.output ?? [0, 0]);
-  const opacity4 = useTransform(scrollYProgress, fades[4]?.input ?? [0, 1], fades[4]?.output ?? [0, 0]);
-  const opacities = [opacity0, opacity1, opacity2, opacity3, opacity4];
+  const opacities = [opacity0, opacity1, opacity2, opacity3];
 
-  const scale0 = useTransform(scrollYProgress, zooms[0]?.input ?? [0, 1], zooms[0]?.output ?? [1, 1]);
-  const scale1 = useTransform(scrollYProgress, zooms[1]?.input ?? [0, 1], zooms[1]?.output ?? [1, 1]);
-  const scale2 = useTransform(scrollYProgress, zooms[2]?.input ?? [0, 1], zooms[2]?.output ?? [1, 1]);
-  const scale3 = useTransform(scrollYProgress, zooms[3]?.input ?? [0, 1], zooms[3]?.output ?? [1, 1]);
-  const scale4 = useTransform(scrollYProgress, zooms[4]?.input ?? [0, 1], zooms[4]?.output ?? [1, 1]);
-  const scales = [scale0, scale1, scale2, scale3, scale4];
+  const videoRef0 = useRef<HTMLVideoElement>(null);
+  const videoRef1 = useRef<HTMLVideoElement>(null);
+  const videoRef2 = useRef<HTMLVideoElement>(null);
+  const videoRef3 = useRef<HTMLVideoElement>(null);
+  const videoRefs = [videoRef0, videoRef1, videoRef2, videoRef3];
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (reduceMotion) return;
+    const segment = 1 / clips.length;
+    clips.forEach((clip, i) => {
+      const video = videoRefs[i].current;
+      if (!video || video.readyState < 1) return;
+      const localStart = i * segment;
+      const localProgress = Math.min(1, Math.max(0, (progress - localStart) / segment));
+      const targetTime = localProgress * clip.duration;
+      // Skip sub-frame deltas — assigning currentTime forces a decode
+      // seek, and doing that every scroll tick is wasted work.
+      if (Math.abs(video.currentTime - targetTime) > 0.06) {
+        video.currentTime = targetTime;
+      }
+    });
+  });
 
   return (
     <>
       <div className="fixed inset-0 overflow-hidden">
-        {reduceMotion ? (
-          <Image src={images[0].src} alt={images[0].alt} fill priority sizes="100vw" className="object-cover" />
-        ) : (
-          images.map((image, i) => (
-            <motion.div
-              key={image.src}
-              style={{ opacity: opacities[i], scale: scales[i] }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                priority={i === 0}
-                sizes="100vw"
-                className="object-cover"
-              />
-            </motion.div>
-          ))
-        )}
+        {clips.map((clip, i) => (
+          <motion.div
+            key={clip.src}
+            style={reduceMotion ? { opacity: i === 0 ? 1 : 0 } : { opacity: opacities[i] }}
+            className="absolute inset-0"
+          >
+            <video
+              ref={videoRefs[i]}
+              src={clip.src}
+              muted
+              playsInline
+              preload={i === 0 ? "auto" : "metadata"}
+              className="h-full w-full object-cover"
+            />
+          </motion.div>
+        ))}
         <div className="absolute inset-0 bg-gradient-to-b from-scrim/50 via-scrim/60 to-scrim/85" />
       </div>
 

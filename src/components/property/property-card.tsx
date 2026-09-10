@@ -18,7 +18,6 @@ export function PropertyCard({
   priority = false,
 }: {
   property: Property;
-  /** Set for the first few cards above the fold to improve LCP. */
   priority?: boolean;
 }) {
   const cover = property.images[0];

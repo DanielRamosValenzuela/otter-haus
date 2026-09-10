@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Optimistic-only check: just looks at cookie presence, never unseals it.
-// Real authorization happens in src/lib/auth/dal.ts (getCurrentAdmin /
-// requireAdmin), which every dashboard page and Server Action calls —
-// this proxy only avoids a flash of the dashboard shell for obviously
-// logged-out visitors and bounces a logged-in visitor away from /login.
 const COOKIE_NAME = "tranhaus_session";
 const LOGIN_PATH = "/dashboard/login";
 

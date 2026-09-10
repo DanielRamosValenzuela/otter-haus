@@ -76,15 +76,6 @@ export async function getPropertyBySlug(slug: string): Promise<Property | null> 
   return property;
 }
 
-export async function getPropertyById(id: string): Promise<Property | null> {
-  "use cache";
-  cacheTag("properties");
-  cacheLife("hours");
-
-  const db = await readDb();
-  return db.properties.find((p) => p.id === id) ?? null;
-}
-
 export async function getFeaturedProperties(limit = 4): Promise<Property[]> {
   "use cache";
   cacheTag("properties");

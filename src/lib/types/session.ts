@@ -4,7 +4,6 @@ export interface SessionData {
   loggedInAt?: number;
 }
 
-/** Narrow DTO returned by the DAL — never the raw session. */
 export interface AdminUser {
   id: string;
   name: string;

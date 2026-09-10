@@ -13,7 +13,6 @@ export function PropertyGallery({
   transitionName,
 }: {
   images: PropertyImage[];
-  /** When set, the first (largest) tile morphs from the matching card on the catalog page. */
   transitionName?: string;
 }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);

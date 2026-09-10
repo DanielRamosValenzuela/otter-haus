@@ -5,15 +5,6 @@ import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils/cn";
 
-/**
- * A photo that grows slightly on its own as it travels through the
- * viewport (independent of any hover state), so photography across the
- * site feels continuously "alive" while scrolling — the same visual
- * language as the hero's dive-in zoom, applied lightly to grid imagery.
- * Compose with a hover-scale class on `imageClassName` — transforms on
- * the outer (scroll-driven) and inner (hover) elements multiply instead
- * of fighting over the same `transform` property.
- */
 export function ScrollZoomImage({
   alt,
   imageClassName,

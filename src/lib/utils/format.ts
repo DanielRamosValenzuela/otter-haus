@@ -13,9 +13,6 @@ const dateFormatter = new Intl.DateTimeFormat("es-CL", {
   year: "numeric",
 });
 
-// Combining diacritical marks (U+0300–U+036F) left behind by NFD
-// normalization — written as an escape, not a literal range, so the
-// source file stays plain ASCII and unambiguous.
 const DIACRITICS_RE = new RegExp("[\\u0300-\\u036f]", "g");
 
 export function formatPrice({ amount, currency }: PropertyPrice): string {

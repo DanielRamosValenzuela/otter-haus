@@ -1,11 +1,5 @@
 @import "tailwindcss";
 
-/* Brand tokens — dark/gold "lujo" theme, refined from the TranHaus
-   reference (docs/03-ui-ux.md). Dark is the brand default (matches the
-   reference site and the confirmed design direction); `[data-theme="light"]`
-   below overrides the same token names with a light palette. Components
-   never reference light/dark directly — they use bg-ink-950, text-cream-50,
-   etc., and the active theme is resolved at the CSS-variable level. */
 @theme {
   --color-ink-950: #0b0d12;
   --color-ink-900: #12141b;
@@ -25,9 +19,6 @@
   --color-warning-500: #d9a441;
   --color-danger-500: #c4614f;
 
-  /* Fixed near-black, independent of theme — for scrims over photography
-     and modal/drawer backdrops, which must stay dark regardless of the
-     active site theme, and for text placed on the (always-gold) accent. */
   --color-scrim: #05060a;
 
   --radius-card: 14px;
@@ -39,9 +30,6 @@
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* next/font exposes its families as CSS custom properties set on <html>;
-   `inline` re-exposes them under our own token names so components can
-   use font-display / font-sans utilities. */
 @theme inline {
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
@@ -63,11 +51,6 @@
   --color-muted-500: #8c8677;
 }
 
-/* Scopes content stacked directly on a photo + dark scrim (hero, zone
-   cards, image badges) back to the dark-mode token values, regardless of
-   the page's active theme — text and glass chips over a photo must stay
-   legible against that photo's fixed dark scrim, not flip to dark text
-   when the site is in light mode. */
 .scrim-scope {
   --color-ink-900: #12141b;
   --color-ink-800: #1a1d26;
@@ -105,9 +88,6 @@
     border-radius: 4px;
   }
 
-  /* Tailwind's preflight resets buttons to cursor: default — every
-     clickable button in the app (theme toggle, icon actions, dialog
-     triggers, etc.) needs the hand cursor back. */
   button:not(:disabled) {
     cursor: pointer;
   }
@@ -133,9 +113,6 @@
   animation: shimmer 1.8s ease-in-out infinite;
 }
 
-/* Radix Dialog (confirm dialog, gallery lightbox, mobile menu) — plain
-   CSS keyframes driven by Radix's own data-state attribute, no
-   animation-utility plugin involved. */
 @keyframes overlay-in {
   from {
     opacity: 0;
@@ -172,7 +149,6 @@
   animation: dialog-out 150ms var(--ease-lux);
 }
 
-/* Side drawer (mobile nav menu, mobile filter drawer) */
 @keyframes drawer-in {
   from {
     transform: translateX(100%);
@@ -196,9 +172,6 @@
   animation: drawer-out 200ms var(--ease-lux);
 }
 
-/* View transitions (React <ViewTransition>, see
-   node_modules/next/dist/docs/01-app/02-guides/view-transitions.md) —
-   no animation library involved, purely CSS pseudo-elements. */
 ::view-transition-group(.morph) {
   animation-duration: 420ms;
   animation-timing-function: var(--ease-lux);

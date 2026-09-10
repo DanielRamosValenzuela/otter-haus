@@ -3,7 +3,6 @@ export interface Zone {
   name: string;
   imageUrl?: string;
   description?: string;
-  /** Computed at read time — count of published properties in this zone. */
   propertyCount: number;
 }
 

@@ -21,11 +21,6 @@ function toInt(value: string | undefined): number | undefined {
   return Number.isFinite(n) && n >= 0 ? n : undefined;
 }
 
-/**
- * Tolerant by design: an unknown/invalid value is dropped rather than
- * thrown — a stray or hand-edited query string should degrade to "no
- * filter", never to an error page.
- */
 export function parsePropertySearchParams(sp: RawSearchParams): PropertyQuery {
   const operation = first(sp.operacion);
   const type = first(sp.tipo);

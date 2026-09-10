@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils/cn";
  * of fighting over the same `transform` property.
  */
 export function ScrollZoomImage({
+  alt,
   imageClassName,
   ...imageProps
 }: Omit<ComponentProps<typeof Image>, "fill"> & { imageClassName?: string }) {
@@ -26,7 +27,7 @@ export function ScrollZoomImage({
   return (
     <div ref={ref} className="absolute inset-0 overflow-hidden">
       <motion.div style={reduceMotion ? undefined : { scale }} className="absolute inset-0">
-        <Image fill className={cn("object-cover", imageClassName)} {...imageProps} />
+        <Image fill alt={alt} className={cn("object-cover", imageClassName)} {...imageProps} />
       </motion.div>
     </div>
   );

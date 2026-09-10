@@ -13,7 +13,12 @@ async function CopyrightYear() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-cream-50/10 bg-ink-900/60">
+    // `relative` isn't for layout here — it puts the footer in the
+    // "positioned, z-index:auto" paint bucket alongside the home page's
+    // fixed cinematic background, so DOM order (footer comes after)
+    // decides the stack instead of the footer (being `static`) always
+    // painting *below* any positioned element per CSS stacking rules.
+    <footer className="relative border-t border-cream-50/10 bg-ink-900/60">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-3">
           <div className="space-y-3">

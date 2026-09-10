@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "badge": "Lujo & confort en Chile",
+    "title": "Tu próximo capítulo comienza aquí.",
+    "subtitle": "En TranHaus redefinimos la experiencia inmobiliaria con asesoría de alto nivel y propiedades exclusivas.",
+    "primaryCtaLabel": "Ver propiedades",
+    "secondaryCtaLabel": "Conócenos"
+  },
+  "zoneSection": {
+    "eyebrow": "Explora por zona",
+    "title": "Encuentra tu próximo hogar",
+    "description": "Recorre nuestro catálogo organizado por las zonas donde tenemos mayor presencia."
+  },
+  "featuredSection": {
+    "eyebrow": "Selección TranHaus",
+    "title": "Propiedades destacadas",
+    "description": "Una muestra de las propiedades que hoy están disponibles."
+  },
+  "updatedAt": "2026-01-01T00:00:00.000Z"
+}

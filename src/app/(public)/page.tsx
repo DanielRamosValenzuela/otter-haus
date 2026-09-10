@@ -9,6 +9,7 @@ import { AgentTeaser } from "@/components/marketing/agent-teaser";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { HomeCinematicScene } from "@/components/marketing/home-cinematic-scene";
+import { getHomeContent } from "@/lib/data/home-content";
 
 const SCENE_CLIPS = [
   { src: "/videos/home-scene/01-exterior.mp4", duration: 20.07 },
@@ -17,7 +18,9 @@ const SCENE_CLIPS = [
   { src: "/videos/home-scene/04-bar.mp4", duration: 23.85 },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const content = await getHomeContent();
+
   return (
     <HomeCinematicScene clips={SCENE_CLIPS}>
       <Hero />
@@ -25,9 +28,9 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="Explora por zona"
-            title="Encuentra tu próximo hogar"
-            description="Recorre nuestro catálogo organizado por las zonas donde tenemos mayor presencia."
+            eyebrow={content.zoneSection.eyebrow}
+            title={content.zoneSection.title}
+            description={content.zoneSection.description}
           />
         </Reveal>
         <div className="mt-10">
@@ -40,9 +43,9 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="Selección TranHaus"
-            title="Propiedades destacadas"
-            description="Una muestra de las propiedades que hoy están disponibles."
+            eyebrow={content.featuredSection.eyebrow}
+            title={content.featuredSection.title}
+            description={content.featuredSection.description}
           />
         </Reveal>
         <div className="mt-10">

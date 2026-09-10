@@ -8,6 +8,7 @@ import { Price } from "@/components/ui/price";
 import { PropertyGallery } from "@/components/property/property-gallery";
 import { PropertySpecs } from "@/components/property/property-specs";
 import { PropertyContactCard } from "@/components/property/property-contact-card";
+import { PropertyMap } from "@/components/property/property-map";
 import { RelatedProperties } from "@/components/property/related-properties";
 
 const STATUS_LABEL = { disponible: "Disponible", reservada: "Reservada", cerrada: "Cerrada" } as const;
@@ -55,6 +56,8 @@ export async function PropertyDetail({ params }: { params: Promise<{ slug: strin
             <h2 className="font-display text-lg font-semibold">Descripción</h2>
             <p className="mt-3 whitespace-pre-line text-cream-50/90">{property.description}</p>
           </div>
+
+          <PropertyMap location={property.location} />
         </div>
 
         <div className="lg:col-span-1">

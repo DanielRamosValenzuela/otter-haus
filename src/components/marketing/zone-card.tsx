@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Sun, Landmark, TreePine, MapPin, type LucideIcon } from "lucide-react";
 import type { Zone } from "@/lib/types/zone";
 import { pluralize } from "@/lib/utils/format";
+import { ScrollZoomImage } from "@/components/motion/scroll-zoom-image";
 
 const ZONE_ICONS: Record<string, LucideIcon> = {
   "zona-norte": Sun,
@@ -19,12 +19,11 @@ export function ZoneCard({ zone }: { zone: Zone }) {
       className="group relative block aspect-[4/5] overflow-hidden rounded-card sm:aspect-square"
     >
       {zone.imageUrl && (
-        <Image
+        <ScrollZoomImage
           src={zone.imageUrl}
           alt={zone.name}
-          fill
           sizes="(min-width: 1024px) 320px, 45vw"
-          className="object-cover transition-transform duration-500 ease-lux group-hover:scale-110"
+          imageClassName="transition-transform duration-500 ease-lux group-hover:scale-110"
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-scrim/90 via-scrim/30 to-transparent" />

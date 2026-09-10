@@ -11,21 +11,41 @@ Refinamos el concepto ya presente en la referencia TranHaus (Google Sites) en ve
 
 Lo que cambia respecto a la referencia: la referencia es una landing estática de una página. Acá necesitamos un sistema de diseño reutilizable (múltiples páginas, catálogo, panel admin) y una capa de animación/interacción mucho más trabajada, ya que es uno de los objetivos explícitos del proyecto.
 
-## Sistema de diseño (tokens propuestos)
+## Sistema de diseño (tokens implementados)
 
-> Placeholder inicial — se ajusta cuando tengamos el logo/marca real del corredor.
+Tokens reales en `src/app/globals.css` (`@theme`), tema "lujo" oscuro/dorado con soporte dark/light. Los componentes nunca referencian light/dark directamente — siempre usan el nombre del token (`bg-ink-950`, `text-cream-50`, etc.) y el valor se resuelve según el tema activo.
 
 **Color**
-| Token | Valor aprox. | Uso |
-|---|---|---|
-| `bg-base` | `#0B0D12` – `#12141B` | Fondo general |
-| `bg-surface` | `#1A1D26` (con opacidad ~70-85% + blur) | Cards, navbar, modales |
-| `accent-gold` | `#D4AF37` / `#C9A227` | CTAs, badges, hover states, bordes activos |
-| `text-primary` | `#F5F5F0` | Texto principal sobre fondo oscuro |
-| `text-muted` | `#9CA3AF` | Texto secundario |
-| `success` / `warning` / `danger` | verdes/ámbar/rojo desaturados | Estados de propiedad (Disponible/Reservada/etc.) en el panel admin |
+| Token | Modo oscuro (default) | Modo claro | Uso |
+|---|---|---|---|
+| `ink-950` | `#0b0d12` | `#faf8f4` | Fondo general (`body`) |
+| `ink-900` | `#12141b` | `#f1eee6` | Cards, navbar, footer, superficies |
+| `ink-800` | `#1a1d26` | `#ffffff` | Superficies elevadas (inputs, hover) |
+| `ink-700` | `#232733` | `#e8e4d9` | Bordes sutiles, divisores |
+| `ink-600` | `#2c3140` | `#ddd8c9` | Bordes/superficies secundarias |
+| `gold-400` | `#e3c767` | `#a9821f` | Acento — texto/íconos sobre fondo oscuro |
+| `gold-500` | `#d4af37` | `#8f6d14` | Acento principal — CTAs, badges, bordes activos |
+| `gold-600` | `#c9a227` | `#7a5c10` | Acento — hover/estados presionados |
+| `cream-50` | `#f5f5f0` | `#1d1b16` | Texto principal |
+| `muted-400` | `#9ca3af` | `#6b6558` | Texto secundario |
+| `muted-500` | `#6b7280` | `#8c8677` | Texto terciario/placeholder |
+| `success-500` | `#5fa97c` | (fijo, no cambia con el tema) | Estado "Disponible" |
+| `warning-500` | `#d9a441` | (fijo) | Estado "Reservada" |
+| `danger-500` | `#c4614f` | (fijo) | Estado "Cerrada" / errores / acciones destructivas |
+| `scrim` | `#05060a` | (fijo) | Overlay oscuro sobre fotografías y fondos de modal/drawer — siempre oscuro sin importar el tema activo, porque el contenido que cubre (texto sobre una foto) necesita seguir siendo legible en ambos temas |
 
-Contraste dorado-sobre-oscuro debe verificarse con WCAG AA para texto; en botones grandes/CTAs es aceptable, en texto largo se prefiere blanco/gris.
+La clase utilitaria `.scrim-scope` re-fija los tokens de superficie/texto/acento a sus valores de modo oscuro dentro de contenido que vive sobre una fotografía (hero, tarjetas de zona, galerías) — así el texto se mantiene legible sobre la foto sin importar si el sitio está en modo claro u oscuro. Un elemento dentro de `.scrim-scope` necesita declarar su propia clase de color (ej. `text-cream-50`) para heredar el valor re-fijado correctamente — la herencia pura desde un ancestro fuera de ese scope no lo recoge.
+
+Contraste dorado-sobre-oscuro debe verificarse con WCAG AA para texto; en botones grandes/CTAs es aceptable, en texto largo se prefiere blanco/gris (`cream-50`).
+
+**Otros tokens**
+| Token | Valor | Uso |
+|---|---|---|
+| `radius-card` | `14px` | Cards, inputs, botones |
+| `radius-pill` | `999px` | Badges, chips, botones pill |
+| `shadow-lift` | `0 20px 40px -12px rgb(0 0 0 / 0.55)` | Hover elevado en cards |
+| `shadow-glass` | `0 8px 32px -8px rgb(0 0 0 / 0.45)` | Efecto "glass" |
+| `ease-lux` | `cubic-bezier(0.22, 1, 0.36, 1)` | Curva de easing estándar de toda la animación del sitio |
 
 **Tipografía**
 - Una display/serif o sans-serif condensada de alto impacto para titulares (headings) — transmite "lujo editorial".

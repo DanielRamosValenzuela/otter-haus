@@ -4,11 +4,13 @@ import { z } from "zod";
 const envSchema = z.object({
   SESSION_PASSWORD: z
     .string()
+    .trim()
     .min(32, "SESSION_PASSWORD debe tener al menos 32 caracteres (iron-session lo exige)."),
-  ADMIN_EMAIL: z.string().email(),
-  ADMIN_NAME: z.string().min(1),
+  ADMIN_EMAIL: z.string().trim().email(),
+  ADMIN_NAME: z.string().trim().min(1),
   ADMIN_PASSWORD_HASH: z
     .string()
+    .trim()
     .regex(/^[a-f0-9]+:[a-f0-9]+$/i, "Formato esperado: salt:hash (ver scripts/hash-password.mjs)."),
   TRANHAUS_DATA_DIR: z.string().optional(),
   NEXT_PUBLIC_SITE_URL: z.preprocess((value) => {

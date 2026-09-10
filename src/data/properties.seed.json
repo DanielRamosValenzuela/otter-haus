@@ -1,0 +1,262 @@
+[
+  {
+    "id": "prop-001",
+    "slug": "casa-moderna-vista-cordillera-lo-barnechea",
+    "title": "Casa moderna con vista a la cordillera",
+    "operation": "venta",
+    "type": "casa",
+    "status": "disponible",
+    "location": { "zone": "Zona Norte", "zoneSlug": "zona-norte", "commune": "Lo Barnechea", "city": "Santiago", "addressHint": "Camino a Farellones, sector precordillera" },
+    "price": { "amount": 18500, "currency": "UF" },
+    "features": { "bedrooms": 5, "bathrooms": 4, "parkingSpaces": 3, "builtAreaM2": 380, "landAreaM2": 800, "amenities": ["Piscina", "Quincho", "Seguridad 24/7", "Vista panorámica", "Jardín"] },
+    "description": "Residencia de diseño contemporáneo emplazada en uno de los sectores más exclusivos de Lo Barnechea. Amplios ventanales conectan los espacios interiores con la cordillera, living-comedor de doble altura, cocina totalmente equipada y suite principal con walk-in closet. Terreno con piscina, quincho y jardín paisajístico.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop", "alt": "Fachada de casa moderna de dos pisos con grandes ventanales" },
+      { "url": "https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop", "alt": "Living amplio y luminoso con vista al jardín" },
+      { "url": "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1600&auto=format&fit=crop", "alt": "Cocina moderna totalmente equipada" },
+      { "url": "https://images.unsplash.com/photo-1521783988139-89397d761dce?q=80&w=1600&auto=format&fit=crop", "alt": "Dormitorio principal con luz natural" }
+    ],
+    "featured": true,
+    "published": true,
+    "createdAt": "2026-05-12T14:00:00.000Z",
+    "updatedAt": "2026-08-20T09:30:00.000Z"
+  },
+  {
+    "id": "prop-002",
+    "slug": "departamento-terraza-vitacura",
+    "title": "Departamento con terraza en Vitacura",
+    "operation": "venta",
+    "type": "departamento",
+    "status": "disponible",
+    "location": { "zone": "Zona Norte", "zoneSlug": "zona-norte", "commune": "Vitacura", "city": "Santiago", "addressHint": "Cerca de Av. Vitacura" },
+    "price": { "amount": 9800, "currency": "UF" },
+    "features": { "bedrooms": 3, "bathrooms": 3, "parkingSpaces": 2, "builtAreaM2": 145, "amenities": ["Terraza", "Gimnasio", "Conserjería 24/7", "Bodega", "Sala multiuso"] },
+    "description": "Departamento de un piso completo en edificio boutique, con terraza de 25m² orientación norponiente. Living-comedor integrado, cocina con isla, 3 dormitorios en suite y estacionamientos dobles. Edificio con gimnasio, sala multiuso y conserjería permanente.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1600&auto=format&fit=crop", "alt": "Edificio residencial moderno en Vitacura" },
+      { "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1600&auto=format&fit=crop", "alt": "Living comedor con terminaciones de lujo" },
+      { "url": "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?q=80&w=1600&auto=format&fit=crop", "alt": "Cocina con isla central" },
+      { "url": "https://images.unsplash.com/photo-1505843513577-22bb7d21e455?q=80&w=1600&auto=format&fit=crop", "alt": "Baño principal con terminaciones en mármol" }
+    ],
+    "featured": true,
+    "published": true,
+    "createdAt": "2026-06-02T11:15:00.000Z",
+    "updatedAt": "2026-08-18T16:45:00.000Z"
+  },
+  {
+    "id": "prop-003",
+    "slug": "parcela-piscina-colina",
+    "title": "Parcela con piscina y quincho en Colina",
+    "operation": "venta",
+    "type": "parcela",
+    "status": "disponible",
+    "location": { "zone": "Zona Norte", "zoneSlug": "zona-norte", "commune": "Colina", "city": "Santiago" },
+    "price": { "amount": 25000, "currency": "UF" },
+    "features": { "bedrooms": 0, "bathrooms": 0, "parkingSpaces": 0, "builtAreaM2": 0, "landAreaM2": 5000, "amenities": ["Piscina", "Quincho", "Pozo de agua", "Cierre perimetral"] },
+    "description": "Parcela de 5.000m² lista para construir, en condominio de parcelas de agrado con seguridad privada. Cuenta con piscina, quincho techado y pozo de agua propio. Ideal para proyecto de casa de descanso o residencia principal en contacto con la naturaleza.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop", "alt": "Amplio terreno con vegetación al atardecer" },
+      { "url": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1600&auto=format&fit=crop", "alt": "Vista panorámica del terreno al anochecer" },
+      { "url": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1600&auto=format&fit=crop", "alt": "Parcela con árboles y espacio abierto" },
+      { "url": "https://images.unsplash.com/photo-1615529182904-14819c35db37?q=80&w=1600&auto=format&fit=crop", "alt": "Camino de acceso a la parcela" }
+    ],
+    "featured": false,
+    "published": true,
+    "createdAt": "2026-04-28T10:00:00.000Z",
+    "updatedAt": "2026-07-30T12:00:00.000Z"
+  },
+  {
+    "id": "prop-004",
+    "slug": "departamento-amoblado-providencia",
+    "title": "Departamento amoblado en Providencia",
+    "operation": "arriendo",
+    "type": "departamento",
+    "status": "disponible",
+    "location": { "zone": "Zona Centro", "zoneSlug": "zona-centro", "commune": "Providencia", "city": "Santiago", "addressHint": "A pasos de metro Los Leones" },
+    "price": { "amount": 850000, "currency": "CLP" },
+    "features": { "bedrooms": 2, "bathrooms": 2, "parkingSpaces": 1, "builtAreaM2": 78, "amenities": ["Amoblado", "Piscina", "Gimnasio", "Cowork", "Bodega"] },
+    "description": "Departamento completamente amoblado y equipado, a pasos de metro Los Leones. Edificio con piscina, gimnasio y espacio de cowork. Ideal para ejecutivos o arriendo de mediana estadía — disponibilidad inmediata.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop", "alt": "Fachada de edificio residencial en Providencia" },
+      { "url": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop", "alt": "Living comedor amoblado" },
+      { "url": "https://images.unsplash.com/photo-1571055107559-3e67626fa8be?q=80&w=1600&auto=format&fit=crop", "alt": "Dormitorio secundario amoblado" },
+      { "url": "https://images.unsplash.com/photo-1505843513577-22bb7d21e455?q=80&w=1600&auto=format&fit=crop", "alt": "Baño con terminaciones modernas" }
+    ],
+    "featured": true,
+    "published": true,
+    "createdAt": "2026-07-01T09:00:00.000Z",
+    "updatedAt": "2026-08-25T08:00:00.000Z"
+  },
+  {
+    "id": "prop-005",
+    "slug": "oficina-boutique-providencia",
+    "title": "Oficina boutique en Providencia",
+    "operation": "arriendo",
+    "type": "oficina",
+    "status": "disponible",
+    "location": { "zone": "Zona Centro", "zoneSlug": "zona-centro", "commune": "Providencia", "city": "Santiago" },
+    "price": { "amount": 1200000, "currency": "CLP" },
+    "features": { "bedrooms": 0, "bathrooms": 2, "parkingSpaces": 2, "builtAreaM2": 210, "amenities": ["Sala de reuniones", "Recepción", "Estacionamiento visitas", "Aire acondicionado"] },
+    "description": "Oficina de planta libre en edificio corporativo boutique, con sala de reuniones acristalada, recepción y dos estacionamientos. Excelente conectividad y acceso a transporte público.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop", "alt": "Espacio de oficina moderno y luminoso" },
+      { "url": "https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop", "alt": "Sala de reuniones con luz natural" },
+      { "url": "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?q=80&w=1600&auto=format&fit=crop", "alt": "Kitchenette de la oficina" }
+    ],
+    "featured": false,
+    "published": true,
+    "createdAt": "2026-06-20T13:30:00.000Z",
+    "updatedAt": "2026-08-10T10:00:00.000Z"
+  },
+  {
+    "id": "prop-006",
+    "slug": "casa-jardin-nunoa",
+    "title": "Casa con jardín en Ñuñoa",
+    "operation": "venta",
+    "type": "casa",
+    "status": "reservada",
+    "location": { "zone": "Zona Centro", "zoneSlug": "zona-centro", "commune": "Ñuñoa", "city": "Santiago" },
+    "price": { "amount": 7200, "currency": "UF" },
+    "features": { "bedrooms": 4, "bathrooms": 3, "parkingSpaces": 2, "builtAreaM2": 210, "landAreaM2": 350, "amenities": ["Jardín", "Quincho", "Calefacción central", "Bodega"] },
+    "description": "Casa de dos pisos en calle tranquila de Ñuñoa, remodelada con terminaciones de calidad. Living-comedor con salida a jardín, cocina amplia, 4 dormitorios y quincho techado. Cerca de colegios, parques y comercio local.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1600&auto=format&fit=crop", "alt": "Fachada de casa de dos pisos con jardín" },
+      { "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1600&auto=format&fit=crop", "alt": "Living con acceso directo al jardín" },
+      { "url": "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1600&auto=format&fit=crop", "alt": "Cocina remodelada" },
+      { "url": "https://images.unsplash.com/photo-1521783988139-89397d761dce?q=80&w=1600&auto=format&fit=crop", "alt": "Dormitorio principal" }
+    ],
+    "featured": false,
+    "published": true,
+    "createdAt": "2026-03-15T09:00:00.000Z",
+    "updatedAt": "2026-08-05T11:00:00.000Z"
+  },
+  {
+    "id": "prop-007",
+    "slug": "local-comercial-santiago-centro",
+    "title": "Local comercial en Santiago Centro",
+    "operation": "arriendo",
+    "type": "local",
+    "status": "disponible",
+    "location": { "zone": "Zona Centro", "zoneSlug": "zona-centro", "commune": "Santiago Centro", "city": "Santiago", "addressHint": "A pasos del Paseo Ahumada" },
+    "price": { "amount": 950000, "currency": "CLP" },
+    "features": { "bedrooms": 0, "bathrooms": 1, "parkingSpaces": 0, "builtAreaM2": 95, "amenities": ["Vitrina a calle", "Alta afluencia peatonal", "Bodega"] },
+    "description": "Local comercial a nivel de calle, con amplia vitrina y alto flujo peatonal en pleno centro de Santiago. Ideal para retail, servicios o gastronomía. Incluye bodega interior.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?q=80&w=1600&auto=format&fit=crop", "alt": "Local comercial con vitrina a la calle" },
+      { "url": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop", "alt": "Interior amplio y despejado del local" },
+      { "url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop", "alt": "Espacio interior con buena iluminación" }
+    ],
+    "featured": false,
+    "published": true,
+    "createdAt": "2026-07-10T15:00:00.000Z",
+    "updatedAt": "2026-08-22T09:00:00.000Z"
+  },
+  {
+    "id": "prop-008",
+    "slug": "departamento-vista-parque-la-florida",
+    "title": "Departamento con vista a parque en La Florida",
+    "operation": "venta",
+    "type": "departamento",
+    "status": "disponible",
+    "location": { "zone": "Zona Sur", "zoneSlug": "zona-sur", "commune": "La Florida", "city": "Santiago" },
+    "price": { "amount": 4500, "currency": "UF" },
+    "features": { "bedrooms": 3, "bathrooms": 2, "parkingSpaces": 1, "builtAreaM2": 92, "amenities": ["Vista a parque", "Piscina", "Áreas verdes", "Sala de eventos"] },
+    "description": "Departamento en piso alto con vista despejada a parque, en condominio con áreas verdes, piscina y sala de eventos. Living-comedor luminoso, cocina separada y 3 dormitorios. Cerca de metro y colegios.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1560185007-5f0bb1866cab?q=80&w=1600&auto=format&fit=crop", "alt": "Edificio residencial con áreas verdes" },
+      { "url": "https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=1600&auto=format&fit=crop", "alt": "Living con vista a parque" },
+      { "url": "https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?q=80&w=1600&auto=format&fit=crop", "alt": "Cocina separada bien equipada" },
+      { "url": "https://images.unsplash.com/photo-1505843513577-22bb7d21e455?q=80&w=1600&auto=format&fit=crop", "alt": "Baño con terminaciones modernas" }
+    ],
+    "featured": true,
+    "published": true,
+    "createdAt": "2026-05-30T10:00:00.000Z",
+    "updatedAt": "2026-08-15T14:00:00.000Z"
+  },
+  {
+    "id": "prop-009",
+    "slug": "casa-familiar-san-miguel",
+    "title": "Casa familiar en San Miguel",
+    "operation": "arriendo",
+    "type": "casa",
+    "status": "disponible",
+    "location": { "zone": "Zona Sur", "zoneSlug": "zona-sur", "commune": "San Miguel", "city": "Santiago" },
+    "price": { "amount": 780000, "currency": "CLP" },
+    "features": { "bedrooms": 3, "bathrooms": 2, "parkingSpaces": 2, "builtAreaM2": 130, "landAreaM2": 200, "amenities": ["Patio", "Estacionamiento techado", "Calefacción"] },
+    "description": "Casa de un piso en sector residencial de San Miguel, con patio trasero, living-comedor amplio y 3 dormitorios. Estacionamiento techado para dos vehículos. Cerca de metro y comercio.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop", "alt": "Fachada de casa de un piso" },
+      { "url": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop", "alt": "Living comedor de la casa" },
+      { "url": "https://images.unsplash.com/photo-1554995207-c18c203602cb?q=80&w=1600&auto=format&fit=crop", "alt": "Cocina equipada" },
+      { "url": "https://images.unsplash.com/photo-1521783988139-89397d761dce?q=80&w=1600&auto=format&fit=crop", "alt": "Dormitorio principal" }
+    ],
+    "featured": false,
+    "published": true,
+    "createdAt": "2026-06-15T08:00:00.000Z",
+    "updatedAt": "2026-08-12T09:00:00.000Z"
+  },
+  {
+    "id": "prop-010",
+    "slug": "terreno-proyecto-puente-alto",
+    "title": "Terreno para proyecto inmobiliario en Puente Alto",
+    "operation": "venta",
+    "type": "terreno",
+    "status": "cerrada",
+    "location": { "zone": "Zona Sur", "zoneSlug": "zona-sur", "commune": "Puente Alto", "city": "Santiago" },
+    "price": { "amount": 11000, "currency": "UF" },
+    "features": { "bedrooms": 0, "bathrooms": 0, "parkingSpaces": 0, "builtAreaM2": 0, "landAreaM2": 3200, "amenities": ["Factibilidad de servicios", "Uso de suelo mixto"] },
+    "description": "Terreno de 3.200m² con factibilidad de servicios y uso de suelo mixto, apto para desarrollo inmobiliario. Operación cerrada — se mantiene como referencia de proyectos gestionados por TranHaus.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop", "alt": "Terreno amplio despejado" },
+      { "url": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1600&auto=format&fit=crop", "alt": "Vista del terreno al atardecer" },
+      { "url": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1600&auto=format&fit=crop", "alt": "Extensión del terreno con vegetación" }
+    ],
+    "featured": false,
+    "published": true,
+    "createdAt": "2026-02-10T09:00:00.000Z",
+    "updatedAt": "2026-06-01T10:00:00.000Z"
+  },
+  {
+    "id": "prop-011",
+    "slug": "penthouse-vitacura",
+    "title": "Penthouse con terraza panorámica en Vitacura",
+    "operation": "venta",
+    "type": "departamento",
+    "status": "disponible",
+    "location": { "zone": "Zona Norte", "zoneSlug": "zona-norte", "commune": "Vitacura", "city": "Santiago" },
+    "price": { "amount": 32000, "currency": "UF" },
+    "features": { "bedrooms": 4, "bathrooms": 5, "parkingSpaces": 3, "builtAreaM2": 320, "amenities": ["Terraza panorámica", "Jacuzzi", "Bodega", "Conserjería 24/7"] },
+    "description": "Penthouse de lujo con terraza panorámica de 100m², jacuzzi exterior y vistas 360° de la ciudad y la cordillera. Ficha en preparación — pendiente de fotos finales antes de publicar.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1600&auto=format&fit=crop", "alt": "Edificio de departamentos de lujo" },
+      { "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1600&auto=format&fit=crop", "alt": "Living de gran formato con vista panorámica" },
+      { "url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1600&auto=format&fit=crop", "alt": "Sala de estar con iluminación natural" },
+      { "url": "https://images.unsplash.com/photo-1505843513577-22bb7d21e455?q=80&w=1600&auto=format&fit=crop", "alt": "Baño principal con terminaciones premium" }
+    ],
+    "featured": false,
+    "published": false,
+    "createdAt": "2026-08-28T09:00:00.000Z",
+    "updatedAt": "2026-09-05T09:00:00.000Z"
+  },
+  {
+    "id": "prop-012",
+    "slug": "estudio-nunoa",
+    "title": "Departamento estudio en Ñuñoa",
+    "operation": "arriendo",
+    "type": "departamento",
+    "status": "disponible",
+    "location": { "zone": "Zona Centro", "zoneSlug": "zona-centro", "commune": "Ñuñoa", "city": "Santiago" },
+    "price": { "amount": 520000, "currency": "CLP" },
+    "features": { "bedrooms": 1, "bathrooms": 1, "parkingSpaces": 0, "builtAreaM2": 38, "amenities": ["Amoblado", "Cowork", "Lavandería"] },
+    "description": "Estudio compacto y funcional, amoblado, a pasos de la vida universitaria y comercial de Ñuñoa. Falta confirmar disponibilidad de estacionamiento de bicicletas antes de publicar.",
+    "images": [
+      { "url": "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1600&auto=format&fit=crop", "alt": "Edificio de departamentos en Ñuñoa" },
+      { "url": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1600&auto=format&fit=crop", "alt": "Estudio amoblado y compacto" },
+      { "url": "https://images.unsplash.com/photo-1571055107559-3e67626fa8be?q=80&w=1600&auto=format&fit=crop", "alt": "Espacio de dormitorio integrado al living" }
+    ],
+    "featured": false,
+    "published": false,
+    "createdAt": "2026-08-30T09:00:00.000Z",
+    "updatedAt": "2026-09-04T09:00:00.000Z"
+  }
+]

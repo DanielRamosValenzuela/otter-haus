@@ -1,0 +1,27 @@
+{
+  "id": "agent-001",
+  "name": "Josefina Tran",
+  "role": "Corredora de Propiedades · Fundadora de TranHaus",
+  "photoUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop",
+  "shortBio": "Más de 12 años asesorando a familias e inversionistas en la compra, venta y arriendo de propiedades en Santiago.",
+  "bio": "Josefina Tran es corredora de propiedades con más de 12 años de experiencia en el mercado inmobiliario de Santiago. Fundó TranHaus con la convicción de que comprar, vender o arrendar una propiedad debe ser un proceso transparente, cercano y sin sorpresas.\n\nSu enfoque combina conocimiento profundo del mercado local con un trato personalizado en cada etapa del proceso — desde la primera visita hasta la firma final. Ha asesorado a más de 300 familias e inversionistas en operaciones de venta y arriendo en las zonas Norte, Centro y Sur de Santiago.\n\nCree firmemente en la educación del cliente: por eso TranHaus incluye una Guía Legal gratuita con todo lo que hay que saber antes de comprar o arrendar en Chile.",
+  "email": "corredor@tranhaus.cl",
+  "phone": "+56 9 1234 5678",
+  "whatsapp": "56912345678",
+  "coverageZones": ["Zona Norte", "Zona Centro", "Zona Sur"],
+  "credentials": [
+    "Corredora de Propiedades certificada",
+    "Miembro de la Asociación Chilena de Corredores de Propiedades",
+    "+300 operaciones cerradas"
+  ],
+  "stats": [
+    { "label": "Años de experiencia", "value": "12+" },
+    { "label": "Propiedades gestionadas", "value": "300+" },
+    { "label": "Zonas de cobertura", "value": "3" }
+  ],
+  "socials": [
+    { "platform": "instagram", "url": "https://instagram.com/tranhaus.cl" },
+    { "platform": "linkedin", "url": "https://linkedin.com/company/tranhaus" }
+  ],
+  "updatedAt": "2026-08-01T10:00:00.000Z"
+}

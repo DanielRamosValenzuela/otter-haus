@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "zona-norte",
+    "name": "Zona Norte",
+    "imageUrl": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop",
+    "description": "Lo Barnechea, Vitacura y Colina — el sector premium de Santiago, entre cordillera y naturaleza."
+  },
+  {
+    "slug": "zona-centro",
+    "name": "Zona Centro",
+    "imageUrl": "https://images.unsplash.com/photo-1484154218962-a197022b5858?q=80&w=1200&auto=format&fit=crop",
+    "description": "Providencia, Ñuñoa y Santiago Centro — vida urbana, conectividad y barrios consolidados."
+  },
+  {
+    "slug": "zona-sur",
+    "name": "Zona Sur",
+    "imageUrl": "https://images.unsplash.com/photo-1560185007-5f0bb1866cab?q=80&w=1200&auto=format&fit=crop",
+    "description": "La Florida, San Miguel y Puente Alto — opciones familiares con excelente relación precio-calidad."
+  }
+]

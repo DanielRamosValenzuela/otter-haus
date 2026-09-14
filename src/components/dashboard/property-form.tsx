@@ -166,6 +166,21 @@ export function PropertyForm({
         <Field name="addressHint" label="Referencia de ubicación" hint="Aproximada — nunca una dirección exacta">
           <Input id="addressHint" name="addressHint" defaultValue={property?.location.addressHint} />
         </Field>
+        <Field
+          name="mapsUrl"
+          label="Link de Google Maps"
+          error={errors?.mapsUrl}
+          hint="Opcional — búscala en Google Maps, copia el link y pégalo aquí"
+        >
+          <Input
+            id="mapsUrl"
+            name="mapsUrl"
+            placeholder="https://maps.app.goo.gl/..."
+            defaultValue={property?.location.mapsUrl}
+            aria-invalid={!!errors?.mapsUrl}
+            aria-describedby={errors?.mapsUrl ? fieldErrorId("mapsUrl") : undefined}
+          />
+        </Field>
       </section>
 
       <section className="space-y-4">

@@ -7,6 +7,11 @@ import type { PropertyImage } from "@/lib/types/property";
 import { isAllowedImageUrl, ALLOWED_IMAGE_HOSTS } from "@/lib/images/allowed-hosts";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { UploadImageButton } from "@/components/dashboard/upload-image-button";
+
+function altFromFilename(filename: string): string {
+  return filename.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
+}
 
 export function ImageUrlEditor({ defaultValue = [] }: { defaultValue?: PropertyImage[] }) {
   const [images, setImages] = useState<PropertyImage[]>(defaultValue);
@@ -117,14 +122,24 @@ export function ImageUrlEditor({ defaultValue = [] }: { defaultValue?: PropertyI
           Agregar
         </Button>
       </div>
+      <div>
+        <UploadImageButton
+          onUploaded={(uploadedUrl, filename) => {
+            setImages((prev) => [...prev, { url: uploadedUrl, alt: altFromFilename(filename) }]);
+            setError(null);
+          }}
+          onError={setError}
+        />
+      </div>
       {error && (
         <p className="text-xs text-danger-500" role="alert">
           {error}
         </p>
       )}
       <p className="text-xs text-muted-500">
-        Por ahora se agregan por URL desde {ALLOWED_IMAGE_HOSTS.join(" o ")}. La primera imagen es
-        la portada — usa las flechas para reordenar.
+        Agrega imágenes subiéndolas desde tu computador, o pegando una URL desde{" "}
+        {ALLOWED_IMAGE_HOSTS.join(" o ")}. La primera imagen es la portada — usa las flechas para
+        reordenar.
       </p>
     </div>
   );

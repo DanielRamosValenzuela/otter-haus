@@ -1,6 +1,6 @@
 import "server-only";
-import { scryptSync, timingSafeEqual } from "node:crypto";
-import { env } from "@/lib/env";
+import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+import { getAdmin } from "@/lib/data/admin";
 import type { AdminUser } from "@/lib/types/session";
 
 const ADMIN_ID = "admin-tranhaus";
@@ -38,10 +38,16 @@ function safeEqualStrings(a: string, b: string): boolean {
   return timingSafeEqual(bufA, bufB);
 }
 
-function verifyPassword(password: string): boolean {
-  const [salt, storedHash] = env.ADMIN_PASSWORD_HASH.split(":");
+export function hashPassword(password: string): string {
+  const salt = randomBytes(16).toString("hex");
+  const hash = scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${hash}`;
+}
+
+export function verifyPasswordHash(password: string, storedHash: string): boolean {
+  const [salt, hashHex] = storedHash.split(":");
   const hash = scryptSync(password, salt, 64);
-  const storedHashBuffer = Buffer.from(storedHash, "hex");
+  const storedHashBuffer = Buffer.from(hashHex, "hex");
   if (hash.length !== storedHashBuffer.length) return false;
   return timingSafeEqual(hash, storedHashBuffer);
 }
@@ -53,15 +59,16 @@ export async function verifyCredentials(
 ): Promise<AdminUser | null> {
   if (isThrottled(throttleKey)) return null;
 
-  const validEmail = safeEqualStrings(email.trim().toLowerCase(), env.ADMIN_EMAIL.toLowerCase());
-  const validPassword = verifyPassword(password);
+  const admin = await getAdmin();
+  const validEmail = safeEqualStrings(email.trim().toLowerCase(), admin.email.toLowerCase());
+  const validPassword = verifyPasswordHash(password, admin.passwordHash);
 
   if (!validEmail || !validPassword) {
     recordFailure(throttleKey);
     return null;
   }
 
-  return { id: ADMIN_ID, name: env.ADMIN_NAME, email: env.ADMIN_EMAIL };
+  return { id: admin.id, name: admin.name, email: admin.email };
 }
 
 export { ADMIN_ID };

@@ -8,10 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "hash-password": "node scripts/hash-password.mjs"
+    "create-admin": "node scripts/create-admin.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@radix-ui/react-dialog": "^1.1.23",
+    "@vercel/blob": "^2.8.0",
     "clsx": "^2.1.1",
     "iron-session": "^9.0.1",
     "lenis": "^1.3.26",

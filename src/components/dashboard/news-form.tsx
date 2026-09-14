@@ -13,6 +13,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { UploadImageButton } from "@/components/dashboard/upload-image-button";
+
+function altFromFilename(filename: string): string {
+  return filename.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
+}
 
 export function NewsForm({
   mode,
@@ -28,6 +33,7 @@ export function NewsForm({
 
   const [coverImageUrl, setCoverImageUrl] = useState(article?.coverImage?.url ?? "");
   const [coverImageAlt, setCoverImageAlt] = useState(article?.coverImage?.alt ?? "");
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   useEffect(() => {
     if (state.status === "success") {
@@ -125,6 +131,19 @@ export function NewsForm({
                 aria-describedby={errors?.coverImageAlt ? fieldErrorId("coverImageAlt") : undefined}
               />
             </Field>
+            <UploadImageButton
+              onUploaded={(uploadedUrl, filename) => {
+                setCoverImageUrl(uploadedUrl);
+                setCoverImageAlt((prev) => prev || altFromFilename(filename));
+                setUploadError(null);
+              }}
+              onError={setUploadError}
+            />
+            {uploadError && (
+              <p className="text-xs text-danger-500" role="alert">
+                {uploadError}
+              </p>
+            )}
           </div>
 
           <div className="scrim-scope relative aspect-video overflow-hidden rounded-lg border border-cream-50/10 bg-ink-800">

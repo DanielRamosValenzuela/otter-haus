@@ -22,6 +22,16 @@ export function PropertyMap({ location }: { location: PropertyLocation }) {
           title={`Ubicación de ${location.commune}, ${location.zone}`}
         />
       </div>
+      {location.mapsUrl && (
+        <a
+          href={location.mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 inline-block text-sm font-medium text-gold-400 hover:text-gold-500"
+        >
+          Ver ubicación exacta en Google Maps ↗
+        </a>
+      )}
     </div>
   );
 }

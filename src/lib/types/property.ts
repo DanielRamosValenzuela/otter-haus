@@ -27,6 +27,7 @@ export interface PropertyLocation {
   commune: string;
   city?: string;
   addressHint?: string;
+  mapsUrl?: string;
 }
 
 export interface PropertyFeatures {

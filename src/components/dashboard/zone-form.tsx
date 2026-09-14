@@ -12,6 +12,7 @@ import { Field, fieldErrorId } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { UploadImageButton } from "@/components/dashboard/upload-image-button";
 
 export function ZoneForm({
   mode,
@@ -26,6 +27,7 @@ export function ZoneForm({
   const errors = state.status === "error" ? state.fieldErrors : undefined;
 
   const [imageUrl, setImageUrl] = useState(zone?.imageUrl ?? "");
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   useEffect(() => {
     if (state.status === "success") {
@@ -104,6 +106,18 @@ export function ZoneForm({
                 aria-describedby={errors?.imageUrl ? fieldErrorId("imageUrl") : undefined}
               />
             </Field>
+            <UploadImageButton
+              onUploaded={(uploadedUrl) => {
+                setImageUrl(uploadedUrl);
+                setUploadError(null);
+              }}
+              onError={setUploadError}
+            />
+            {uploadError && (
+              <p className="text-xs text-danger-500" role="alert">
+                {uploadError}
+              </p>
+            )}
           </div>
 
           <div className="scrim-scope relative aspect-video overflow-hidden rounded-lg border border-cream-50/10 bg-ink-800">

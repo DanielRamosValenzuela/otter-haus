@@ -37,9 +37,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-# mock data store (dev/demo persistence — see docs/04-tecnico.md)
-/.data
-
 # typescript
 *.tsbuildinfo
 next-env.d.ts

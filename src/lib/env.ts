@@ -6,13 +6,14 @@ const envSchema = z.object({
     .string()
     .trim()
     .min(32, "SESSION_PASSWORD debe tener al menos 32 caracteres (iron-session lo exige)."),
-  ADMIN_EMAIL: z.string().trim().email(),
-  ADMIN_NAME: z.string().trim().min(1),
-  ADMIN_PASSWORD_HASH: z
+  DATABASE_URL: z
     .string()
     .trim()
-    .regex(/^[a-f0-9]+:[a-f0-9]+$/i, "Formato esperado: salt:hash (ver scripts/hash-password.mjs)."),
-  TRANHAUS_DATA_DIR: z.string().optional(),
+    .regex(/^postgres(ql)?:\/\//, "Debe ser una connection string de Postgres (postgresql://...)."),
+  BLOB_READ_WRITE_TOKEN: z
+    .string()
+    .trim()
+    .regex(/^vercel_blob_rw_/, "Debe ser un token de Vercel Blob (vercel_blob_rw_...)."),
   NEXT_PUBLIC_SITE_URL: z.preprocess((value) => {
     if (typeof value !== "string" || value.trim() === "") return undefined;
     try {
@@ -36,7 +37,7 @@ function loadEnv() {
       .map((issue) => `  - ${issue.path.join(".")}: ${issue.message}`)
       .join("\n");
     throw new Error(
-      `Variables de entorno inválidas o faltantes:\n${issues}\n\nRevisa .env.example y copia los valores a .env.local (usa "npm run hash-password -- <password>" para ADMIN_PASSWORD_HASH).`,
+      `Variables de entorno inválidas o faltantes:\n${issues}\n\nRevisa .env.example y copia los valores a .env.local.`,
     );
   }
   return parsed.data;

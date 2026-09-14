@@ -12,6 +12,7 @@ const SECTIONS = [
   { href: "/dashboard/noticias", label: "Noticias", newHref: "/dashboard/noticias/nueva", cta: "Nueva noticia" },
   { href: "/dashboard/zonas", label: "Zonas", newHref: "/dashboard/zonas/nueva", cta: "Nueva zona" },
   { href: "/dashboard/contenido", label: "Contenido", newHref: null, cta: null },
+  { href: "/dashboard/cuenta", label: "Cuenta", newHref: null, cta: null },
 ] as const;
 
 export function DashboardNav() {

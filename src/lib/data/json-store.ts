@@ -1,7 +1,5 @@
 import "server-only";
-import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
-import os from "node:os";
-import path from "node:path";
+import { neon } from "@neondatabase/serverless";
 
 import propertiesSeed from "@/data/properties.seed.json";
 import agentSeed from "@/data/agent.seed.json";
@@ -9,12 +7,14 @@ import zonesSeed from "@/data/zones.seed.json";
 import leadsSeed from "@/data/leads.seed.json";
 import newsSeed from "@/data/news.seed.json";
 import homeContentSeed from "@/data/home-content.seed.json";
+import { env } from "@/lib/env";
 import type { Property } from "@/lib/types/property";
 import type { Agent } from "@/lib/types/agent";
 import type { ZoneInput } from "@/lib/types/zone";
 import type { Lead } from "@/lib/types/lead";
 import type { NewsArticle } from "@/lib/types/news";
 import type { HomeContent } from "@/lib/types/home-content";
+import type { AdminAccount } from "@/lib/types/admin";
 
 export interface Db {
   properties: Property[];
@@ -23,18 +23,12 @@ export interface Db {
   leads: Lead[];
   news: NewsArticle[];
   homeContent: HomeContent;
+  // null solo puede ocurrir en una base de datos recién creada, antes de
+  // correr `npm run create-admin` — ver src/lib/data/admin.ts.
+  admin: AdminAccount | null;
 }
 
-function resolveDataDir(): string {
-  if (process.env.TRANHAUS_DATA_DIR) return process.env.TRANHAUS_DATA_DIR;
-  if (process.env.NODE_ENV === "production") {
-    return path.join(os.tmpdir(), "tranhaus-data");
-  }
-  return path.join(process.cwd(), ".data");
-}
-
-const DATA_DIR = resolveDataDir();
-const DB_PATH = path.join(DATA_DIR, "db.json");
+const sql = neon(env.DATABASE_URL);
 
 function seedDb(): Db {
   return {
@@ -44,37 +38,46 @@ function seedDb(): Db {
     leads: leadsSeed as Lead[],
     news: newsSeed as NewsArticle[],
     homeContent: homeContentSeed as HomeContent,
+    admin: null,
   };
 }
 
-async function readDbFile(): Promise<Db | null> {
-  try {
-    const raw = await readFile(DB_PATH, "utf-8");
-    return JSON.parse(raw) as Db;
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-    return null;
+function withDefaults(db: Db): Db {
+  let next = db;
+  if (!next.news) next = { ...next, news: seedDb().news };
+  if (!next.homeContent) next = { ...next, homeContent: seedDb().homeContent };
+  return next;
+}
+
+let ensureTablePromise: Promise<void> | null = null;
+
+function ensureTable(): Promise<void> {
+  if (!ensureTablePromise) {
+    ensureTablePromise = sql`
+      CREATE TABLE IF NOT EXISTS app_state (
+        id INT PRIMARY KEY,
+        data JSONB NOT NULL,
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+      )
+    `.then(() => undefined);
   }
+  return ensureTablePromise;
 }
 
-async function writeDbFile(db: Db): Promise<void> {
-  await mkdir(DATA_DIR, { recursive: true });
-  const tmpPath = `${DB_PATH}.${process.pid}.${crypto.randomUUID()}.tmp`;
-  await writeFile(tmpPath, JSON.stringify(db, null, 2), "utf-8");
-  await rename(tmpPath, DB_PATH);
+async function readRow(): Promise<Db | null> {
+  await ensureTable();
+  const rows = await sql`SELECT data FROM app_state WHERE id = 1`;
+  if (rows.length === 0) return null;
+  return rows[0].data as Db;
 }
 
-function isConcurrentWriteRace(error: unknown): boolean {
-  const code = (error as NodeJS.ErrnoException).code;
-  return code === "EPERM" || code === "EBUSY" || code === "EACCES";
-}
-
-async function persistBestEffort(db: Db): Promise<void> {
-  try {
-    await writeDbFile(db);
-  } catch (error) {
-    if (!isConcurrentWriteRace(error)) throw error;
-  }
+async function writeRow(db: Db): Promise<void> {
+  await ensureTable();
+  await sql`
+    INSERT INTO app_state (id, data, updated_at)
+    VALUES (1, ${JSON.stringify(db)}::jsonb, now())
+    ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()
+  `;
 }
 
 let queue: Promise<unknown> = Promise.resolve();
@@ -88,32 +91,25 @@ function enqueue<T>(fn: () => Promise<T>): Promise<T> {
   return run;
 }
 
-function withDefaults(db: Db): Db {
-  let next = db;
-  if (!next.news) next = { ...next, news: seedDb().news };
-  if (!next.homeContent) next = { ...next, homeContent: seedDb().homeContent };
-  return next;
-}
-
 export async function readDb(): Promise<Db> {
   return enqueue(async () => {
-    const existing = await readDbFile();
+    const existing = await readRow();
     if (existing) {
       const migrated = withDefaults(existing);
-      if (migrated !== existing) await persistBestEffort(migrated);
+      if (migrated !== existing) await writeRow(migrated);
       return migrated;
     }
     const seeded = seedDb();
-    await persistBestEffort(seeded);
+    await writeRow(seeded);
     return seeded;
   });
 }
 
 export async function writeDb(mutate: (db: Db) => Db | Promise<Db>): Promise<Db> {
   return enqueue(async () => {
-    const current = withDefaults((await readDbFile()) ?? seedDb());
+    const current = withDefaults((await readRow()) ?? seedDb());
     const next = await mutate(current);
-    await writeDbFile(next);
+    await writeRow(next);
     return next;
   });
 }

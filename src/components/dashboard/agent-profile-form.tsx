@@ -12,6 +12,7 @@ import { Field, fieldErrorId } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { UploadImageButton } from "@/components/dashboard/upload-image-button";
 import {
   InstagramIcon,
   FacebookIcon,
@@ -35,6 +36,7 @@ export function AgentProfileForm({
   const errors = state.status === "error" ? state.fieldErrors : undefined;
 
   const [photoUrl, setPhotoUrl] = useState(agent.photoUrl);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   useEffect(() => {
     if (state.status === "success") {
@@ -82,6 +84,18 @@ export function AgentProfileForm({
                 aria-describedby={errors?.photoUrl ? fieldErrorId("photoUrl") : undefined}
               />
             </Field>
+            <UploadImageButton
+              onUploaded={(uploadedUrl) => {
+                setPhotoUrl(uploadedUrl);
+                setUploadError(null);
+              }}
+              onError={setUploadError}
+            />
+            {uploadError && (
+              <p className="text-xs text-danger-500" role="alert">
+                {uploadError}
+              </p>
+            )}
           </div>
 
           <div className="scrim-scope relative mx-auto aspect-square w-full max-w-40 overflow-hidden rounded-full border border-cream-50/10 bg-ink-800">

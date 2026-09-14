@@ -46,6 +46,7 @@ async function toPropertyInput(values: PropertyFormValues): Promise<PropertyInpu
       commune: values.commune,
       city: values.city,
       addressHint: values.addressHint,
+      mapsUrl: values.mapsUrl,
     },
     price: { amount: values.priceAmount, currency },
     features: {

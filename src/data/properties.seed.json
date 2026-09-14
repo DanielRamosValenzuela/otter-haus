@@ -205,7 +205,7 @@
     "location": { "zone": "Zona Sur", "zoneSlug": "zona-sur", "commune": "Puente Alto", "city": "Santiago" },
     "price": { "amount": 11000, "currency": "UF" },
     "features": { "bedrooms": 0, "bathrooms": 0, "parkingSpaces": 0, "builtAreaM2": 0, "landAreaM2": 3200, "amenities": ["Factibilidad de servicios", "Uso de suelo mixto"] },
-    "description": "Terreno de 3.200m² con factibilidad de servicios y uso de suelo mixto, apto para desarrollo inmobiliario. Operación cerrada — se mantiene como referencia de proyectos gestionados por TranHaus.",
+    "description": "Terreno de 3.200m² con factibilidad de servicios y uso de suelo mixto, apto para desarrollo inmobiliario. Operación cerrada — se mantiene como referencia de proyectos gestionados por OtterHaus.",
     "images": [
       { "url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1600&auto=format&fit=crop", "alt": "Terreno amplio despejado" },
       { "url": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?q=80&w=1600&auto=format&fit=crop", "alt": "Vista del terreno al atardecer" },

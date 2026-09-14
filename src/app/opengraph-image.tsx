@@ -28,7 +28,7 @@ export default function OpengraphImage() {
             display: "flex",
           }}
         >
-          TRAN
+          OTTER
           <span style={{ color: "#D4AF37" }}>HAUS</span>
         </div>
         <div style={{ fontSize: 32, color: "#9CA3AF", marginTop: 16, display: "flex" }}>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { NAV_LINKS, CONTACT, SITE } from "@/lib/content/site";
+import { Logo } from "@/components/layout/logo";
 
 async function CopyrightYear() {
   "use cache";
@@ -14,9 +15,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-3">
           <div className="space-y-3">
-            <span className="font-display text-xl font-semibold">
-              TRAN<span className="text-gold-500">HAUS</span>
-            </span>
+            <Logo size="sm" />
             <p className="max-w-xs text-sm text-muted-400">{SITE.description}</p>
           </div>
 

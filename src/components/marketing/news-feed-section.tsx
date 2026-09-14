@@ -11,7 +11,7 @@ export async function NewsFeedSection() {
     return (
       <EmptyState
         title="Aún no hay noticias publicadas"
-        description="Vuelve pronto para conocer las últimas novedades de TranHaus."
+        description="Vuelve pronto para conocer las últimas novedades de OtterHaus."
       />
     );
   }

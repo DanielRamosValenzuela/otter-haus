@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const metadata: Metadata = {
   title: "Noticias",
-  description: "Novedades del mercado inmobiliario y actualidad de TranHaus.",
+  description: "Novedades del mercado inmobiliario y actualidad de OtterHaus.",
 };
 
 export default function NoticiasPage() {
@@ -19,9 +19,9 @@ export default function NoticiasPage() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="TranHaus"
+            eyebrow="OtterHaus"
             title="Noticias"
-            description="Tendencias del mercado inmobiliario, consejos y novedades de TranHaus."
+            description="Tendencias del mercado inmobiliario, consejos y novedades de OtterHaus."
           />
         </Reveal>
 

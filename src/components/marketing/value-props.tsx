@@ -27,7 +27,7 @@ export function ValueProps() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <SectionHeading
-        eyebrow="Por qué TranHaus"
+        eyebrow="Por qué OtterHaus"
         title="Una experiencia inmobiliaria distinta"
         align="center"
         className="mx-auto"

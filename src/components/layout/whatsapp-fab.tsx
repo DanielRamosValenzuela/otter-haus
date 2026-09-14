@@ -5,7 +5,7 @@ import { WhatsAppIcon } from "@/components/icons/social-icons";
 export function WhatsAppFab() {
   const href = whatsappUrl({
     phone: CONTACT.whatsapp,
-    message: "Hola, me gustaría más información sobre las propiedades de TranHaus.",
+    message: "Hola, me gustaría más información sobre las propiedades de OtterHaus.",
   });
 
   return (

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 
 const SECTIONS = [
@@ -22,8 +23,8 @@ export function DashboardNav() {
 
   return (
     <div className="flex items-center gap-6">
-      <Link href="/dashboard/propiedades" className="font-display text-xl font-semibold">
-        TRAN<span className="text-gold-500">HAUS</span>
+      <Link href="/dashboard/propiedades">
+        <Logo size="sm" />
       </Link>
       <nav className="hidden items-center gap-6 sm:flex">
         {SECTIONS.map((section) => {

@@ -15,7 +15,7 @@ function resolveSiteUrl(): string {
 }
 
 export const SITE = {
-  name: "TranHaus",
+  name: "OtterHaus",
   tagline: "Tu próximo capítulo comienza aquí.",
   description:
     "Corretaje de propiedades de lujo en Chile — venta y arriendo con asesoría de alto nivel.",
@@ -34,7 +34,7 @@ export const NAV_LINKS = [
 export const CTA_LINK = { href: "/contacto", label: "Contacto" } as const;
 
 export const CONTACT = {
-  whatsapp: "56912345678",
-  phoneDisplay: "+56 9 1234 5678",
-  email: "contacto@tranhaus.cl",
+  whatsapp: "56954237542",
+  phoneDisplay: "+56 9 5423 7542",
+  email: "Otterhaus.cl@gmail.com",
 } as const;

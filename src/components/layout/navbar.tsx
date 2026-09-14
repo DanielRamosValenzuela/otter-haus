@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { NAV_LINKS, CTA_LINK, SITE } from "@/lib/content/site";
+import { NAV_LINKS, CTA_LINK } from "@/lib/content/site";
 import { NavLinks } from "@/components/layout/nav-links";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 
 export function Navbar() {
@@ -12,9 +13,8 @@ export function Navbar() {
       style={{ viewTransitionName: "site-header" }}
     >
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="font-display text-2xl font-semibold tracking-tight">
-          TRAN<span className="text-gold-500">HAUS</span>
-          <span className="sr-only"> — {SITE.name}</span>
+        <Link href="/">
+          <Logo size="md" priority />
         </Link>
 
         <NavLinks links={NAV_LINKS} />

@@ -1,12 +1,10 @@
-import { CONTACT } from "@/lib/content/site";
+import { getAgent } from "@/lib/data/agent";
 import { whatsappUrl } from "@/lib/utils/whatsapp";
 import { WhatsAppIcon } from "@/components/icons/social-icons";
 
-export function WhatsAppFab() {
-  const href = whatsappUrl({
-    phone: CONTACT.whatsapp,
-    message: "Hola, me gustaría más información sobre las propiedades de OtterHaus.",
-  });
+export async function WhatsAppFab() {
+  const agent = await getAgent();
+  const href = whatsappUrl({ phone: agent.whatsapp, message: agent.whatsappMessage });
 
   return (
     <a

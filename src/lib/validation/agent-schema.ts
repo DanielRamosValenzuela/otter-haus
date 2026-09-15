@@ -17,6 +17,8 @@ export const agentFormSchema = z.object({
   email: z.string().trim().email("Correo inválido"),
   phone: z.string().trim().min(6, "Teléfono muy corto"),
   whatsapp: z.string().trim().min(6, "WhatsApp muy corto"),
+  whatsappMessage: z.string().trim().min(5, "Mensaje muy corto"),
+  notificationEmail: z.string().trim().email("Correo inválido"),
   coverageZones: z
     .string()
     .optional()
@@ -60,6 +62,8 @@ export function parseAgentFormData(formData: FormData) {
     email: formData.get("email"),
     phone: formData.get("phone"),
     whatsapp: formData.get("whatsapp"),
+    whatsappMessage: formData.get("whatsappMessage"),
+    notificationEmail: formData.get("notificationEmail"),
     coverageZones: formData.get("coverageZones") || "",
     credentials: formData.get("credentials") || "",
     stat1Label: formData.get("stat1Label"),

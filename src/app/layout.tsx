@@ -40,7 +40,7 @@ const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');d
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="es"
+      lang="es-CL"
       suppressHydrationWarning
       className={`${fontDisplay.variable} ${fontSans.variable} h-full antialiased`}
     >

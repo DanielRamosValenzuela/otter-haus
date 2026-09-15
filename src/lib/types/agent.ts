@@ -27,6 +27,8 @@ export interface Agent {
   email: string;
   phone: string;
   whatsapp: string;
+  whatsappMessage: string;
+  notificationEmail: string;
   coverageZones: string[];
   credentials: string[];
   stats: AgentStat[];

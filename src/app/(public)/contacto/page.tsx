@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Mail, Phone } from "lucide-react";
-import { CONTACT } from "@/lib/content/site";
+import { getAgent } from "@/lib/data/agent";
 import { whatsappUrl } from "@/lib/utils/whatsapp";
 import { ContactForm } from "@/components/forms/contact-form";
 import { PageTransition } from "@/components/motion/page-transition";
@@ -13,11 +13,9 @@ export const metadata: Metadata = {
   description: "Contáctanos para agendar una visita o resolver tus dudas.",
 };
 
-export default function ContactoPage() {
-  const waHref = whatsappUrl({
-    phone: CONTACT.whatsapp,
-    message: "Hola, me gustaría conversar sobre una propiedad.",
-  });
+export default async function ContactoPage() {
+  const agent = await getAgent();
+  const waHref = whatsappUrl({ phone: agent.whatsapp, message: agent.whatsappMessage });
 
   return (
     <PageTransition>
@@ -48,21 +46,21 @@ export default function ContactoPage() {
                   className="flex items-center gap-3 text-cream-50 transition-colors hover:text-gold-400"
                 >
                   <WhatsAppIcon className="size-5 text-[#25D366]" />
-                  WhatsApp: {CONTACT.phoneDisplay}
+                  WhatsApp: {agent.phone}
                 </a>
                 <a
-                  href={`tel:${CONTACT.phoneDisplay.replace(/\s/g, "")}`}
+                  href={`tel:${agent.phone.replace(/\s/g, "")}`}
                   className="flex items-center gap-3 text-cream-50 transition-colors hover:text-gold-400"
                 >
                   <Phone className="size-5 text-gold-500" aria-hidden />
-                  {CONTACT.phoneDisplay}
+                  {agent.phone}
                 </a>
                 <a
-                  href={`mailto:${CONTACT.email}`}
+                  href={`mailto:${agent.email}`}
                   className="flex items-center gap-3 text-cream-50 transition-colors hover:text-gold-400"
                 >
                   <Mail className="size-5 text-gold-500" aria-hidden />
-                  {CONTACT.email}
+                  {agent.email}
                 </a>
               </div>
             </Card>

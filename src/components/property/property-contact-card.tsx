@@ -1,12 +1,13 @@
 import type { Property } from "@/lib/types/property";
-import { CONTACT } from "@/lib/content/site";
+import { getAgent } from "@/lib/data/agent";
 import { whatsappUrl, propertyInquiryMessage } from "@/lib/utils/whatsapp";
 import { Card } from "@/components/ui/card";
 import { ContactForm } from "@/components/forms/contact-form";
 import { WhatsAppIcon } from "@/components/icons/social-icons";
 
-export function PropertyContactCard({ property }: { property: Property }) {
-  const href = whatsappUrl({ phone: CONTACT.whatsapp, message: propertyInquiryMessage(property) });
+export async function PropertyContactCard({ property }: { property: Property }) {
+  const agent = await getAgent();
+  const href = whatsappUrl({ phone: agent.whatsapp, message: propertyInquiryMessage(property) });
 
   return (
     <Card className="sticky top-24 space-y-5 p-6">

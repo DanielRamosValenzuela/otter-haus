@@ -184,6 +184,43 @@ export function AgentProfileForm({
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Field
+            name="notificationEmail"
+            label="Correo para notificaciones"
+            error={errors?.notificationEmail}
+            hint="Ahí llegan los mensajes del formulario de contacto"
+            required
+          >
+            <Input
+              id="notificationEmail"
+              name="notificationEmail"
+              type="email"
+              defaultValue={agent.notificationEmail}
+              aria-invalid={!!errors?.notificationEmail}
+              aria-describedby={
+                errors?.notificationEmail ? fieldErrorId("notificationEmail") : undefined
+              }
+            />
+          </Field>
+          <Field
+            name="whatsappMessage"
+            label="Mensaje inicial de WhatsApp"
+            error={errors?.whatsappMessage}
+            hint="El que se pre-llena al escribir por el botón flotante"
+            required
+          >
+            <Input
+              id="whatsappMessage"
+              name="whatsappMessage"
+              defaultValue={agent.whatsappMessage}
+              aria-invalid={!!errors?.whatsappMessage}
+              aria-describedby={
+                errors?.whatsappMessage ? fieldErrorId("whatsappMessage") : undefined
+              }
+            />
+          </Field>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field
             name="coverageZones"
             label="Zonas de cobertura"
             error={errors?.coverageZones}

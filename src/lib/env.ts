@@ -14,6 +14,11 @@ const envSchema = z.object({
     .string()
     .trim()
     .regex(/^vercel_blob_rw_/, "Debe ser un token de Vercel Blob (vercel_blob_rw_...)."),
+  RESEND_API_KEY: z
+    .string()
+    .trim()
+    .regex(/^re_/, "Debe ser un API key de Resend (re_...)."),
+  RESEND_FROM_EMAIL: z.string().trim().optional(),
   NEXT_PUBLIC_SITE_URL: z.preprocess((value) => {
     if (typeof value !== "string" || value.trim() === "") return undefined;
     try {

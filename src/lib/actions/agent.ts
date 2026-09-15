@@ -28,6 +28,8 @@ function toAgentInput(values: AgentFormValues): AgentInput {
     email: values.email,
     phone: values.phone,
     whatsapp: values.whatsapp,
+    whatsappMessage: values.whatsappMessage,
+    notificationEmail: values.notificationEmail,
     coverageZones: values.coverageZones,
     credentials: values.credentials,
     stats: [

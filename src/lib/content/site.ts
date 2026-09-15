@@ -18,7 +18,7 @@ export const SITE = {
   name: "OtterHaus",
   tagline: "Tu próximo capítulo comienza aquí.",
   description:
-    "Corretaje de propiedades de lujo en Chile — venta y arriendo con asesoría de alto nivel.",
+    "Corretaje de propiedades de lujo en Santiago y todo Chile — venta y arriendo con asesoría de alto nivel.",
   url: resolveSiteUrl(),
   locale: "es-CL",
 } as const;
@@ -32,9 +32,3 @@ export const NAV_LINKS = [
 ] as const;
 
 export const CTA_LINK = { href: "/contacto", label: "Contacto" } as const;
-
-export const CONTACT = {
-  whatsapp: "56954237542",
-  phoneDisplay: "+56 9 5423 7542",
-  email: "Otterhaus.cl@gmail.com",
-} as const;

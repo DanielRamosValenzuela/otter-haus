@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cacheLife } from "next/cache";
-import { NAV_LINKS, CONTACT, SITE } from "@/lib/content/site";
+import { NAV_LINKS, SITE } from "@/lib/content/site";
+import { getAgent } from "@/lib/data/agent";
 import { Logo } from "@/components/layout/logo";
 
 async function CopyrightYear() {
@@ -9,7 +10,9 @@ async function CopyrightYear() {
   return new Date().getFullYear();
 }
 
-export function Footer() {
+export async function Footer() {
+  const agent = await getAgent();
+
   return (
     <footer className="relative border-t border-cream-50/10 bg-ink-900/60">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -42,8 +45,8 @@ export function Footer() {
               Contacto
             </h3>
             <ul className="space-y-2 text-sm text-cream-50/90">
-              <li>{CONTACT.phoneDisplay}</li>
-              <li>{CONTACT.email}</li>
+              <li>{agent.phone}</li>
+              <li>{agent.email}</li>
             </ul>
           </div>
         </div>

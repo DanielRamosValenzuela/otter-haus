@@ -2,7 +2,6 @@ import { Heading, Link, Section, Text } from "@react-email/components";
 import { EmailShell, emailColors } from "@/emails/components/email-shell";
 
 export function ContactNotificationEmail({
-  siteUrl,
   name,
   email,
   phone,
@@ -10,7 +9,6 @@ export function ContactNotificationEmail({
   propertyTitle,
   propertyUrl,
 }: {
-  siteUrl: string;
   name: string;
   email: string;
   phone?: string;
@@ -19,7 +17,7 @@ export function ContactNotificationEmail({
   propertyUrl?: string;
 }) {
   return (
-    <EmailShell siteUrl={siteUrl} preview={`Nuevo mensaje de contacto de ${name}`}>
+    <EmailShell preview={`Nuevo mensaje de contacto de ${name}`}>
       <Heading as="h1" style={{ fontSize: 22, margin: "0 0 16px", color: emailColors.ink }}>
         Nuevo mensaje de contacto
       </Heading>

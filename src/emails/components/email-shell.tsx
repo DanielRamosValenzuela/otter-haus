@@ -9,13 +9,13 @@ const COLORS = {
   border: "#e8e4d9",
 };
 
+export const LOGO_CID = "otterhaus-logo";
+
 export function EmailShell({
   preview,
-  siteUrl,
   children,
 }: {
   preview: string;
-  siteUrl: string;
   children: ReactNode;
 }) {
   return (
@@ -43,7 +43,7 @@ export function EmailShell({
         >
           <Section style={{ padding: "32px 32px 16px", textAlign: "center" }}>
             <Img
-              src={`${siteUrl}/image/logo-full.png`}
+              src={`cid:${LOGO_CID}`}
               width="120"
               alt="OtterHaus"
               style={{ margin: "0 auto" }}

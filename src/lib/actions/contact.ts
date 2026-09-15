@@ -1,5 +1,7 @@
 "use server";
 
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { render } from "@react-email/render";
 import { createLead } from "@/lib/data/leads";
 import { getAgent } from "@/lib/data/agent";
@@ -8,8 +10,14 @@ import { parseContactFormData } from "@/lib/validation/contact-schema";
 import type { ActionState } from "@/lib/types/action-state";
 import { resend, EMAIL_FROM } from "@/lib/email/resend";
 import { SITE } from "@/lib/content/site";
+import { LOGO_CID } from "@/emails/components/email-shell";
 import { ContactNotificationEmail } from "@/emails/contact-notification";
 import { ContactConfirmationEmail } from "@/emails/contact-confirmation";
+
+async function logoAttachment() {
+  const content = await readFile(path.join(process.cwd(), "public/image/logo-full.png"));
+  return { filename: "otterhaus-logo.png", content, contentId: LOGO_CID };
+}
 
 async function sendContactEmails(lead: {
   name: string;
@@ -18,14 +26,14 @@ async function sendContactEmails(lead: {
   message: string;
   propertyId?: string;
 }): Promise<void> {
-  const [agent, property] = await Promise.all([
+  const [agent, property, attachment] = await Promise.all([
     getAgent(),
     lead.propertyId ? getPropertyByIdForAdmin(lead.propertyId) : null,
+    logoAttachment(),
   ]);
 
   const notificationHtml = await render(
     ContactNotificationEmail({
-      siteUrl: SITE.url,
       name: lead.name,
       email: lead.email,
       phone: lead.phone,
@@ -52,12 +60,14 @@ async function sendContactEmails(lead: {
       replyTo: lead.email,
       subject: `Nuevo contacto: ${lead.name}`,
       html: notificationHtml,
+      attachments: [attachment],
     }),
     resend.emails.send({
       from: EMAIL_FROM,
       to: lead.email,
       subject: "Gracias por contactar a OtterHaus",
       html: confirmationHtml,
+      attachments: [attachment],
     }),
   ]);
 }

@@ -17,7 +17,7 @@ export function ContactConfirmationEmail({
   const firstName = name.trim().split(" ")[0];
 
   return (
-    <EmailShell siteUrl={siteUrl} preview="Recibimos tu mensaje — te contactaremos pronto">
+    <EmailShell preview="Recibimos tu mensaje — te contactaremos pronto">
       <Heading as="h1" style={{ fontSize: 22, margin: "0 0 16px", color: emailColors.ink }}>
         ¡Gracias, {firstName}!
       </Heading>

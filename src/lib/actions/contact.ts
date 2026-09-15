@@ -5,7 +5,7 @@ import { createLead } from "@/lib/data/leads";
 import { getAgent } from "@/lib/data/agent";
 import { getPropertyByIdForAdmin } from "@/lib/data/properties";
 import { parseContactFormData } from "@/lib/validation/contact-schema";
-import { IDLE_ACTION_STATE, type ActionState } from "@/lib/types/action-state";
+import type { ActionState } from "@/lib/types/action-state";
 import { resend, EMAIL_FROM } from "@/lib/email/resend";
 import { SITE } from "@/lib/content/site";
 import { ContactNotificationEmail } from "@/emails/contact-notification";

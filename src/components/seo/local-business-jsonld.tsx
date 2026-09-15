@@ -10,7 +10,7 @@ export async function LocalBusinessJsonLd() {
     name: SITE.name,
     description: SITE.description,
     url: SITE.url,
-    image: `${SITE.url}/image/logo-full.png`,
+    image: `${SITE.url}/image/logo-icon.png`,
     telephone: agent.phone,
     email: agent.email,
     areaServed: [

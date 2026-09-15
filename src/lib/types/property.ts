@@ -28,6 +28,8 @@ export interface PropertyLocation {
   city?: string;
   addressHint?: string;
   mapsUrl?: string;
+  mapsLat?: number;
+  mapsLng?: number;
 }
 
 export interface PropertyFeatures {

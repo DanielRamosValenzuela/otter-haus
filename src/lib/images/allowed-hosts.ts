@@ -4,8 +4,6 @@ export const ALLOWED_IMAGE_HOSTS = [
   "images.pexels.com",
 ] as const;
 
-// Cada Blob store de Vercel tiene un subdominio propio y aleatorio, así que
-// se valida por sufijo en vez de una lista de hosts exactos.
 export const ALLOWED_IMAGE_HOST_SUFFIX = ".public.blob.vercel-storage.com";
 
 export type AllowedImageHost = (typeof ALLOWED_IMAGE_HOSTS)[number];

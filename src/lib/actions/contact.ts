@@ -15,7 +15,7 @@ import { ContactNotificationEmail } from "@/emails/contact-notification";
 import { ContactConfirmationEmail } from "@/emails/contact-confirmation";
 
 async function logoAttachment() {
-  const content = await readFile(path.join(process.cwd(), "public/image/logo-full.png"));
+  const content = await readFile(path.join(process.cwd(), "public/image/logo-icon.png"));
   return { filename: "otterhaus-logo.png", content, contentId: LOGO_CID };
 }
 

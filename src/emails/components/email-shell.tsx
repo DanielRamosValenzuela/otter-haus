@@ -44,10 +44,20 @@ export function EmailShell({
           <Section style={{ padding: "32px 32px 16px", textAlign: "center" }}>
             <Img
               src={`cid:${LOGO_CID}`}
-              width="120"
+              width="110"
               alt="OtterHaus"
               style={{ margin: "0 auto" }}
             />
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 700,
+                margin: "8px 0 0",
+                color: COLORS.ink,
+              }}
+            >
+              Otter<span style={{ color: "#c9a227" }}>Haus</span>
+            </Text>
           </Section>
           <Hr style={{ borderColor: COLORS.border, margin: 0 }} />
           <Section style={{ padding: "32px" }}>{children}</Section>

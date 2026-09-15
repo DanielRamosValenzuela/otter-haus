@@ -17,6 +17,7 @@ import {
   type PropertyFormValues,
 } from "@/lib/validation/property-schema";
 import { slugify } from "@/lib/utils/format";
+import { extractMapsCoordinates } from "@/lib/utils/google-maps";
 import type { ActionState } from "@/lib/types/action-state";
 import type { Property, PropertyInput } from "@/lib/types/property";
 
@@ -33,6 +34,7 @@ async function resolveZone(zoneSlug: string, customZoneName?: string) {
 async function toPropertyInput(values: PropertyFormValues): Promise<PropertyInput> {
   const { zone, zoneSlug } = await resolveZone(values.zoneSlug, values.customZoneName);
   const currency = values.operation === "venta" ? "UF" : "CLP";
+  const coordinates = values.mapsUrl ? await extractMapsCoordinates(values.mapsUrl) : null;
 
   return {
     title: values.title,
@@ -47,6 +49,8 @@ async function toPropertyInput(values: PropertyFormValues): Promise<PropertyInpu
       city: values.city,
       addressHint: values.addressHint,
       mapsUrl: values.mapsUrl,
+      mapsLat: coordinates?.lat,
+      mapsLng: coordinates?.lng,
     },
     price: { amount: values.priceAmount, currency },
     features: {

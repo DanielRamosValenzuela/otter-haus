@@ -27,8 +27,8 @@ export function Logo({
       <Image
         src="/image/logo-icon.png"
         alt=""
-        width={512}
-        height={512}
+        width={1473}
+        height={951}
         priority={priority}
         className={cn(ICON_SIZES[size], "w-auto shrink-0 object-contain")}
       />

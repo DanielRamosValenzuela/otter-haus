@@ -1,15 +1,17 @@
-import { Button, Heading, Text } from "@react-email/components";
+import { Button, Heading, Hr, Text } from "@react-email/components";
 import { EmailShell, emailColors } from "@/emails/components/email-shell";
 
 export function ContactConfirmationEmail({
   siteUrl,
   name,
   agentName,
+  agentRole,
   agentPhoneDisplay,
 }: {
   siteUrl: string;
   name: string;
   agentName: string;
+  agentRole: string;
   agentPhoneDisplay: string;
 }) {
   const firstName = name.trim().split(" ")[0];
@@ -44,6 +46,16 @@ export function ContactConfirmationEmail({
       >
         Ver propiedades disponibles
       </Button>
+
+      <Hr style={{ borderColor: emailColors.border, margin: "28px 0 16px" }} />
+
+      <Text style={{ fontSize: 13, color: emailColors.muted, lineHeight: 1.6, margin: 0 }}>
+        {agentName}
+        <br />
+        {agentRole}
+        <br />
+        {agentPhoneDisplay}
+      </Text>
     </EmailShell>
   );
 }

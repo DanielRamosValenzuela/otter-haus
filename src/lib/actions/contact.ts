@@ -40,6 +40,7 @@ async function sendContactEmails(lead: {
       siteUrl: SITE.url,
       name: lead.name,
       agentName: agent.name,
+      agentRole: agent.role,
       agentPhoneDisplay: agent.phone,
     }),
   );

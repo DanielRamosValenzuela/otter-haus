@@ -88,5 +88,3 @@ export async function submitContactAction(
     message: "¡Gracias! Te contactaremos a la brevedad.",
   };
 }
-
-export { IDLE_ACTION_STATE };

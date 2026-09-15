@@ -25,6 +25,31 @@ function socialUrl(agent: Agent, platform: string): string {
   return agent.socials.find((s) => s.platform === platform)?.url ?? "";
 }
 
+interface TextValues {
+  name: string;
+  role: string;
+  shortBio: string;
+  bio: string;
+  email: string;
+  phone: string;
+  whatsapp: string;
+  notificationEmail: string;
+  whatsappMessage: string;
+  coverageZones: string;
+  credentials: string;
+  stat1Label: string;
+  stat1Value: string;
+  stat2Label: string;
+  stat2Value: string;
+  stat3Label: string;
+  stat3Value: string;
+  instagramUrl: string;
+  facebookUrl: string;
+  linkedinUrl: string;
+  youtubeUrl: string;
+  tiktokUrl: string;
+}
+
 export function AgentProfileForm({
   agent,
   action,
@@ -37,6 +62,35 @@ export function AgentProfileForm({
 
   const [photoUrl, setPhotoUrl] = useState(agent.photoUrl);
   const [uploadError, setUploadError] = useState<string | null>(null);
+
+  const [text, setText] = useState<TextValues>({
+    name: agent.name,
+    role: agent.role,
+    shortBio: agent.shortBio,
+    bio: agent.bio,
+    email: agent.email,
+    phone: agent.phone,
+    whatsapp: agent.whatsapp,
+    notificationEmail: agent.notificationEmail,
+    whatsappMessage: agent.whatsappMessage,
+    coverageZones: agent.coverageZones.join(", "),
+    credentials: agent.credentials.join(", "),
+    stat1Label: agent.stats[0]?.label ?? "",
+    stat1Value: agent.stats[0]?.value ?? "",
+    stat2Label: agent.stats[1]?.label ?? "",
+    stat2Value: agent.stats[1]?.value ?? "",
+    stat3Label: agent.stats[2]?.label ?? "",
+    stat3Value: agent.stats[2]?.value ?? "",
+    instagramUrl: socialUrl(agent, "instagram"),
+    facebookUrl: socialUrl(agent, "facebook"),
+    linkedinUrl: socialUrl(agent, "linkedin"),
+    youtubeUrl: socialUrl(agent, "youtube"),
+    tiktokUrl: socialUrl(agent, "tiktok"),
+  });
+
+  function setField<K extends keyof TextValues>(key: K, value: TextValues[K]) {
+    setText((v) => ({ ...v, [key]: value }));
+  }
 
   useEffect(() => {
     if (state.status === "success") {
@@ -59,7 +113,8 @@ export function AgentProfileForm({
               <Input
                 id="name"
                 name="name"
-                defaultValue={agent.name}
+                value={text.name}
+                onChange={(e) => setField("name", e.target.value)}
                 aria-invalid={!!errors?.name}
                 aria-describedby={errors?.name ? fieldErrorId("name") : undefined}
               />
@@ -68,7 +123,8 @@ export function AgentProfileForm({
               <Input
                 id="role"
                 name="role"
-                defaultValue={agent.role}
+                value={text.role}
+                onChange={(e) => setField("role", e.target.value)}
                 aria-invalid={!!errors?.role}
                 aria-describedby={errors?.role ? fieldErrorId("role") : undefined}
               />
@@ -126,7 +182,8 @@ export function AgentProfileForm({
             id="shortBio"
             name="shortBio"
             rows={3}
-            defaultValue={agent.shortBio}
+            value={text.shortBio}
+            onChange={(e) => setField("shortBio", e.target.value)}
             aria-invalid={!!errors?.shortBio}
             aria-describedby={errors?.shortBio ? fieldErrorId("shortBio") : undefined}
           />
@@ -143,7 +200,8 @@ export function AgentProfileForm({
             id="bio"
             name="bio"
             rows={8}
-            defaultValue={agent.bio}
+            value={text.bio}
+            onChange={(e) => setField("bio", e.target.value)}
             aria-invalid={!!errors?.bio}
             aria-describedby={errors?.bio ? fieldErrorId("bio") : undefined}
           />
@@ -158,7 +216,8 @@ export function AgentProfileForm({
               id="email"
               name="email"
               type="email"
-              defaultValue={agent.email}
+              value={text.email}
+              onChange={(e) => setField("email", e.target.value)}
               aria-invalid={!!errors?.email}
               aria-describedby={errors?.email ? fieldErrorId("email") : undefined}
             />
@@ -167,7 +226,8 @@ export function AgentProfileForm({
             <Input
               id="phone"
               name="phone"
-              defaultValue={agent.phone}
+              value={text.phone}
+              onChange={(e) => setField("phone", e.target.value)}
               aria-invalid={!!errors?.phone}
               aria-describedby={errors?.phone ? fieldErrorId("phone") : undefined}
             />
@@ -176,7 +236,8 @@ export function AgentProfileForm({
             <Input
               id="whatsapp"
               name="whatsapp"
-              defaultValue={agent.whatsapp}
+              value={text.whatsapp}
+              onChange={(e) => setField("whatsapp", e.target.value)}
               aria-invalid={!!errors?.whatsapp}
               aria-describedby={errors?.whatsapp ? fieldErrorId("whatsapp") : undefined}
             />
@@ -194,7 +255,8 @@ export function AgentProfileForm({
               id="notificationEmail"
               name="notificationEmail"
               type="email"
-              defaultValue={agent.notificationEmail}
+              value={text.notificationEmail}
+              onChange={(e) => setField("notificationEmail", e.target.value)}
               aria-invalid={!!errors?.notificationEmail}
               aria-describedby={
                 errors?.notificationEmail ? fieldErrorId("notificationEmail") : undefined
@@ -211,7 +273,8 @@ export function AgentProfileForm({
             <Input
               id="whatsappMessage"
               name="whatsappMessage"
-              defaultValue={agent.whatsappMessage}
+              value={text.whatsappMessage}
+              onChange={(e) => setField("whatsappMessage", e.target.value)}
               aria-invalid={!!errors?.whatsappMessage}
               aria-describedby={
                 errors?.whatsappMessage ? fieldErrorId("whatsappMessage") : undefined
@@ -229,7 +292,8 @@ export function AgentProfileForm({
             <Input
               id="coverageZones"
               name="coverageZones"
-              defaultValue={agent.coverageZones.join(", ")}
+              value={text.coverageZones}
+              onChange={(e) => setField("coverageZones", e.target.value)}
             />
           </Field>
           <Field
@@ -241,7 +305,8 @@ export function AgentProfileForm({
             <Input
               id="credentials"
               name="credentials"
-              defaultValue={agent.credentials.join(", ")}
+              value={text.credentials}
+              onChange={(e) => setField("credentials", e.target.value)}
             />
           </Field>
         </div>
@@ -255,14 +320,16 @@ export function AgentProfileForm({
               <Input
                 id="stat1Label"
                 name="stat1Label"
-                defaultValue={agent.stats[0]?.label}
+                value={text.stat1Label}
+                onChange={(e) => setField("stat1Label", e.target.value)}
               />
             </Field>
             <Field name="stat1Value" label="Valor 1" error={errors?.stat1Value} required>
               <Input
                 id="stat1Value"
                 name="stat1Value"
-                defaultValue={agent.stats[0]?.value}
+                value={text.stat1Value}
+                onChange={(e) => setField("stat1Value", e.target.value)}
               />
             </Field>
           </div>
@@ -271,14 +338,16 @@ export function AgentProfileForm({
               <Input
                 id="stat2Label"
                 name="stat2Label"
-                defaultValue={agent.stats[1]?.label}
+                value={text.stat2Label}
+                onChange={(e) => setField("stat2Label", e.target.value)}
               />
             </Field>
             <Field name="stat2Value" label="Valor 2" error={errors?.stat2Value} required>
               <Input
                 id="stat2Value"
                 name="stat2Value"
-                defaultValue={agent.stats[1]?.value}
+                value={text.stat2Value}
+                onChange={(e) => setField("stat2Value", e.target.value)}
               />
             </Field>
           </div>
@@ -287,14 +356,16 @@ export function AgentProfileForm({
               <Input
                 id="stat3Label"
                 name="stat3Label"
-                defaultValue={agent.stats[2]?.label}
+                value={text.stat3Label}
+                onChange={(e) => setField("stat3Label", e.target.value)}
               />
             </Field>
             <Field name="stat3Value" label="Valor 3" error={errors?.stat3Value} required>
               <Input
                 id="stat3Value"
                 name="stat3Value"
-                defaultValue={agent.stats[2]?.value}
+                value={text.stat3Value}
+                onChange={(e) => setField("stat3Value", e.target.value)}
               />
             </Field>
           </div>
@@ -310,7 +381,8 @@ export function AgentProfileForm({
               <Input
                 id="instagramUrl"
                 name="instagramUrl"
-                defaultValue={socialUrl(agent, "instagram")}
+                value={text.instagramUrl}
+                onChange={(e) => setField("instagramUrl", e.target.value)}
               />
             </div>
           </Field>
@@ -320,7 +392,8 @@ export function AgentProfileForm({
               <Input
                 id="facebookUrl"
                 name="facebookUrl"
-                defaultValue={socialUrl(agent, "facebook")}
+                value={text.facebookUrl}
+                onChange={(e) => setField("facebookUrl", e.target.value)}
               />
             </div>
           </Field>
@@ -330,7 +403,8 @@ export function AgentProfileForm({
               <Input
                 id="linkedinUrl"
                 name="linkedinUrl"
-                defaultValue={socialUrl(agent, "linkedin")}
+                value={text.linkedinUrl}
+                onChange={(e) => setField("linkedinUrl", e.target.value)}
               />
             </div>
           </Field>
@@ -340,7 +414,8 @@ export function AgentProfileForm({
               <Input
                 id="youtubeUrl"
                 name="youtubeUrl"
-                defaultValue={socialUrl(agent, "youtube")}
+                value={text.youtubeUrl}
+                onChange={(e) => setField("youtubeUrl", e.target.value)}
               />
             </div>
           </Field>
@@ -350,7 +425,8 @@ export function AgentProfileForm({
               <Input
                 id="tiktokUrl"
                 name="tiktokUrl"
-                defaultValue={socialUrl(agent, "tiktok")}
+                value={text.tiktokUrl}
+                onChange={(e) => setField("tiktokUrl", e.target.value)}
               />
             </div>
           </Field>

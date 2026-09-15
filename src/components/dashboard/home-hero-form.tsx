@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { HomeContent } from "@/lib/types/home-content";
 import type { ActionState } from "@/lib/types/action-state";
@@ -9,6 +9,20 @@ import { Field, fieldErrorId } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+
+interface TextValues {
+  heroBadge: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroPrimaryCta: string;
+  heroSecondaryCta: string;
+  zoneEyebrow: string;
+  zoneTitle: string;
+  zoneDescription: string;
+  featuredEyebrow: string;
+  featuredTitle: string;
+  featuredDescription: string;
+}
 
 export function HomeHeroForm({
   content,
@@ -19,6 +33,24 @@ export function HomeHeroForm({
 }) {
   const [state, formAction, pending] = useActionState(action, IDLE_ACTION_STATE);
   const errors = state.status === "error" ? state.fieldErrors : undefined;
+
+  const [text, setText] = useState<TextValues>({
+    heroBadge: content.hero.badge,
+    heroTitle: content.hero.title,
+    heroSubtitle: content.hero.subtitle,
+    heroPrimaryCta: content.hero.primaryCtaLabel,
+    heroSecondaryCta: content.hero.secondaryCtaLabel,
+    zoneEyebrow: content.zoneSection.eyebrow,
+    zoneTitle: content.zoneSection.title,
+    zoneDescription: content.zoneSection.description,
+    featuredEyebrow: content.featuredSection.eyebrow,
+    featuredTitle: content.featuredSection.title,
+    featuredDescription: content.featuredSection.description,
+  });
+
+  function setField<K extends keyof TextValues>(key: K, value: TextValues[K]) {
+    setText((v) => ({ ...v, [key]: value }));
+  }
 
   useEffect(() => {
     if (state.status === "success") {
@@ -42,7 +74,8 @@ export function HomeHeroForm({
           <Input
             id="heroBadge"
             name="heroBadge"
-            defaultValue={content.hero.badge}
+            value={text.heroBadge}
+            onChange={(e) => setField("heroBadge", e.target.value)}
             aria-invalid={!!errors?.heroBadge}
             aria-describedby={errors?.heroBadge ? fieldErrorId("heroBadge") : undefined}
           />
@@ -52,7 +85,8 @@ export function HomeHeroForm({
           <Input
             id="heroTitle"
             name="heroTitle"
-            defaultValue={content.hero.title}
+            value={text.heroTitle}
+            onChange={(e) => setField("heroTitle", e.target.value)}
             aria-invalid={!!errors?.heroTitle}
             aria-describedby={errors?.heroTitle ? fieldErrorId("heroTitle") : undefined}
           />
@@ -63,7 +97,8 @@ export function HomeHeroForm({
             id="heroSubtitle"
             name="heroSubtitle"
             rows={3}
-            defaultValue={content.hero.subtitle}
+            value={text.heroSubtitle}
+            onChange={(e) => setField("heroSubtitle", e.target.value)}
             aria-invalid={!!errors?.heroSubtitle}
             aria-describedby={errors?.heroSubtitle ? fieldErrorId("heroSubtitle") : undefined}
           />
@@ -80,7 +115,8 @@ export function HomeHeroForm({
             <Input
               id="heroPrimaryCta"
               name="heroPrimaryCta"
-              defaultValue={content.hero.primaryCtaLabel}
+              value={text.heroPrimaryCta}
+              onChange={(e) => setField("heroPrimaryCta", e.target.value)}
               aria-invalid={!!errors?.heroPrimaryCta}
               aria-describedby={errors?.heroPrimaryCta ? fieldErrorId("heroPrimaryCta") : undefined}
             />
@@ -95,7 +131,8 @@ export function HomeHeroForm({
             <Input
               id="heroSecondaryCta"
               name="heroSecondaryCta"
-              defaultValue={content.hero.secondaryCtaLabel}
+              value={text.heroSecondaryCta}
+              onChange={(e) => setField("heroSecondaryCta", e.target.value)}
               aria-invalid={!!errors?.heroSecondaryCta}
               aria-describedby={
                 errors?.heroSecondaryCta ? fieldErrorId("heroSecondaryCta") : undefined
@@ -113,7 +150,8 @@ export function HomeHeroForm({
           <Input
             id="zoneEyebrow"
             name="zoneEyebrow"
-            defaultValue={content.zoneSection.eyebrow}
+            value={text.zoneEyebrow}
+            onChange={(e) => setField("zoneEyebrow", e.target.value)}
             aria-invalid={!!errors?.zoneEyebrow}
             aria-describedby={errors?.zoneEyebrow ? fieldErrorId("zoneEyebrow") : undefined}
           />
@@ -122,7 +160,8 @@ export function HomeHeroForm({
           <Input
             id="zoneTitle"
             name="zoneTitle"
-            defaultValue={content.zoneSection.title}
+            value={text.zoneTitle}
+            onChange={(e) => setField("zoneTitle", e.target.value)}
             aria-invalid={!!errors?.zoneTitle}
             aria-describedby={errors?.zoneTitle ? fieldErrorId("zoneTitle") : undefined}
           />
@@ -137,7 +176,8 @@ export function HomeHeroForm({
             id="zoneDescription"
             name="zoneDescription"
             rows={3}
-            defaultValue={content.zoneSection.description}
+            value={text.zoneDescription}
+            onChange={(e) => setField("zoneDescription", e.target.value)}
             aria-invalid={!!errors?.zoneDescription}
             aria-describedby={
               errors?.zoneDescription ? fieldErrorId("zoneDescription") : undefined
@@ -154,7 +194,8 @@ export function HomeHeroForm({
           <Input
             id="featuredEyebrow"
             name="featuredEyebrow"
-            defaultValue={content.featuredSection.eyebrow}
+            value={text.featuredEyebrow}
+            onChange={(e) => setField("featuredEyebrow", e.target.value)}
             aria-invalid={!!errors?.featuredEyebrow}
             aria-describedby={
               errors?.featuredEyebrow ? fieldErrorId("featuredEyebrow") : undefined
@@ -165,7 +206,8 @@ export function HomeHeroForm({
           <Input
             id="featuredTitle"
             name="featuredTitle"
-            defaultValue={content.featuredSection.title}
+            value={text.featuredTitle}
+            onChange={(e) => setField("featuredTitle", e.target.value)}
             aria-invalid={!!errors?.featuredTitle}
             aria-describedby={errors?.featuredTitle ? fieldErrorId("featuredTitle") : undefined}
           />
@@ -180,7 +222,8 @@ export function HomeHeroForm({
             id="featuredDescription"
             name="featuredDescription"
             rows={3}
-            defaultValue={content.featuredSection.description}
+            value={text.featuredDescription}
+            onChange={(e) => setField("featuredDescription", e.target.value)}
             aria-invalid={!!errors?.featuredDescription}
             aria-describedby={
               errors?.featuredDescription ? fieldErrorId("featuredDescription") : undefined

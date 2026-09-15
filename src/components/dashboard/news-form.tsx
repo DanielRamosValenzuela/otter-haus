@@ -34,6 +34,10 @@ export function NewsForm({
   const [coverImageUrl, setCoverImageUrl] = useState(article?.coverImage?.url ?? "");
   const [coverImageAlt, setCoverImageAlt] = useState(article?.coverImage?.alt ?? "");
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [title, setTitle] = useState(article?.title ?? "");
+  const [excerpt, setExcerpt] = useState(article?.excerpt ?? "");
+  const [content, setContent] = useState(article?.content ?? "");
+  const [published, setPublished] = useState(article?.published ?? false);
 
   useEffect(() => {
     if (state.status === "success") {
@@ -54,7 +58,8 @@ export function NewsForm({
           <Input
             id="title"
             name="title"
-            defaultValue={article?.title}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             aria-invalid={!!errors?.title}
             aria-describedby={errors?.title ? fieldErrorId("title") : undefined}
           />
@@ -71,7 +76,8 @@ export function NewsForm({
             id="excerpt"
             name="excerpt"
             rows={3}
-            defaultValue={article?.excerpt}
+            value={excerpt}
+            onChange={(e) => setExcerpt(e.target.value)}
             aria-invalid={!!errors?.excerpt}
             aria-describedby={errors?.excerpt ? fieldErrorId("excerpt") : undefined}
           />
@@ -88,7 +94,8 @@ export function NewsForm({
             id="content"
             name="content"
             rows={14}
-            defaultValue={article?.content}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
             aria-invalid={!!errors?.content}
             aria-describedby={errors?.content ? fieldErrorId("content") : undefined}
           />
@@ -168,7 +175,7 @@ export function NewsForm({
       <section className="space-y-4">
         <h2 className="font-display text-lg font-semibold text-gold-400">Publicación</h2>
         <label className="flex items-center gap-2 text-sm">
-          <Checkbox name="published" defaultChecked={article?.published ?? false} />
+          <Checkbox name="published" checked={published} onChange={(e) => setPublished(e.target.checked)} />
           Publicada (visible en el sitio)
         </label>
       </section>

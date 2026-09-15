@@ -28,6 +28,9 @@ export function ZoneForm({
 
   const [imageUrl, setImageUrl] = useState(zone?.imageUrl ?? "");
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [name, setName] = useState(zone?.name ?? "");
+  const [slug, setSlug] = useState(zone?.slug ?? "");
+  const [description, setDescription] = useState(zone?.description ?? "");
 
   useEffect(() => {
     if (state.status === "success") {
@@ -48,7 +51,8 @@ export function ZoneForm({
           <Input
             id="name"
             name="name"
-            defaultValue={zone?.name}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             aria-invalid={!!errors?.name}
             aria-describedby={errors?.name ? fieldErrorId("name") : undefined}
           />
@@ -63,7 +67,8 @@ export function ZoneForm({
           <Input
             id="slug"
             name="slug"
-            defaultValue={zone?.slug}
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
             aria-invalid={!!errors?.slug}
             aria-describedby={errors?.slug ? fieldErrorId("slug") : undefined}
           />
@@ -79,7 +84,8 @@ export function ZoneForm({
             id="description"
             name="description"
             rows={4}
-            defaultValue={zone?.description}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             aria-invalid={!!errors?.description}
             aria-describedby={errors?.description ? fieldErrorId("description") : undefined}
           />

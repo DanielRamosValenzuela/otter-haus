@@ -38,6 +38,23 @@ const STATUS_LABEL: Record<(typeof PROPERTY_STATUSES)[number], string> = {
   cerrada: "Cerrada",
 };
 
+interface TextValues {
+  title: string;
+  description: string;
+  customZoneName: string;
+  commune: string;
+  city: string;
+  addressHint: string;
+  mapsUrl: string;
+  bedrooms: string;
+  bathrooms: string;
+  parkingSpaces: string;
+  builtAreaM2: string;
+  landAreaM2: string;
+  amenities: string;
+  priceAmount: string;
+}
+
 export function PropertyForm({
   mode,
   zones,
@@ -60,6 +77,32 @@ export function PropertyForm({
     property?.operation ?? "venta",
   );
   const [type, setType] = useState<(typeof PROPERTY_TYPES)[number]>(property?.type ?? "casa");
+  const [status, setStatus] = useState<(typeof PROPERTY_STATUSES)[number]>(
+    property?.status ?? "disponible",
+  );
+  const [featured, setFeatured] = useState(property?.featured ?? false);
+  const [published, setPublished] = useState(property?.published ?? false);
+
+  const [text, setText] = useState<TextValues>({
+    title: property?.title ?? "",
+    description: property?.description ?? "",
+    customZoneName: !isKnownZone ? (property?.location.zone ?? "") : "",
+    commune: property?.location.commune ?? "",
+    city: property?.location.city ?? "",
+    addressHint: property?.location.addressHint ?? "",
+    mapsUrl: property?.location.mapsUrl ?? "",
+    bedrooms: String(property?.features.bedrooms ?? 0),
+    bathrooms: String(property?.features.bathrooms ?? 0),
+    parkingSpaces: String(property?.features.parkingSpaces ?? 0),
+    builtAreaM2: String(property?.features.builtAreaM2 ?? 0),
+    landAreaM2: property?.features.landAreaM2 != null ? String(property.features.landAreaM2) : "",
+    amenities: property?.features.amenities.join(", ") ?? "",
+    priceAmount: property?.price.amount != null ? String(property.price.amount) : "",
+  });
+
+  function setField<K extends keyof TextValues>(key: K, value: TextValues[K]) {
+    setText((v) => ({ ...v, [key]: value }));
+  }
 
   useEffect(() => {
     if (state.status === "success") {
@@ -79,7 +122,8 @@ export function PropertyForm({
           <Input
             id="title"
             name="title"
-            defaultValue={property?.title}
+            value={text.title}
+            onChange={(e) => setField("title", e.target.value)}
             aria-invalid={!!errors?.title}
             aria-describedby={errors?.title ? fieldErrorId("title") : undefined}
           />
@@ -120,7 +164,8 @@ export function PropertyForm({
           <Textarea
             id="description"
             name="description"
-            defaultValue={property?.description}
+            value={text.description}
+            onChange={(e) => setField("description", e.target.value)}
             aria-invalid={!!errors?.description}
             aria-describedby={errors?.description ? fieldErrorId("description") : undefined}
           />
@@ -151,20 +196,36 @@ export function PropertyForm({
               <Input
                 id="customZoneName"
                 name="customZoneName"
-                defaultValue={!isKnownZone ? property?.location.zone : undefined}
+                value={text.customZoneName}
+                onChange={(e) => setField("customZoneName", e.target.value)}
               />
             </Field>
           )}
 
           <Field name="commune" label="Comuna" error={errors?.commune} required>
-            <Input id="commune" name="commune" defaultValue={property?.location.commune} />
+            <Input
+              id="commune"
+              name="commune"
+              value={text.commune}
+              onChange={(e) => setField("commune", e.target.value)}
+            />
           </Field>
           <Field name="city" label="Ciudad" hint="Opcional">
-            <Input id="city" name="city" defaultValue={property?.location.city} />
+            <Input
+              id="city"
+              name="city"
+              value={text.city}
+              onChange={(e) => setField("city", e.target.value)}
+            />
           </Field>
         </div>
         <Field name="addressHint" label="Referencia de ubicación" hint="Aproximada — nunca una dirección exacta">
-          <Input id="addressHint" name="addressHint" defaultValue={property?.location.addressHint} />
+          <Input
+            id="addressHint"
+            name="addressHint"
+            value={text.addressHint}
+            onChange={(e) => setField("addressHint", e.target.value)}
+          />
         </Field>
         <Field
           name="mapsUrl"
@@ -176,7 +237,8 @@ export function PropertyForm({
             id="mapsUrl"
             name="mapsUrl"
             placeholder="https://maps.app.goo.gl/..."
-            defaultValue={property?.location.mapsUrl}
+            value={text.mapsUrl}
+            onChange={(e) => setField("mapsUrl", e.target.value)}
             aria-invalid={!!errors?.mapsUrl}
             aria-describedby={errors?.mapsUrl ? fieldErrorId("mapsUrl") : undefined}
           />
@@ -187,16 +249,44 @@ export function PropertyForm({
         <h2 className="font-display text-lg font-semibold text-gold-400">Características</h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
           <Field name="bedrooms" label="Dormitorios">
-            <Input id="bedrooms" name="bedrooms" type="number" min={0} defaultValue={property?.features.bedrooms ?? 0} />
+            <Input
+              id="bedrooms"
+              name="bedrooms"
+              type="number"
+              min={0}
+              value={text.bedrooms}
+              onChange={(e) => setField("bedrooms", e.target.value)}
+            />
           </Field>
           <Field name="bathrooms" label="Baños">
-            <Input id="bathrooms" name="bathrooms" type="number" min={0} defaultValue={property?.features.bathrooms ?? 0} />
+            <Input
+              id="bathrooms"
+              name="bathrooms"
+              type="number"
+              min={0}
+              value={text.bathrooms}
+              onChange={(e) => setField("bathrooms", e.target.value)}
+            />
           </Field>
           <Field name="parkingSpaces" label="Estacionamientos">
-            <Input id="parkingSpaces" name="parkingSpaces" type="number" min={0} defaultValue={property?.features.parkingSpaces ?? 0} />
+            <Input
+              id="parkingSpaces"
+              name="parkingSpaces"
+              type="number"
+              min={0}
+              value={text.parkingSpaces}
+              onChange={(e) => setField("parkingSpaces", e.target.value)}
+            />
           </Field>
           <Field name="builtAreaM2" label="Superficie construida (m²)">
-            <Input id="builtAreaM2" name="builtAreaM2" type="number" min={0} defaultValue={property?.features.builtAreaM2 ?? 0} />
+            <Input
+              id="builtAreaM2"
+              name="builtAreaM2"
+              type="number"
+              min={0}
+              value={text.builtAreaM2}
+              onChange={(e) => setField("builtAreaM2", e.target.value)}
+            />
           </Field>
           <Field
             name="landAreaM2"
@@ -205,14 +295,22 @@ export function PropertyForm({
             required={needsLandArea}
             hint={needsLandArea ? undefined : "Opcional"}
           >
-            <Input id="landAreaM2" name="landAreaM2" type="number" min={0} defaultValue={property?.features.landAreaM2 ?? ""} />
+            <Input
+              id="landAreaM2"
+              name="landAreaM2"
+              type="number"
+              min={0}
+              value={text.landAreaM2}
+              onChange={(e) => setField("landAreaM2", e.target.value)}
+            />
           </Field>
         </div>
         <Field name="amenities" label="Características adicionales" hint="Sepáralas con comas — ej: Piscina, Quincho, Bodega">
           <Input
             id="amenities"
             name="amenities"
-            defaultValue={property?.features.amenities.join(", ")}
+            value={text.amenities}
+            onChange={(e) => setField("amenities", e.target.value)}
           />
         </Field>
       </section>
@@ -242,13 +340,19 @@ export function PropertyForm({
               type="number"
               min={0}
               step="0.1"
-              defaultValue={property?.price.amount}
+              value={text.priceAmount}
+              onChange={(e) => setField("priceAmount", e.target.value)}
               aria-invalid={!!errors?.priceAmount}
               aria-describedby={errors?.priceAmount ? fieldErrorId("priceAmount") : undefined}
             />
           </Field>
           <Field name="status" label="Estado">
-            <Select id="status" name="status" defaultValue={property?.status ?? "disponible"}>
+            <Select
+              id="status"
+              name="status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value as typeof status)}
+            >
               {PROPERTY_STATUSES.map((s) => (
                 <option key={s} value={s}>
                   {STATUS_LABEL[s]}
@@ -260,11 +364,19 @@ export function PropertyForm({
 
         <div className="flex flex-wrap gap-6">
           <label className="flex items-center gap-2 text-sm">
-            <Checkbox name="featured" defaultChecked={property?.featured} />
+            <Checkbox
+              name="featured"
+              checked={featured}
+              onChange={(e) => setFeatured(e.target.checked)}
+            />
             Destacada (aparece en Home)
           </label>
           <label className="flex items-center gap-2 text-sm">
-            <Checkbox name="published" defaultChecked={property?.published ?? false} />
+            <Checkbox
+              name="published"
+              checked={published}
+              onChange={(e) => setPublished(e.target.checked)}
+            />
             Publicada (visible en el sitio)
           </label>
         </div>

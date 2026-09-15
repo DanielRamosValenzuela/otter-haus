@@ -18,7 +18,7 @@ export const SITE = {
   name: "OtterHaus",
   tagline: "Tu próximo capítulo comienza aquí.",
   description:
-    "Corretaje de propiedades de lujo en Santiago y todo Chile — venta y arriendo con asesoría de alto nivel.",
+    "Corretaje de propiedades en Santiago y todo Chile — venta y arriendo con asesoría de alto nivel.",
   url: resolveSiteUrl(),
   locale: "es-CL",
 } as const;

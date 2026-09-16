@@ -11,6 +11,7 @@ import { WhatsAppIcon } from "@/components/icons/social-icons";
 export const metadata: Metadata = {
   title: "Contacto",
   description: "Contáctanos para agendar una visita o resolver tus dudas.",
+  alternates: { canonical: "/contacto" },
 };
 
 export default async function ContactoPage() {

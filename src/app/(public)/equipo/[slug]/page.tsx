@@ -24,6 +24,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title: account.name,
     description: account.bio ?? `Noticias publicadas por ${account.name} en OtterHaus.`,
+    alternates: { canonical: `/equipo/${account.slug}` },
   };
 }
 

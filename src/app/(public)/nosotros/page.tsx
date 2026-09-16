@@ -18,7 +18,8 @@ import type { SocialPlatform } from "@/lib/types/agent";
 
 export const metadata: Metadata = {
   title: "Nosotros",
-  description: "Conoce a la corredora detrás de TranHaus.",
+  description: "Conoce a la corredora detrás de OtterHaus.",
+  alternates: { canonical: "/nosotros" },
 };
 
 const SOCIAL_ICON: Record<SocialPlatform, typeof InstagramIcon> = {

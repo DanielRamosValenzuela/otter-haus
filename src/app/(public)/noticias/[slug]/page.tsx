@@ -7,6 +7,8 @@ import type { Metadata } from "next";
 import { getNewsArticleBySlug, listPublishedNews } from "@/lib/data/news";
 import { getAgent } from "@/lib/data/agent";
 import { PageTransition } from "@/components/motion/page-transition";
+import { NewsArticleJsonLd } from "@/components/seo/news-article-jsonld";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-jsonld";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils/format";
 
@@ -25,9 +27,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title: article.title,
     description: article.excerpt,
+    alternates: { canonical: `/noticias/${article.slug}` },
     openGraph: {
       title: article.title,
       description: article.excerpt,
+      type: "article",
+      publishedTime: article.publishedAt,
       images: article.coverImage ? [{ url: article.coverImage.url }] : undefined,
     },
   };
@@ -60,6 +65,14 @@ async function NewsArticleContent({ params }: { params: Params }) {
 
   return (
     <article>
+      <NewsArticleJsonLd article={article} authorName={byline.name} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Inicio", path: "/" },
+          { name: "Noticias", path: "/noticias" },
+          { name: article.title, path: `/noticias/${article.slug}` },
+        ]}
+      />
       <div className="scrim-scope relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-ink-800 to-ink-900 sm:aspect-[21/9]">
         {article.coverImage && (
           <Image

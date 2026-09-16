@@ -9,6 +9,7 @@ import type { RawSearchParams } from "@/lib/validation/search-params";
 export const metadata: Metadata = {
   title: "Propiedades",
   description: "Explora nuestro catálogo de propiedades en venta y arriendo en Santiago.",
+  alternates: { canonical: "/propiedades" },
 };
 
 export default function PropiedadesPage({

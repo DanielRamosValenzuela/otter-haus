@@ -9,6 +9,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Guía Legal",
   description: "Todo lo que necesitas saber para comprar o arrendar una propiedad en Chile.",
+  alternates: { canonical: "/guia-legal" },
 };
 
 export default function GuiaLegalPage() {

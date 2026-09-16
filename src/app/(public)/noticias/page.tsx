@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const metadata: Metadata = {
   title: "Noticias",
   description: "Novedades del mercado inmobiliario y actualidad de OtterHaus.",
+  alternates: { canonical: "/noticias" },
 };
 
 export default function NoticiasPage() {

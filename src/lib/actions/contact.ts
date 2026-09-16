@@ -65,6 +65,7 @@ async function sendContactEmails(lead: {
     resend.emails.send({
       from: EMAIL_FROM,
       to: lead.email,
+      replyTo: agent.notificationEmail,
       subject: "Gracias por contactar a OtterHaus",
       html: confirmationHtml,
       attachments: [attachment],

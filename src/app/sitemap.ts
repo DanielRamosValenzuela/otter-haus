@@ -1,9 +1,13 @@
 import type { MetadataRoute } from "next";
 import { listProperties } from "@/lib/data/properties";
+import { listSubAdmins } from "@/lib/data/admin";
 import { SITE } from "@/lib/content/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { items } = await listProperties({ perPage: 1000 });
+  const [{ items }, subAdmins] = await Promise.all([
+    listProperties({ perPage: 1000 }),
+    listSubAdmins(),
+  ]);
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: SITE.url, changeFrequency: "weekly", priority: 1 },
@@ -20,5 +24,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...propertyPages];
+  const teamPages: MetadataRoute.Sitemap = subAdmins
+    .filter((account) => account.active && account.slug)
+    .map((account) => ({
+      url: `${SITE.url}/equipo/${account.slug}`,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    }));
+
+  return [...staticPages, ...propertyPages, ...teamPages];
 }

@@ -2,24 +2,27 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Logo } from "@/components/layout/logo";
-import { Button } from "@/components/ui/button";
+import type { AccountRole } from "@/lib/types/admin";
 
 const SECTIONS = [
-  { href: "/dashboard/propiedades", label: "Propiedades", newHref: "/dashboard/propiedades/nueva", cta: "Nueva propiedad" },
-  { href: "/dashboard/noticias", label: "Noticias", newHref: "/dashboard/noticias/nueva", cta: "Nueva noticia" },
-  { href: "/dashboard/zonas", label: "Zonas", newHref: "/dashboard/zonas/nueva", cta: "Nueva zona" },
-  { href: "/dashboard/contenido", label: "Contenido", newHref: null, cta: null },
-  { href: "/dashboard/cuenta", label: "Cuenta", newHref: null, cta: null },
+  { href: "/dashboard/propiedades", label: "Propiedades", adminOnly: false },
+  { href: "/dashboard/noticias", label: "Noticias", adminOnly: false },
+  { href: "/dashboard/zonas", label: "Zonas", adminOnly: true },
+  { href: "/dashboard/contenido", label: "Contenido", adminOnly: true },
+  { href: "/dashboard/cuentas", label: "Cuentas", adminOnly: true },
+  { href: "/dashboard/cuenta", label: "Mi cuenta", adminOnly: false },
 ] as const;
 
-export function DashboardNav() {
+function isActiveSection(pathname: string, href: string): boolean {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function DashboardNav({ role }: { role: AccountRole }) {
   const pathname = usePathname();
-  const activeSection =
-    SECTIONS.find((section) => pathname.startsWith(section.href)) ?? SECTIONS[0];
+  const sections = SECTIONS.filter((section) => !section.adminOnly || role === "admin");
 
   return (
     <div className="flex items-center gap-6">
@@ -27,8 +30,8 @@ export function DashboardNav() {
         <Logo size="sm" />
       </Link>
       <nav className="hidden items-center gap-6 sm:flex">
-        {SECTIONS.map((section) => {
-          const active = pathname.startsWith(section.href);
+        {sections.map((section) => {
+          const active = isActiveSection(pathname, section.href);
           return (
             <Link
               key={section.href}
@@ -53,12 +56,6 @@ export function DashboardNav() {
       </nav>
       <div className="ml-auto flex items-center gap-2">
         <ThemeToggle />
-        {activeSection.newHref && (
-          <Button as={Link} href={activeSection.newHref} size="sm">
-            <Plus className="size-4" aria-hidden />
-            {activeSection.cta}
-          </Button>
-        )}
       </div>
     </div>
   );

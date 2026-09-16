@@ -1,9 +1,7 @@
 import "server-only";
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
-import { getAdmin } from "@/lib/data/admin";
+import { getAccountByEmail } from "@/lib/data/admin";
 import type { AdminUser } from "@/lib/types/session";
-
-const ADMIN_ID = "admin-tranhaus";
 
 const attempts = new Map<string, { count: number; resetAt: number }>();
 const MAX_ATTEMPTS = 5;
@@ -28,16 +26,6 @@ function recordFailure(key: string): void {
   entry.count += 1;
 }
 
-function safeEqualStrings(a: string, b: string): boolean {
-  const bufA = Buffer.from(a);
-  const bufB = Buffer.from(b);
-  if (bufA.length !== bufB.length) {
-    timingSafeEqual(bufA, bufA);
-    return false;
-  }
-  return timingSafeEqual(bufA, bufB);
-}
-
 export function hashPassword(password: string): string {
   const salt = randomBytes(16).toString("hex");
   const hash = scryptSync(password, salt, 64).toString("hex");
@@ -52,6 +40,8 @@ export function verifyPasswordHash(password: string, storedHash: string): boolea
   return timingSafeEqual(hash, storedHashBuffer);
 }
 
+const DUMMY_HASH = hashPassword(randomBytes(24).toString("hex"));
+
 export async function verifyCredentials(
   email: string,
   password: string,
@@ -59,16 +49,13 @@ export async function verifyCredentials(
 ): Promise<AdminUser | null> {
   if (isThrottled(throttleKey)) return null;
 
-  const admin = await getAdmin();
-  const validEmail = safeEqualStrings(email.trim().toLowerCase(), admin.email.toLowerCase());
-  const validPassword = verifyPasswordHash(password, admin.passwordHash);
+  const account = await getAccountByEmail(email.trim());
+  const validPassword = verifyPasswordHash(password, account?.passwordHash ?? DUMMY_HASH);
 
-  if (!validEmail || !validPassword) {
+  if (!account || !account.active || !validPassword) {
     recordFailure(throttleKey);
     return null;
   }
 
-  return { id: admin.id, name: admin.name, email: admin.email };
+  return { id: account.id, name: account.name, email: account.email, role: account.role };
 }
-
-export { ADMIN_ID };

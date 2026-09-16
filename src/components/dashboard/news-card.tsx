@@ -61,8 +61,12 @@ export function NewsCard({ article }: { article: NewsArticle }) {
           <p className="mt-1 line-clamp-2 text-sm text-muted-400">{article.excerpt}</p>
         </div>
 
-        {article.published && (
-          <p className="text-xs text-muted-400">{formatDate(article.publishedAt)}</p>
+        {(article.published || article.author) && (
+          <p className="text-xs text-muted-400">
+            {article.published && formatDate(article.publishedAt)}
+            {article.published && article.author && " · "}
+            {article.author && `Por ${article.author.name}`}
+          </p>
         )}
 
         <div className="flex items-center justify-end gap-1 border-t border-cream-50/10 pt-3">

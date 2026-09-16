@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import type { Metadata } from "next";
 import { getNewsArticleBySlug, listPublishedNews } from "@/lib/data/news";
+import { getAgent } from "@/lib/data/agent";
 import { PageTransition } from "@/components/motion/page-transition";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils/format";
@@ -52,6 +53,11 @@ async function NewsArticleContent({ params }: { params: Params }) {
     .map((paragraph) => paragraph.trim())
     .filter((paragraph) => paragraph.length > 0);
 
+  const byline =
+    article.author?.isSubAdmin && article.author.slug
+      ? { name: article.author.name, href: `/equipo/${article.author.slug}` }
+      : { name: (await getAgent()).name, href: "/nosotros" };
+
   return (
     <article>
       <div className="scrim-scope relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-ink-800 to-ink-900 sm:aspect-[21/9]">
@@ -85,6 +91,13 @@ async function NewsArticleContent({ params }: { params: Params }) {
             <p key={index}>{paragraph}</p>
           ))}
         </div>
+
+        <p className="mt-10 border-t border-cream-50/10 pt-6 text-sm text-muted-400">
+          Publicado por{" "}
+          <Link href={byline.href} className="font-medium text-cream-50 hover:text-gold-400">
+            {byline.name}
+          </Link>
+        </p>
 
         <Link
           href="/noticias"

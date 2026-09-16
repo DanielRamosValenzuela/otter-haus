@@ -3,13 +3,20 @@ import Link from "next/link";
 import { DashboardNav } from "@/components/dashboard/dashboard-nav";
 import { AdminBadge } from "@/components/dashboard/admin-badge";
 import { AdminBadgeSkeleton } from "@/components/dashboard/admin-badge-skeleton";
+import type { AccountRole } from "@/lib/types/admin";
 
-export function DashboardShell({ children }: { children: ReactNode }) {
+export function DashboardShell({
+  role,
+  children,
+}: {
+  role: AccountRole;
+  children: ReactNode;
+}) {
   return (
     <div className="min-h-screen bg-ink-950">
       <header className="border-b border-cream-50/10 bg-ink-900/60">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-4 sm:px-6">
-          <DashboardNav />
+          <DashboardNav role={role} />
           <Suspense fallback={<AdminBadgeSkeleton />}>
             <AdminBadge />
           </Suspense>

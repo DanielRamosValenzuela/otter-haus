@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getCurrentAdmin } from "@/lib/auth/dal";
+import { requireAdminPage } from "@/lib/auth/dal";
 import { getHomeContent } from "@/lib/data/home-content";
 import { getAgent } from "@/lib/data/agent";
 import { updateHomeContentAction } from "@/lib/actions/home-content";
@@ -11,7 +11,7 @@ export const metadata: Metadata = { title: "Contenido del sitio" };
 export const instant = false;
 
 export default async function ContenidoPage() {
-  await getCurrentAdmin();
+  await requireAdminPage();
 
   const [content, agent] = await Promise.all([getHomeContent(), getAgent()]);
 

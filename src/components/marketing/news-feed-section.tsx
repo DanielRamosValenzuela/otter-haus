@@ -22,8 +22,8 @@ export async function NewsFeedSection() {
         <StaggerItem key={article.id}>
           <NewsCard
             article={article}
-            authorName={agent.name}
-            authorPhotoUrl={agent.photoUrl}
+            authorName={article.author?.name ?? agent.name}
+            authorPhotoUrl={article.author?.photoUrl ?? agent.photoUrl}
             priority={index < 2}
           />
         </StaggerItem>

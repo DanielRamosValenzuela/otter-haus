@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getCurrentAdmin } from "@/lib/auth/dal";
+import { getCurrentAccount } from "@/lib/auth/dal";
 import { getPropertyByIdForAdmin } from "@/lib/data/properties";
 import { listZones } from "@/lib/data/zones";
 import { updatePropertyAction } from "@/lib/actions/properties";
@@ -14,11 +14,12 @@ export default async function EditarPropiedadPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  await getCurrentAdmin();
+  const account = await getCurrentAccount();
   const { id } = await params;
 
   const [property, zones] = await Promise.all([getPropertyByIdForAdmin(id), listZones()]);
   if (!property) notFound();
+  if (account.role !== "admin" && property.createdBy !== account.id) notFound();
 
   return (
     <div className="space-y-6">

@@ -2,10 +2,11 @@
 
 import { refresh, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
-import { requireAdmin } from "@/lib/auth/dal";
+import { requireAuth } from "@/lib/auth/dal";
 import {
   createProperty,
   deleteProperty,
+  getPropertyByIdForAdmin,
   setPropertyFeatured,
   setPropertyPublished,
   updateProperty,
@@ -19,6 +20,7 @@ import {
 import { slugify } from "@/lib/utils/format";
 import { extractMapsCoordinates } from "@/lib/utils/google-maps";
 import type { ActionState } from "@/lib/types/action-state";
+import type { AdminUser } from "@/lib/types/session";
 import type { Property, PropertyInput } from "@/lib/types/property";
 
 async function resolveZone(zoneSlug: string, customZoneName?: string) {
@@ -31,7 +33,7 @@ async function resolveZone(zoneSlug: string, customZoneName?: string) {
   return { zone: zone?.name ?? zoneSlug, zoneSlug };
 }
 
-async function toPropertyInput(values: PropertyFormValues): Promise<PropertyInput> {
+async function toPropertyInput(values: PropertyFormValues): Promise<Omit<PropertyInput, "createdBy">> {
   const { zone, zoneSlug } = await resolveZone(values.zoneSlug, values.customZoneName);
   const currency = values.operation === "venta" ? "UF" : "CLP";
   const coordinates = values.mapsUrl ? await extractMapsCoordinates(values.mapsUrl) : null;
@@ -68,6 +70,15 @@ async function toPropertyInput(values: PropertyFormValues): Promise<PropertyInpu
   };
 }
 
+async function requireOwnedProperty(id: string, actor: AdminUser): Promise<Property> {
+  const property = await getPropertyByIdForAdmin(id);
+  if (!property) throw new Error("Propiedad no encontrada");
+  if (actor.role !== "admin" && property.createdBy !== actor.id) {
+    throw new Error("No autorizado");
+  }
+  return property;
+}
+
 function invalidatePropertyCaches(property?: Property) {
   updateTag("properties");
   updateTag("zones");
@@ -79,7 +90,7 @@ export async function createPropertyAction(
   _prevState: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
-  await requireAdmin();
+  const actor = await requireAuth();
 
   const parsed = parsePropertyFormData(formData);
   if (!parsed.success) {
@@ -91,7 +102,7 @@ export async function createPropertyAction(
   }
 
   const input = await toPropertyInput(parsed.data);
-  const property = await createProperty(input);
+  const property = await createProperty({ ...input, createdBy: actor.id });
   invalidatePropertyCaches(property);
   redirect("/dashboard/propiedades?toast=creada");
 }
@@ -101,7 +112,8 @@ export async function updatePropertyAction(
   _prevState: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
-  await requireAdmin();
+  const actor = await requireAuth();
+  await requireOwnedProperty(id, actor);
 
   const parsed = parsePropertyFormData(formData);
   if (!parsed.success) {
@@ -119,19 +131,22 @@ export async function updatePropertyAction(
 }
 
 export async function deletePropertyAction(id: string): Promise<void> {
-  await requireAdmin();
+  const actor = await requireAuth();
+  await requireOwnedProperty(id, actor);
   await deleteProperty(id);
   invalidatePropertyCaches();
 }
 
 export async function togglePublishedAction(id: string, published: boolean): Promise<void> {
-  await requireAdmin();
+  const actor = await requireAuth();
+  await requireOwnedProperty(id, actor);
   const property = await setPropertyPublished(id, published);
   invalidatePropertyCaches(property);
 }
 
 export async function toggleFeaturedAction(id: string, featured: boolean): Promise<void> {
-  await requireAdmin();
+  const actor = await requireAuth();
+  await requireOwnedProperty(id, actor);
   const property = await setPropertyFeatured(id, featured);
   invalidatePropertyCaches(property);
 }

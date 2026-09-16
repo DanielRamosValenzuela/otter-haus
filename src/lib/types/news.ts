@@ -3,6 +3,13 @@ export interface NewsArticleImage {
   alt: string;
 }
 
+export interface NewsArticleAuthor {
+  name: string;
+  slug?: string;
+  photoUrl?: string;
+  isSubAdmin: boolean;
+}
+
 export interface NewsArticle {
   id: string;
   slug: string;
@@ -11,6 +18,8 @@ export interface NewsArticle {
   content: string;
   coverImage?: NewsArticleImage;
   published: boolean;
+  createdBy?: string;
+  author?: NewsArticleAuthor;
   publishedAt: string;
   createdAt: string;
   updatedAt: string;

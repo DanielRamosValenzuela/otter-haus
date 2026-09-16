@@ -60,6 +60,7 @@ export interface Property {
   images: PropertyImage[];
   featured: boolean;
   published: boolean;
+  createdBy?: string;
   createdAt: string;
   updatedAt: string;
 }

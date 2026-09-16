@@ -9,9 +9,6 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname === LOGIN_PATH) {
-    if (hasSessionCookie) {
-      return NextResponse.redirect(new URL("/dashboard/propiedades", request.url));
-    }
     return NextResponse.next();
   }
 

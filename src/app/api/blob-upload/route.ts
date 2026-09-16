@@ -1,6 +1,6 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
-import { requireAdmin } from "@/lib/auth/dal";
+import { requireAuth } from "@/lib/auth/dal";
 
 export async function POST(request: Request): Promise<NextResponse> {
   const body = (await request.json()) as HandleUploadBody;
@@ -10,7 +10,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       body,
       request,
       onBeforeGenerateToken: async () => {
-        await requireAdmin();
+        await requireAuth();
         return {
           allowedContentTypes: ["image/jpeg", "image/png", "image/webp", "image/avif"],
           addRandomSuffix: true,

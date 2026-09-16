@@ -39,6 +39,7 @@ interface PropertyRow {
   images: Property["images"];
   featured: boolean;
   published: boolean;
+  created_by: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -80,6 +81,7 @@ function rowToProperty(row: PropertyRow): Property {
     images: row.images,
     featured: row.featured,
     published: row.published,
+    createdBy: row.created_by ?? undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };
@@ -197,8 +199,10 @@ export async function getRelatedProperties(id: string, limit = 3): Promise<Prope
   return [...sameType, ...rest].slice(0, limit);
 }
 
-export async function listAllPropertiesForAdmin(): Promise<Property[]> {
-  const rows = (await sql.query(SELECT_PROPERTY, [])) as PropertyRow[];
+export async function listAllPropertiesForAdmin(authorId?: string): Promise<Property[]> {
+  const where = authorId ? "WHERE p.created_by = $1" : "";
+  const params = authorId ? [authorId] : [];
+  const rows = (await sql.query(`${SELECT_PROPERTY} ${where}`, params)) as PropertyRow[];
   return sortProperties(rows.map(rowToProperty), "recientes");
 }
 
@@ -229,7 +233,7 @@ export async function createProperty(input: PropertyInput): Promise<Property> {
     INSERT INTO properties (
       id, slug, title, operation, type, status, zone_slug, commune, city, address_hint,
       maps_url, maps_lat, maps_lng, price_amount, currency, bedrooms, bathrooms, parking_spaces,
-      built_area_m2, land_area_m2, amenities, description, images, featured, published
+      built_area_m2, land_area_m2, amenities, description, images, featured, published, created_by
     ) VALUES (
       ${id}, ${slug}, ${input.title}, ${input.operation}, ${input.type}, ${input.status},
       ${input.location.zoneSlug}, ${input.location.commune}, ${input.location.city ?? null},
@@ -238,7 +242,8 @@ export async function createProperty(input: PropertyInput): Promise<Property> {
       ${input.price.amount}, ${input.price.currency}, ${input.features.bedrooms},
       ${input.features.bathrooms}, ${input.features.parkingSpaces}, ${input.features.builtAreaM2},
       ${input.features.landAreaM2 ?? null}, ${JSON.stringify(input.features.amenities)}::jsonb,
-      ${input.description}, ${JSON.stringify(input.images)}::jsonb, ${input.featured}, ${input.published}
+      ${input.description}, ${JSON.stringify(input.images)}::jsonb, ${input.featured}, ${input.published},
+      ${input.createdBy ?? null}
     )
     RETURNING *, (SELECT name FROM zones WHERE slug = ${input.location.zoneSlug}) AS zone_name
   `;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useSyncExternalStore, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import {
   motion,
   useScroll,
@@ -75,9 +75,26 @@ export function HomeCinematicScene({
   const videoRef3 = useRef<HTMLVideoElement>(null);
   const videoRefs = [videoRef0, videoRef1, videoRef2, videoRef3];
 
+  const prefetchedRef = useRef<Set<number>>(new Set());
+  const prefetchClip = useCallback(
+    (index: number) => {
+      if (index < 0 || index >= clips.length || prefetchedRef.current.has(index)) return;
+      prefetchedRef.current.add(index);
+      fetch(clips[index].src, { cache: "force-cache" }).catch(() => {});
+    },
+    [clips],
+  );
+
+  useEffect(() => {
+    if (reduceMotion || !isDesktop) return;
+    prefetchClip(1);
+  }, [reduceMotion, isDesktop, prefetchClip]);
+
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     if (reduceMotion || !isDesktop) return;
     const segment = 1 / clips.length;
+    const activeIndex = Math.floor(progress / segment);
+    for (let i = 1; i <= activeIndex + 1; i += 1) prefetchClip(i);
     clips.forEach((clip, i) => {
       const video = videoRefs[i].current;
       if (!video || video.readyState < 1) return;

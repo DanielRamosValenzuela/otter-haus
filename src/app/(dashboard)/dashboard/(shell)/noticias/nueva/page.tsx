@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getCurrentAdmin } from "@/lib/auth/dal";
+import { getCurrentAccount } from "@/lib/auth/dal";
 import { createNewsAction } from "@/lib/actions/news";
 import { NewsForm } from "@/components/dashboard/news-form";
 
@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Nueva noticia" };
 export const instant = false;
 
 export default async function NuevaNoticiaPage() {
-  await getCurrentAdmin();
+  await getCurrentAccount();
 
   return (
     <div className="space-y-6">

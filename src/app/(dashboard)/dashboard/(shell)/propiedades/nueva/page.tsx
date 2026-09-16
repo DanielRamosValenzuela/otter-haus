@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getCurrentAdmin } from "@/lib/auth/dal";
+import { getCurrentAccount } from "@/lib/auth/dal";
 import { listZones } from "@/lib/data/zones";
 import { createPropertyAction } from "@/lib/actions/properties";
 import { PropertyForm } from "@/components/dashboard/property-form";
@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Nueva propiedad" };
 export const instant = false;
 
 export default async function NuevaPropiedadPage() {
-  await getCurrentAdmin();
+  await getCurrentAccount();
   const zones = await listZones();
 
   return (

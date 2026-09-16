@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getCurrentAdmin } from "@/lib/auth/dal";
+import { requireAdminPage } from "@/lib/auth/dal";
 import { getZoneForAdmin } from "@/lib/data/zones";
 import { updateZoneAction } from "@/lib/actions/zones";
 import { ZoneForm } from "@/components/dashboard/zone-form";
@@ -13,7 +13,7 @@ export default async function EditarZonaPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  await getCurrentAdmin();
+  await requireAdminPage();
   const { slug } = await params;
 
   const zone = await getZoneForAdmin(slug);

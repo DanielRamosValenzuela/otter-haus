@@ -14,6 +14,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 type Params = Promise<{ slug: string }>;
 
+export const instant = false;
+
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   const account = await getSubAdminBySlug(slug);

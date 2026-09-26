@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const createSubAdminFormSchema = z.object({
   name: z.string().trim().min(2, "El nombre es muy corto"),
-  email: z.string().trim().email("Correo inválido"),
+  email: z.string().trim().toLowerCase().email("Correo inválido"),
   password: z.string().min(8, "Mínimo 8 caracteres"),
   roleTitle: z.string().trim().optional(),
 });

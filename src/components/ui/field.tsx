@@ -12,17 +12,30 @@ interface FieldProps {
   hint?: string;
   required?: boolean;
   className?: string;
+  labelAction?: ReactNode;
   children: ReactNode;
 }
 
-export function Field({ name, label, error, hint, required, className, children }: FieldProps) {
+export function Field({
+  name,
+  label,
+  error,
+  hint,
+  required,
+  className,
+  labelAction,
+  children,
+}: FieldProps) {
   const hasError = !!error?.length;
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      <label htmlFor={name} className="text-sm font-medium text-cream-50">
-        {label}
-        {required && <span className="text-gold-500"> *</span>}
-      </label>
+      <div className="flex items-center justify-between gap-2">
+        <label htmlFor={name} className="text-sm font-medium text-cream-50">
+          {label}
+          {required && <span className="text-gold-500"> *</span>}
+        </label>
+        {labelAction}
+      </div>
       {children}
       {hint && !hasError && <p className="text-xs text-muted-400">{hint}</p>}
       {hasError && (

@@ -15,6 +15,7 @@ interface AdminRow {
   role_title: string | null;
   photo_url: string | null;
   bio: string | null;
+  team_order: number | null;
   created_at: string;
 }
 
@@ -30,6 +31,7 @@ function rowToAccount(row: AdminRow): AdminAccount {
     roleTitle: row.role_title ?? undefined,
     photoUrl: row.photo_url ?? undefined,
     bio: row.bio ?? undefined,
+    teamOrder: row.team_order ?? undefined,
     createdAt: row.created_at,
   };
 }
@@ -73,6 +75,61 @@ export async function listSubAdmins(): Promise<AccountProfile[]> {
     SELECT * FROM admin_accounts WHERE role = 'sub_admin' ORDER BY created_at DESC
   `;
   return (rows as AdminRow[]).map((row) => toProfile(rowToAccount(row)));
+}
+
+export async function listFeaturedTeamMembers(): Promise<AccountProfile[]> {
+  "use cache";
+  cacheTag("team");
+  cacheLife("hours");
+
+  const rows = await sql`
+    SELECT * FROM admin_accounts
+    WHERE role = 'sub_admin' AND active = true AND team_order IS NOT NULL
+    ORDER BY team_order ASC
+  `;
+  return (rows as AdminRow[]).map((row) => toProfile(rowToAccount(row)));
+}
+
+export async function setAccountTeamFeatured(id: string, featured: boolean): Promise<AccountProfile> {
+  if (!featured) {
+    const rows = await sql`
+      UPDATE admin_accounts SET team_order = NULL WHERE id = ${id} AND role = 'sub_admin' RETURNING *
+    `;
+    if (rows.length === 0) throw new Error("Cuenta no encontrada.");
+    return toProfile(rowToAccount(rows[0] as AdminRow));
+  }
+
+  const [{ next_order }] = await sql`
+    SELECT COALESCE(MAX(team_order), -1) + 1 AS next_order FROM admin_accounts
+  `;
+  const rows = await sql`
+    UPDATE admin_accounts SET team_order = ${next_order}
+    WHERE id = ${id} AND role = 'sub_admin'
+    RETURNING *
+  `;
+  if (rows.length === 0) throw new Error("Cuenta no encontrada.");
+  return toProfile(rowToAccount(rows[0] as AdminRow));
+}
+
+export async function moveAccountTeamOrder(id: string, direction: "up" | "down"): Promise<void> {
+  const featured = await sql`
+    SELECT id, team_order FROM admin_accounts
+    WHERE role = 'sub_admin' AND team_order IS NOT NULL
+    ORDER BY team_order ASC
+  `;
+  const index = featured.findIndex((row) => (row as { id: string }).id === id);
+  if (index === -1) return;
+
+  const swapIndex = direction === "up" ? index - 1 : index + 1;
+  if (swapIndex < 0 || swapIndex >= featured.length) return;
+
+  const current = featured[index] as { id: string; team_order: number };
+  const swap = featured[swapIndex] as { id: string; team_order: number };
+
+  await sql.transaction([
+    sql`UPDATE admin_accounts SET team_order = ${swap.team_order} WHERE id = ${current.id}`,
+    sql`UPDATE admin_accounts SET team_order = ${current.team_order} WHERE id = ${swap.id}`,
+  ]);
 }
 
 async function uniqueAccountSlug(base: string): Promise<string> {

@@ -12,12 +12,23 @@ export interface AdminAccount {
   roleTitle?: string;
   photoUrl?: string;
   bio?: string;
+  teamOrder?: number;
   createdAt: string;
 }
 
 export type AccountProfile = Pick<
   AdminAccount,
-  "id" | "name" | "email" | "role" | "active" | "slug" | "roleTitle" | "photoUrl" | "bio" | "createdAt"
+  | "id"
+  | "name"
+  | "email"
+  | "role"
+  | "active"
+  | "slug"
+  | "roleTitle"
+  | "photoUrl"
+  | "bio"
+  | "teamOrder"
+  | "createdAt"
 >;
 
 export type SubAdminInput = {

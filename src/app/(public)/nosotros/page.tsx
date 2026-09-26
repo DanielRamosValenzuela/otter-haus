@@ -3,9 +3,12 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { BadgeCheck } from "lucide-react";
 import { getAgent } from "@/lib/data/agent";
+import { listFeaturedTeamMembers } from "@/lib/data/admin";
 import { StatRow } from "@/components/marketing/stat-row";
+import { TeamCard } from "@/components/marketing/team-card";
 import { PageTransition } from "@/components/motion/page-transition";
 import { Reveal } from "@/components/motion/reveal";
+import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   InstagramIcon,
@@ -104,6 +107,27 @@ async function AgentProfile() {
   );
 }
 
+async function TeamSection() {
+  const members = await listFeaturedTeamMembers();
+  if (members.length === 0) return null;
+
+  return (
+    <div className="mx-auto max-w-6xl px-4 pb-20 sm:px-6 lg:px-8">
+      <Reveal className="text-center">
+        <h2 className="font-display text-3xl font-semibold">Nuestro equipo</h2>
+        <p className="mt-2 text-cream-50/80">Las personas detrás de cada propiedad y noticia.</p>
+      </Reveal>
+      <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {members.map((member) => (
+          <StaggerItem key={member.id}>
+            <TeamCard member={member} />
+          </StaggerItem>
+        ))}
+      </Stagger>
+    </div>
+  );
+}
+
 export default function NosotrosPage() {
   return (
     <PageTransition>
@@ -122,6 +146,10 @@ export default function NosotrosPage() {
           <AgentProfile />
         </Suspense>
       </div>
+
+      <Suspense fallback={null}>
+        <TeamSection />
+      </Suspense>
     </PageTransition>
   );
 }

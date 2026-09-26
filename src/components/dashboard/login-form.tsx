@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { loginAction } from "@/lib/actions/auth";
 import { IDLE_ACTION_STATE } from "@/lib/types/action-state";
@@ -33,7 +34,17 @@ export function LoginForm({ next }: { next?: string }) {
         />
       </Field>
 
-      <Field name="password" label="Contraseña" error={errors?.password} required>
+      <Field
+        name="password"
+        label="Contraseña"
+        error={errors?.password}
+        labelAction={
+          <Link href="/dashboard/recuperar" className="text-xs text-muted-400 hover:text-gold-400">
+            ¿Olvidaste tu contraseña?
+          </Link>
+        }
+        required
+      >
         <div className="relative">
           <Input
             id="password"

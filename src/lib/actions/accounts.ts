@@ -3,7 +3,13 @@
 import { refresh, updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/dal";
-import { createSubAdmin, getAccountByEmail, setAccountActive } from "@/lib/data/admin";
+import {
+  createSubAdmin,
+  getAccountByEmail,
+  moveAccountTeamOrder,
+  setAccountActive,
+  setAccountTeamFeatured,
+} from "@/lib/data/admin";
 import { hashPassword } from "@/lib/auth/credentials";
 import { parseCreateSubAdminFormData } from "@/lib/validation/sub-admin-schema";
 import type { ActionState } from "@/lib/types/action-state";
@@ -45,6 +51,20 @@ export async function createSubAdminAction(
 export async function setAccountActiveAction(id: string, active: boolean): Promise<void> {
   await requireAdmin();
   await setAccountActive(id, active);
+  updateTag("team");
+  refresh();
+}
+
+export async function setAccountTeamFeaturedAction(id: string, featured: boolean): Promise<void> {
+  await requireAdmin();
+  await setAccountTeamFeatured(id, featured);
+  updateTag("team");
+  refresh();
+}
+
+export async function moveAccountTeamOrderAction(id: string, direction: "up" | "down"): Promise<void> {
+  await requireAdmin();
+  await moveAccountTeamOrder(id, direction);
   updateTag("team");
   refresh();
 }

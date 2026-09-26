@@ -3,12 +3,17 @@ import type { NextRequest } from "next/server";
 
 const COOKIE_NAME = "tranhaus_session";
 const LOGIN_PATH = "/dashboard/login";
+const PUBLIC_PATHS = [LOGIN_PATH, "/dashboard/recuperar"];
+
+function isPublicPath(pathname: string): boolean {
+  return PUBLIC_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+}
 
 export function proxy(request: NextRequest) {
   const hasSessionCookie = request.cookies.has(COOKIE_NAME);
   const { pathname } = request.nextUrl;
 
-  if (pathname === LOGIN_PATH) {
+  if (isPublicPath(pathname)) {
     return NextResponse.next();
   }
 

@@ -15,6 +15,11 @@ export async function AccountListSection() {
         <div>
           <h1 className="font-display text-2xl font-semibold">Cuentas</h1>
           <p className="text-sm text-muted-400">{accounts.length} en total</p>
+          <p className="mt-1 text-sm text-muted-400">
+            Usa el botón <span className="text-gold-400">“Mostrar en Nosotros”</span> de cada cuenta
+            para elegir quién aparece en el equipo de la página pública Nosotros, y las flechas
+            para ordenarlos.
+          </p>
         </div>
         <Button as={Link} href="/dashboard/cuentas/nueva" size="sm">
           <Plus className="size-4" aria-hidden />

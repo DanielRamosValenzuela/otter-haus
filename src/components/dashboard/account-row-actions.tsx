@@ -70,11 +70,16 @@ export function AccountRowActions({
         disabled={pending}
         title={isFeatured ? "Dejar de mostrar en Nosotros" : "Mostrar en Nosotros"}
         className={cn(
-          "flex size-8 items-center justify-center rounded-lg transition-colors hover:bg-cream-50/10 disabled:opacity-50",
-          isFeatured ? "text-gold-400" : "text-muted-400 hover:text-cream-50",
+          "flex items-center gap-1.5 whitespace-nowrap rounded-pill border px-2.5 py-1.5 text-xs font-medium transition-colors disabled:opacity-50",
+          isFeatured
+            ? "border-gold-500/40 bg-gold-500/10 text-gold-400 hover:bg-gold-500/15"
+            : "border-cream-50/15 text-muted-400 hover:border-cream-50/30 hover:text-cream-50",
         )}
       >
-        <Star className={cn("size-4", isFeatured && "fill-current")} aria-hidden />
+        <Star className={cn("size-3.5", isFeatured && "fill-current")} aria-hidden />
+        <span className="hidden sm:inline">
+          {isFeatured ? "En Nosotros" : "Mostrar en Nosotros"}
+        </span>
       </button>
       <button
         onClick={handleToggleActive}

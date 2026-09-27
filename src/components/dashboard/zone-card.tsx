@@ -23,7 +23,10 @@ export function ZoneCard({ zone }: { zone: Zone }) {
   }
 
   return (
-    <div className="group overflow-hidden rounded-card border border-cream-50/10 bg-ink-900 transition-[transform,box-shadow] duration-300 ease-lux hover:-translate-y-1 hover:shadow-lift">
+    <Link
+      href={`/dashboard/zonas/${zone.slug}/editar`}
+      className="group block overflow-hidden rounded-card border border-cream-50/10 bg-ink-900 transition-[transform,box-shadow] duration-300 ease-lux hover:-translate-y-1 hover:shadow-lift"
+    >
       <div className="relative aspect-video overflow-hidden bg-ink-800">
         {zone.imageUrl ? (
           <Image
@@ -54,36 +57,35 @@ export function ZoneCard({ zone }: { zone: Zone }) {
           {zone.propertyCount} {pluralize(zone.propertyCount, "propiedad", "propiedades")}
         </p>
 
-        <div className="flex items-center justify-end gap-1 border-t border-cream-50/10 pt-3">
-          <Link
-            href={`/dashboard/zonas/${zone.slug}/editar`}
-            title="Editar"
-            className="flex size-8 items-center justify-center rounded-lg text-muted-400 transition-colors hover:bg-cream-50/10 hover:text-cream-50"
-          >
-            <Pencil className="size-4" aria-hidden />
-          </Link>
+        <div className="flex items-center justify-between gap-1 border-t border-cream-50/10 pt-3">
+          <span className="inline-flex items-center gap-1.5 text-xs text-muted-400 transition-colors group-hover:text-cream-50">
+            <Pencil className="size-3.5" aria-hidden />
+            Editar
+          </span>
 
-          <ConfirmDialog
-            title={`¿Eliminar "${zone.name}"?`}
-            description="Esta acción no se puede deshacer. La zona se eliminará permanentemente."
-            confirmLabel="Eliminar"
-            destructive
-            onConfirm={handleDelete}
-            trigger={
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  title="Eliminar"
-                  className="size-8 p-0 text-muted-400 hover:bg-danger-500/15 hover:text-danger-500"
-                >
-                  <Trash2 className="size-4" aria-hidden />
-                </Button>
-              </DialogTrigger>
-            }
-          />
+          <div onClick={(e) => e.stopPropagation()}>
+            <ConfirmDialog
+              title={`¿Eliminar "${zone.name}"?`}
+              description="Esta acción no se puede deshacer. La zona se eliminará permanentemente."
+              confirmLabel="Eliminar"
+              destructive
+              onConfirm={handleDelete}
+              trigger={
+                <DialogTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    title="Eliminar"
+                    className="size-8 p-0 text-muted-400 hover:bg-danger-500/15 hover:text-danger-500"
+                  >
+                    <Trash2 className="size-4" aria-hidden />
+                  </Button>
+                </DialogTrigger>
+              }
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

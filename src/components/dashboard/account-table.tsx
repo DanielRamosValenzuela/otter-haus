@@ -14,11 +14,6 @@ export function AccountTable({ accounts }: { accounts: AccountProfile[] }) {
     );
   }
 
-  const featuredOrder = accounts
-    .filter((a) => a.teamOrder != null)
-    .sort((a, b) => (a.teamOrder ?? 0) - (b.teamOrder ?? 0))
-    .map((a) => a.id);
-
   return (
     <div className="overflow-hidden rounded-card border border-cream-50/10">
       <table className="w-full text-sm">
@@ -28,51 +23,34 @@ export function AccountTable({ accounts }: { accounts: AccountProfile[] }) {
             <th className="hidden px-4 py-3 font-medium sm:table-cell">Correo</th>
             <th className="hidden px-4 py-3 font-medium md:table-cell">Creada</th>
             <th className="px-4 py-3 font-medium">Estado</th>
-            <th className="px-4 py-3 font-medium">Nosotros</th>
             <th className="px-4 py-3 text-right font-medium">Acciones</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-cream-50/5">
-          {accounts.map((account) => {
-            const featuredIndex = featuredOrder.indexOf(account.id);
-            const isFeatured = featuredIndex !== -1;
-
-            return (
-              <tr key={account.id} className="transition-colors hover:bg-cream-50/[0.03]">
-                <td className="px-4 py-3">
-                  <p className="font-medium text-cream-50">{account.name}</p>
-                  {account.roleTitle && (
-                    <p className="text-xs text-muted-400">{account.roleTitle}</p>
-                  )}
-                </td>
-                <td className="hidden px-4 py-3 text-muted-400 sm:table-cell">{account.email}</td>
-                <td className="hidden px-4 py-3 text-muted-400 md:table-cell">
-                  {formatDate(account.createdAt)}
-                </td>
-                <td className="px-4 py-3">
-                  <Badge tone={account.active ? "success" : "neutral"}>
-                    {account.active ? "Activa" : "Desactivada"}
-                  </Badge>
-                </td>
-                <td className="px-4 py-3">
-                  {isFeatured ? (
-                    <Badge tone="gold">#{featuredIndex + 1} en equipo</Badge>
-                  ) : (
-                    <span className="text-xs text-muted-400">No se muestra</span>
-                  )}
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center justify-end gap-1">
-                    <AccountRowActions
-                      account={account}
-                      isFirstFeatured={isFeatured && featuredIndex === 0}
-                      isLastFeatured={isFeatured && featuredIndex === featuredOrder.length - 1}
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
+          {accounts.map((account) => (
+            <tr key={account.id} className="transition-colors hover:bg-cream-50/[0.03]">
+              <td className="px-4 py-3">
+                <p className="font-medium text-cream-50">{account.name}</p>
+                {account.roleTitle && (
+                  <p className="text-xs text-muted-400">{account.roleTitle}</p>
+                )}
+              </td>
+              <td className="hidden px-4 py-3 text-muted-400 sm:table-cell">{account.email}</td>
+              <td className="hidden px-4 py-3 text-muted-400 md:table-cell">
+                {formatDate(account.createdAt)}
+              </td>
+              <td className="px-4 py-3">
+                <Badge tone={account.active ? "success" : "neutral"}>
+                  {account.active ? "Activa" : "Desactivada"}
+                </Badge>
+              </td>
+              <td className="px-4 py-3">
+                <div className="flex items-center justify-end">
+                  <AccountRowActions account={account} />
+                </div>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { requireAdminPage } from "@/lib/auth/dal";
 import { listSubAdmins } from "@/lib/data/admin";
 import { AccountTable } from "@/components/dashboard/account-table";
@@ -16,18 +16,11 @@ export async function AccountListSection() {
           <h1 className="font-display text-2xl font-semibold">Cuentas</h1>
           <p className="text-sm text-muted-400">{accounts.length} en total</p>
           <p className="mt-1 text-sm text-muted-400">
-            Usa el botón <span className="text-gold-400">“Mostrar en Nosotros”</span> de cada cuenta
-            para elegir quién aparece en el equipo de la página pública Nosotros, y las flechas
-            para ordenarlos.{" "}
-            <Link
-              href="/nosotros"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-gold-400 hover:text-gold-300"
-            >
-              Ver Nosotros
-              <ExternalLink className="size-3.5" aria-hidden />
+            ¿Quién aparece en la página Nosotros? Eso se elige desde{" "}
+            <Link href="/dashboard/nosotros" className="text-gold-400 hover:text-gold-300">
+              Nosotros
             </Link>
+            .
           </p>
         </div>
         <Button as={Link} href="/dashboard/cuentas/nueva" size="sm">

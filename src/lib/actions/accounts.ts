@@ -45,7 +45,7 @@ export async function createSubAdminAction(
   updateTag("team");
   refresh();
 
-  redirect("/dashboard/cuentas?toast=creada");
+  redirect("/dashboard/nosotros?toast=creada");
 }
 
 export async function setAccountActiveAction(id: string, active: boolean): Promise<void> {

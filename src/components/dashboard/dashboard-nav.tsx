@@ -12,6 +12,7 @@ const SECTIONS = [
   { href: "/dashboard/noticias", label: "Noticias", adminOnly: false },
   { href: "/dashboard/zonas", label: "Zonas", adminOnly: true },
   { href: "/dashboard/contenido", label: "Contenido", adminOnly: true },
+  { href: "/dashboard/nosotros", label: "Nosotros", adminOnly: true },
   { href: "/dashboard/cuentas", label: "Cuentas", adminOnly: true },
   { href: "/dashboard/cuenta", label: "Mi cuenta", adminOnly: false },
 ] as const;

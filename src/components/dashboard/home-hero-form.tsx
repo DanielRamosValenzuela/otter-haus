@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowDown, ArrowUp, ImageOff, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import type { HomeContent, ValuePropIcon } from "@/lib/types/home-content";
@@ -383,6 +384,14 @@ export function HomeHeroForm({
         <p className="text-xs text-muted-400">
           La versión &quot;Tu corredora&quot; se muestra cuando nadie está destacado en Nosotros; la
           versión de equipo se muestra cuando hay personas destacadas.
+        </p>
+        <p className="rounded-lg border border-gold-500/30 bg-gold-500/5 p-3 text-xs text-cream-50/90">
+          El párrafo de presentación de la corredora (por ejemplo &quot;Fundador de un nuevo
+          proyecto…&quot;) no se edita aquí: está en{" "}
+          <Link href="/dashboard/nosotros" className="font-medium text-gold-400 hover:text-gold-300">
+            Nosotros → Perfil del agente → Biografía corta
+          </Link>
+          .
         </p>
         {input("teamSingleEyebrow", "Texto pequeño sobre el título (una sola persona)")}
         {input("teamSingleCtaLabel", "Botón (Tu corredora)", {

@@ -1,9 +1,12 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
-import { LEGAL_GUIDE_INTRO, LEGAL_GUIDE_SECTIONS } from "@/lib/content/guia-legal";
+import { getLegalGuide } from "@/lib/data/legal-guide";
 import { PageTransition } from "@/components/motion/page-transition";
 import { Reveal } from "@/components/motion/reveal";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { RichInline, RichText } from "@/components/ui/rich-text";
+import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -12,33 +15,52 @@ export const metadata: Metadata = {
   alternates: { canonical: "/guia-legal" },
 };
 
+async function LegalGuideContent() {
+  const guide = await getLegalGuide();
+
+  return (
+    <>
+      <Reveal>
+        <h1 className="font-display text-4xl font-semibold">Guía Legal</h1>
+        <RichText text={guide.intro} className="mt-4 space-y-4 text-lg text-muted-400" />
+      </Reveal>
+
+      <div className="mt-12 space-y-5">
+        {guide.sections.map((section, i) => (
+          <Reveal key={section.id} delay={i * 0.05}>
+            <Card className="p-6">
+              <h2 className="font-display text-xl font-semibold text-gold-400">
+                {section.title}
+              </h2>
+              <ul className="mt-4 space-y-2">
+                {section.items.map((item, idx) => (
+                  <li key={idx} className="text-cream-50/90">
+                    <RichInline text={item} />
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </Reveal>
+        ))}
+      </div>
+    </>
+  );
+}
+
 export default function GuiaLegalPage() {
   return (
     <PageTransition>
       <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-        <Reveal>
-          <h1 className="font-display text-4xl font-semibold">Guía Legal</h1>
-          <p className="mt-4 text-lg text-muted-400">{LEGAL_GUIDE_INTRO}</p>
-        </Reveal>
-
-        <div className="mt-12 space-y-5">
-          {LEGAL_GUIDE_SECTIONS.map((section, i) => (
-            <Reveal key={section.id} delay={i * 0.05}>
-              <Card className="p-6">
-                <h2 className="font-display text-xl font-semibold text-gold-400">
-                  {section.title}
-                </h2>
-                <ul className="mt-4 space-y-2">
-                  {section.body.map((paragraph, idx) => (
-                    <li key={idx} className="text-cream-50/90">
-                      {paragraph}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
+        <Suspense
+          fallback={
+            <div className="space-y-4">
+              <Skeleton className="h-10 w-1/3" />
+              <Skeleton className="h-24 w-full" />
+            </div>
+          }
+        >
+          <LegalGuideContent />
+        </Suspense>
 
         <Reveal>
           <Card className="mt-10 flex flex-col items-center gap-4 p-8 text-center">

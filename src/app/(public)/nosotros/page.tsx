@@ -48,7 +48,7 @@ async function AgentProfile() {
     <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-start">
       <Reveal>
         <div className="relative aspect-[4/5] overflow-hidden rounded-card">
-          <Image src={agent.photoUrl} alt={agent.name} fill sizes="(min-width: 1024px) 480px, 90vw" className="object-cover" priority />
+          <Image src={agent.photoUrl} alt={agent.name} fill sizes="(min-width: 1024px) 480px, 90vw" className="object-cover object-top" priority />
         </div>
       </Reveal>
 

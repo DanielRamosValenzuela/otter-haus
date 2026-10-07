@@ -124,6 +124,7 @@ export function ImageUrlEditor({ defaultValue = [] }: { defaultValue?: PropertyI
       </div>
       <div>
         <UploadImageButton
+          sizeHint="Tamaño recomendado: 1600 x 1200 px (horizontal 4:3)."
           onUploaded={(uploadedUrl, filename) => {
             setImages((prev) => [...prev, { url: uploadedUrl, alt: altFromFilename(filename) }]);
             setError(null);

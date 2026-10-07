@@ -11,6 +11,7 @@ import { isAllowedImageUrl } from "@/lib/images/allowed-hosts";
 import { Field, fieldErrorId } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { RichTextField } from "@/components/ui/rich-text-field";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { UploadImageButton } from "@/components/dashboard/upload-image-button";
@@ -87,17 +88,18 @@ export function NewsForm({
           name="content"
           label="Contenido"
           error={errors?.content}
-          hint="Deja una línea en blanco entre párrafos para separarlos"
+          hint="Selecciona texto y usa los botones Negrita, Cursiva o Subrayado. Deja una línea en blanco para empezar un párrafo nuevo."
           required
         >
-          <Textarea
+          <RichTextField
             id="content"
             name="content"
             rows={14}
             value={content}
-            onChange={(e) => setContent(e.target.value)}
-            aria-invalid={!!errors?.content}
-            aria-describedby={errors?.content ? fieldErrorId("content") : undefined}
+            onChange={setContent}
+            showPreview
+            invalid={!!errors?.content}
+            describedBy={errors?.content ? fieldErrorId("content") : undefined}
           />
         </Field>
       </section>
@@ -139,6 +141,7 @@ export function NewsForm({
               />
             </Field>
             <UploadImageButton
+              sizeHint="Tamaño recomendado: 1200 x 1200 px (cuadrada). En la lista de noticias se recorta al centro; dentro de la noticia se ve completa."
               onUploaded={(uploadedUrl, filename) => {
                 setCoverImageUrl(uploadedUrl);
                 setCoverImageAlt((prev) => prev || altFromFilename(filename));

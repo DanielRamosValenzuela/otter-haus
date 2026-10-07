@@ -16,6 +16,7 @@ interface HomeContentRow {
   featured_eyebrow: string;
   featured_title: string;
   featured_description: string;
+  footer_description: string;
   updated_at: string;
 }
 
@@ -38,6 +39,7 @@ function rowToHomeContent(row: HomeContentRow): HomeContent {
       title: row.featured_title,
       description: row.featured_description,
     },
+    footerDescription: row.footer_description,
     updatedAt: row.updated_at,
   };
 }
@@ -66,6 +68,7 @@ export async function updateHomeContent(input: HomeContentInput): Promise<HomeCo
       featured_eyebrow = ${input.featuredSection.eyebrow},
       featured_title = ${input.featuredSection.title},
       featured_description = ${input.featuredSection.description},
+      footer_description = ${input.footerDescription},
       updated_at = now()
     RETURNING *
   `;

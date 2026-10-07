@@ -80,6 +80,7 @@ export function ProfileForm({ account }: { account: AccountProfile }) {
         />
       </Field>
       <UploadImageButton
+        sizeHint="Tamaño recomendado: 1200 x 1500 px (vertical 4:5). Deja el rostro centrado en la parte superior de la foto."
         onUploaded={(uploadedUrl) => {
           setPhotoUrl(uploadedUrl);
           setUploadError(null);

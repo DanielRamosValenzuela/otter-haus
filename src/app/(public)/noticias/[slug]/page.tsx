@@ -9,6 +9,7 @@ import { getAgent } from "@/lib/data/agent";
 import { PageTransition } from "@/components/motion/page-transition";
 import { NewsArticleJsonLd } from "@/components/seo/news-article-jsonld";
 import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-jsonld";
+import { RichText } from "@/components/ui/rich-text";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils/format";
 
@@ -53,11 +54,6 @@ async function NewsArticleContent({ params }: { params: Params }) {
   const article = await getNewsArticleBySlug(slug);
   if (!article) notFound();
 
-  const paragraphs = article.content
-    .split("\n\n")
-    .map((paragraph) => paragraph.trim())
-    .filter((paragraph) => paragraph.length > 0);
-
   const byline =
     article.author?.isSubAdmin && article.author.slug
       ? { name: article.author.name, href: `/equipo/${article.author.slug}` }
@@ -73,37 +69,31 @@ async function NewsArticleContent({ params }: { params: Params }) {
           { name: article.title, path: `/noticias/${article.slug}` },
         ]}
       />
-      <div className="scrim-scope relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-ink-800 to-ink-900 sm:aspect-[21/9]">
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-400">
+          {formatDate(article.publishedAt)}
+        </p>
+        <h1 className="mt-2 font-display text-3xl font-semibold text-cream-50 sm:text-4xl lg:text-5xl">
+          {article.title}
+        </h1>
+
         {article.coverImage && (
           <Image
             src={article.coverImage.url}
             alt={article.coverImage.alt}
-            fill
+            width={1200}
+            height={800}
             priority
-            sizes="100vw"
-            className="object-cover"
+            sizes="(min-width: 768px) 768px, 100vw"
+            style={{ width: "100%", height: "auto" }}
+            className="mt-8 rounded-card"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-scrim via-scrim/50 to-transparent" />
 
-        <div className="absolute inset-x-0 bottom-0">
-          <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-400">
-              {formatDate(article.publishedAt)}
-            </p>
-            <h1 className="mt-2 font-display text-3xl font-semibold text-cream-50 sm:text-4xl lg:text-5xl">
-              {article.title}
-            </h1>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="space-y-5 text-lg leading-relaxed text-cream-50/90">
-          {paragraphs.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-        </div>
+        <RichText
+          text={article.content}
+          className="mt-8 space-y-5 text-lg leading-relaxed text-cream-50/90"
+        />
 
         <p className="mt-10 border-t border-cream-50/10 pt-6 text-sm text-muted-400">
           Publicado por{" "}
@@ -126,13 +116,13 @@ async function NewsArticleContent({ params }: { params: Params }) {
 
 function NewsArticleSkeleton() {
   return (
-    <div>
-      <Skeleton className="aspect-[4/3] w-full rounded-none sm:aspect-[21/9]" />
-      <div className="mx-auto max-w-3xl space-y-4 px-4 py-12 sm:px-6 lg:px-8">
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-full" />
-        <Skeleton className="h-5 w-2/3" />
-      </div>
+    <div className="mx-auto max-w-3xl space-y-4 px-4 py-12 sm:px-6 lg:px-8">
+      <Skeleton className="h-4 w-32" />
+      <Skeleton className="h-10 w-3/4" />
+      <Skeleton className="mt-8 aspect-[3/2] w-full rounded-card" />
+      <Skeleton className="h-5 w-full" />
+      <Skeleton className="h-5 w-full" />
+      <Skeleton className="h-5 w-2/3" />
     </div>
   );
 }

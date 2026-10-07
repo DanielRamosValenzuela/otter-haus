@@ -16,7 +16,7 @@ export function TeamCard({ member }: { member: AccountProfile }) {
             alt={member.name}
             fill
             sizes="96px"
-            className="object-cover transition-transform duration-500 ease-lux group-hover:scale-105"
+            className="object-cover object-[50%_20%] transition-transform duration-500 ease-lux group-hover:scale-105"
           />
         ) : (
           <User className="size-8 text-muted-400" aria-hidden />

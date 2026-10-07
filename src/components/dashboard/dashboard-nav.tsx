@@ -13,6 +13,7 @@ const SECTIONS = [
   { href: "/dashboard/zonas", label: "Zonas", adminOnly: true },
   { href: "/dashboard/contenido", label: "Contenido", adminOnly: true },
   { href: "/dashboard/nosotros", label: "Nosotros", adminOnly: true },
+  { href: "/dashboard/guia-legal", label: "Guía Legal", adminOnly: true },
   { href: "/dashboard/cuentas", label: "Cuentas", adminOnly: true },
   { href: "/dashboard/cuenta", label: "Mi cuenta", adminOnly: false },
 ] as const;
@@ -30,7 +31,7 @@ export function DashboardNav({ role }: { role: AccountRole }) {
       <Link href="/dashboard/propiedades">
         <Logo size="sm" />
       </Link>
-      <nav className="hidden items-center gap-6 sm:flex">
+      <nav className="hidden min-w-0 flex-wrap items-center gap-x-4 sm:flex lg:gap-x-6">
         {sections.map((section) => {
           const active = isActiveSection(pathname, section.href);
           return (

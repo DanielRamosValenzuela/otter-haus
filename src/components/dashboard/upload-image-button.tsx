@@ -8,9 +8,11 @@ import { Button } from "@/components/ui/button";
 export function UploadImageButton({
   onUploaded,
   onError,
+  sizeHint,
 }: {
   onUploaded: (url: string, filename: string) => void;
   onError?: (message: string) => void;
+  sizeHint?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -56,6 +58,7 @@ export function UploadImageButton({
         )}
         {uploading ? "Subiendo…" : "Subir desde tu PC"}
       </Button>
+      {sizeHint && <p className="text-xs text-muted-400">{sizeHint}</p>}
     </>
   );
 }

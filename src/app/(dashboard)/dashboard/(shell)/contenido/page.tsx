@@ -20,9 +20,9 @@ export default async function ContenidoPage() {
       <section className="rounded-card border border-cream-50/10 bg-ink-900 p-6 shadow-lift sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="font-display text-xl font-semibold text-cream-50">Portada</h2>
+            <h2 className="font-display text-xl font-semibold text-cream-50">Portada y pie de página</h2>
             <p className="mt-1 text-sm text-muted-400">
-              Copy del hero y de los encabezados de las secciones de la portada (Inicio).
+              Copy del hero, de los encabezados de las secciones de la portada (Inicio) y del texto del pie de página.
             </p>
           </div>
           <ViewPageLink href="/" label="Ver Inicio" />

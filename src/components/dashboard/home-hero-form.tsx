@@ -22,6 +22,7 @@ interface TextValues {
   featuredEyebrow: string;
   featuredTitle: string;
   featuredDescription: string;
+  footerDescription: string;
 }
 
 export function HomeHeroForm({
@@ -46,6 +47,7 @@ export function HomeHeroForm({
     featuredEyebrow: content.featuredSection.eyebrow,
     featuredTitle: content.featuredSection.title,
     featuredDescription: content.featuredSection.description,
+    footerDescription: content.footerDescription,
   });
 
   function setField<K extends keyof TextValues>(key: K, value: TextValues[K]) {
@@ -227,6 +229,29 @@ export function HomeHeroForm({
             aria-invalid={!!errors?.featuredDescription}
             aria-describedby={
               errors?.featuredDescription ? fieldErrorId("featuredDescription") : undefined
+            }
+          />
+        </Field>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="font-display text-lg font-semibold text-gold-400">Pie de página</h2>
+        <Field
+          name="footerDescription"
+          label="Descripción"
+          error={errors?.footerDescription}
+          hint="Texto que aparece bajo el logo en el pie de página"
+          required
+        >
+          <Textarea
+            id="footerDescription"
+            name="footerDescription"
+            rows={2}
+            value={text.footerDescription}
+            onChange={(e) => setField("footerDescription", e.target.value)}
+            aria-invalid={!!errors?.footerDescription}
+            aria-describedby={
+              errors?.footerDescription ? fieldErrorId("footerDescription") : undefined
             }
           />
         </Field>

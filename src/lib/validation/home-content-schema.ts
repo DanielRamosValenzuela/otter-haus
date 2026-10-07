@@ -12,6 +12,11 @@ export const homeContentFormSchema = z.object({
   featuredEyebrow: z.string().trim().min(1, "El eyebrow es obligatorio"),
   featuredTitle: z.string().trim().min(3, "El título es muy corto"),
   featuredDescription: z.string().trim().min(5, "La descripción es muy corta"),
+  footerDescription: z
+    .string()
+    .trim()
+    .min(5, "El texto es muy corto")
+    .max(200, "Máximo 200 caracteres"),
 });
 
 export type HomeContentFormValues = z.infer<typeof homeContentFormSchema>;
@@ -29,6 +34,7 @@ export function parseHomeContentFormData(formData: FormData) {
     featuredEyebrow: formData.get("featuredEyebrow"),
     featuredTitle: formData.get("featuredTitle"),
     featuredDescription: formData.get("featuredDescription"),
+    footerDescription: formData.get("footerDescription"),
   };
   return homeContentFormSchema.safeParse(raw);
 }

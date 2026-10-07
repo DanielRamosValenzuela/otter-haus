@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { NAV_LINKS, SITE } from "@/lib/content/site";
 import { getAgent } from "@/lib/data/agent";
+import { getHomeContent } from "@/lib/data/home-content";
 import { Logo } from "@/components/layout/logo";
 
 async function CopyrightYear() {
@@ -11,7 +12,7 @@ async function CopyrightYear() {
 }
 
 export async function Footer() {
-  const agent = await getAgent();
+  const [agent, content] = await Promise.all([getAgent(), getHomeContent()]);
 
   return (
     <footer className="relative border-t border-cream-50/10 bg-ink-900/60">
@@ -19,7 +20,7 @@ export async function Footer() {
         <div className="grid gap-10 sm:grid-cols-3">
           <div className="space-y-3">
             <Logo size="sm" />
-            <p className="max-w-xs text-sm text-muted-400">{SITE.description}</p>
+            <p className="max-w-xs text-sm text-muted-400">{content.footerDescription}</p>
           </div>
 
           <div className="space-y-3">

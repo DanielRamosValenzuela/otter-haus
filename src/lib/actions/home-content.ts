@@ -29,6 +29,7 @@ function toHomeContentInput(values: HomeContentFormValues): HomeContentInput {
       title: values.featuredTitle,
       description: values.featuredDescription,
     },
+    footerDescription: values.footerDescription,
   };
 }
 

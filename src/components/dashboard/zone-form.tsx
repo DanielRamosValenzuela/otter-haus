@@ -113,6 +113,7 @@ export function ZoneForm({
               />
             </Field>
             <UploadImageButton
+              sizeHint="Tamaño recomendado: 1200 x 1200 px (cuadrada 1:1, centra lo importante)."
               onUploaded={(uploadedUrl) => {
                 setImageUrl(uploadedUrl);
                 setUploadError(null);

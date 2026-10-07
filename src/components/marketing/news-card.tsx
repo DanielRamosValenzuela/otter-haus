@@ -23,7 +23,7 @@ export function NewsCard({
       <div className="flex items-center gap-3 px-4 py-3">
         <div className="relative flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-gold-500/30 bg-ink-800">
           {authorPhotoUrl ? (
-            <Image src={authorPhotoUrl} alt={authorName} fill sizes="36px" className="object-cover" />
+            <Image src={authorPhotoUrl} alt={authorName} fill sizes="36px" className="object-cover object-[50%_20%]" />
           ) : (
             <User className="size-4 text-muted-400" aria-hidden />
           )}

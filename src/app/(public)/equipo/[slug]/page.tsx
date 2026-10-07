@@ -49,16 +49,16 @@ async function TeamProfileContent({ params }: { params: Params }) {
 
   return (
     <div className="space-y-16">
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[280px_1fr] lg:items-start">
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-start">
         <Reveal>
-          <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-card bg-ink-800">
+          <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-card bg-ink-800">
             {account.photoUrl ? (
               <Image
                 src={account.photoUrl}
                 alt={account.name}
                 fill
-                sizes="(min-width: 1024px) 280px, 60vw"
-                className="object-cover"
+                sizes="(min-width: 1024px) 480px, 90vw"
+                className="object-cover object-top"
                 priority
               />
             ) : (
@@ -69,12 +69,10 @@ async function TeamProfileContent({ params }: { params: Params }) {
 
         <Reveal delay={0.1} className="space-y-4">
           <div>
-            <h1 className="font-display text-3xl font-semibold sm:text-4xl">{account.name}</h1>
+            <h1 className="font-display text-4xl font-semibold">{account.name}</h1>
             {account.roleTitle && <p className="mt-1 text-gold-400">{account.roleTitle}</p>}
           </div>
-          {account.bio && (
-            <p className="max-w-2xl whitespace-pre-line text-cream-50/90">{account.bio}</p>
-          )}
+          {account.bio && <p className="whitespace-pre-line text-cream-50/90">{account.bio}</p>}
         </Reveal>
       </div>
 
@@ -109,8 +107,8 @@ async function TeamProfileContent({ params }: { params: Params }) {
 
 function TeamProfileSkeleton() {
   return (
-    <div className="grid grid-cols-1 gap-12 lg:grid-cols-[280px_1fr]">
-      <Skeleton className="aspect-square rounded-card" />
+    <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+      <Skeleton className="aspect-[4/5] rounded-card" />
       <div className="space-y-4">
         <Skeleton className="h-10 w-2/3" />
         <Skeleton className="h-24 w-full" />

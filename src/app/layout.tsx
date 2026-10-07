@@ -36,12 +36,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){}})();`;
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){}})();`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-CL"
+      data-theme="light"
       suppressHydrationWarning
       className={`${fontDisplay.variable} ${fontSans.variable} h-full antialiased`}
     >

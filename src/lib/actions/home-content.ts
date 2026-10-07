@@ -17,17 +17,37 @@ function toHomeContentInput(values: HomeContentFormValues): HomeContentInput {
       title: values.heroTitle,
       subtitle: values.heroSubtitle,
       primaryCtaLabel: values.heroPrimaryCta,
+      primaryCtaHref: values.heroPrimaryHref,
       secondaryCtaLabel: values.heroSecondaryCta,
+      secondaryCtaHref: values.heroSecondaryHref,
+      mobileImageUrl: values.heroMobileImageUrl,
+      mobileImageAlt: values.heroMobileImageAlt,
     },
     zoneSection: {
+      visible: values.zoneVisible,
       eyebrow: values.zoneEyebrow,
       title: values.zoneTitle,
       description: values.zoneDescription,
     },
     featuredSection: {
+      visible: values.featuredVisible,
       eyebrow: values.featuredEyebrow,
       title: values.featuredTitle,
       description: values.featuredDescription,
+    },
+    valueSection: {
+      visible: values.valueVisible,
+      eyebrow: values.valueEyebrow,
+      title: values.valueTitle,
+      items: values.valueItems,
+    },
+    teamSection: {
+      visible: values.teamVisible,
+      singleEyebrow: values.teamSingleEyebrow,
+      singleCtaLabel: values.teamSingleCtaLabel,
+      teamEyebrow: values.teamEyebrow,
+      teamTitle: values.teamTitle,
+      teamCtaLabel: values.teamCtaLabel,
     },
     footerDescription: values.footerDescription,
   };
@@ -41,15 +61,15 @@ export async function updateHomeContentAction(
 
   const parsed = parseHomeContentFormData(formData);
   if (!parsed.success) {
-    return {
-      status: "error",
-      message: "Revisa los campos marcados.",
-      fieldErrors: parsed.error.flatten().fieldErrors,
-    };
+    const fieldErrors: Record<string, string[]> = {};
+    for (const issue of parsed.error.issues) {
+      const key = issue.path.join(".");
+      (fieldErrors[key] ??= []).push(issue.message);
+    }
+    return { status: "error", message: "Revisa los campos marcados.", fieldErrors };
   }
 
-  const input = toHomeContentInput(parsed.data);
-  await updateHomeContent(input);
+  await updateHomeContent(toHomeContentInput(parsed.data));
   updateTag("home-content");
   refresh();
   return { status: "success", message: "Contenido actualizado." };

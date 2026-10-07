@@ -3,10 +3,28 @@ import Image from "next/image";
 import { getHomeContent } from "@/lib/data/home-content";
 import { Button } from "@/components/ui/button";
 
-const MOBILE_BACKGROUND = {
-  src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
-  alt: "Fachada de casa moderna de lujo",
-};
+function HeroCta({
+  href,
+  variant,
+  children,
+}: {
+  href: string;
+  variant?: "outline";
+  children: string;
+}) {
+  if (href.startsWith("http")) {
+    return (
+      <Button as="a" href={href} target="_blank" rel="noopener noreferrer" variant={variant} size="lg">
+        {children}
+      </Button>
+    );
+  }
+  return (
+    <Button as={Link} href={href} variant={variant} size="lg">
+      {children}
+    </Button>
+  );
+}
 
 export async function Hero() {
   const content = await getHomeContent();
@@ -15,8 +33,8 @@ export async function Hero() {
     <section className="relative flex min-h-[85vh] items-center overflow-hidden">
       <div className="absolute inset-0 md:hidden">
         <Image
-          src={MOBILE_BACKGROUND.src}
-          alt={MOBILE_BACKGROUND.alt}
+          src={content.hero.mobileImageUrl}
+          alt={content.hero.mobileImageAlt}
           fill
           priority
           sizes="100vw"
@@ -39,12 +57,12 @@ export async function Hero() {
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <Button as={Link} href="/propiedades" size="lg">
+          <HeroCta href={content.hero.primaryCtaHref}>
             {content.hero.primaryCtaLabel}
-          </Button>
-          <Button as={Link} href="/nosotros" variant="outline" size="lg">
+          </HeroCta>
+          <HeroCta href={content.hero.secondaryCtaHref} variant="outline">
             {content.hero.secondaryCtaLabel}
-          </Button>
+          </HeroCta>
         </div>
       </div>
     </section>

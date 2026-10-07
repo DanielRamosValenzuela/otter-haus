@@ -25,37 +25,43 @@ export default async function HomePage() {
     <HomeCinematicScene clips={SCENE_CLIPS}>
       <Hero />
 
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <Reveal>
-          <SectionHeading
-            eyebrow={content.zoneSection.eyebrow}
-            title={content.zoneSection.title}
-            description={content.zoneSection.description}
-          />
-        </Reveal>
-        <div className="mt-10">
-          <Suspense fallback={<ZoneGridSkeleton />}>
-            <ZoneGrid />
-          </Suspense>
-        </div>
-      </section>
+      {content.zoneSection.visible && (
+        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeading
+              eyebrow={content.zoneSection.eyebrow}
+              title={content.zoneSection.title}
+              description={content.zoneSection.description}
+            />
+          </Reveal>
+          <div className="mt-10">
+            <Suspense fallback={<ZoneGridSkeleton />}>
+              <ZoneGrid />
+            </Suspense>
+          </div>
+        </section>
+      )}
 
-      <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <Reveal>
-          <SectionHeading
-            eyebrow={content.featuredSection.eyebrow}
-            title={content.featuredSection.title}
-            description={content.featuredSection.description}
-          />
-        </Reveal>
-        <div className="mt-10">
-          <Suspense fallback={<PropertyGridSkeleton n={4} />}>
-            <FeaturedProperties />
-          </Suspense>
-        </div>
-      </section>
+      {content.featuredSection.visible && (
+        <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeading
+              eyebrow={content.featuredSection.eyebrow}
+              title={content.featuredSection.title}
+              description={content.featuredSection.description}
+            />
+          </Reveal>
+          <div className="mt-10">
+            <Suspense fallback={<PropertyGridSkeleton n={4} />}>
+              <FeaturedProperties />
+            </Suspense>
+          </div>
+        </section>
+      )}
 
-      <ValueProps />
+      <Suspense fallback={null}>
+        <ValueProps />
+      </Suspense>
 
       <Suspense fallback={null}>
         <AgentTeaser />

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { User } from "lucide-react";
 import { getAgent } from "@/lib/data/agent";
+import { getHomeContent } from "@/lib/data/home-content";
 import { listFeaturedTeamMembers } from "@/lib/data/admin";
 import { StatRow } from "@/components/marketing/stat-row";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,14 @@ function PersonCard({
 }
 
 export async function AgentTeaser() {
-  const [agent, members] = await Promise.all([getAgent(), listFeaturedTeamMembers()]);
+  const [agent, members, content] = await Promise.all([
+    getAgent(),
+    listFeaturedTeamMembers(),
+    getHomeContent(),
+  ]);
+  const team = content.teamSection;
+
+  if (!team.visible) return null;
 
   if (members.length === 0) {
     return (
@@ -62,7 +70,7 @@ export async function AgentTeaser() {
 
           <Reveal delay={0.1}>
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-500">
-              Tu corredora
+              {team.singleEyebrow}
             </span>
             <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{agent.name}</h2>
             <p className="mt-3 text-muted-400">{agent.shortBio}</p>
@@ -70,7 +78,7 @@ export async function AgentTeaser() {
               <StatRow stats={agent.stats} />
             </div>
             <Button as={Link} href="/nosotros" variant="outline" className="mt-6">
-              Conoce más sobre {agent.name.split(" ")[0]}
+              {team.singleCtaLabel.replace("{nombre}", agent.name.split(" ")[0])}
             </Button>
           </Reveal>
         </div>
@@ -82,10 +90,10 @@ export async function AgentTeaser() {
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <Reveal className="mx-auto max-w-2xl text-center">
         <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-500">
-          Tu equipo
+          {team.teamEyebrow}
         </span>
         <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
-          Conoce a quienes te acompañan
+          {team.teamTitle}
         </h2>
         <p className="mt-3 text-muted-400">{agent.shortBio}</p>
       </Reveal>
@@ -114,7 +122,7 @@ export async function AgentTeaser() {
       <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center gap-6">
         <StatRow stats={agent.stats} />
         <Button as={Link} href="/nosotros" variant="outline">
-          Conoce más sobre nosotros
+          {team.teamCtaLabel}
         </Button>
       </div>
     </section>

@@ -22,7 +22,7 @@ export default async function ContenidoPage() {
           <div>
             <h2 className="font-display text-xl font-semibold text-cream-50">Portada y pie de página</h2>
             <p className="mt-1 text-sm text-muted-400">
-              Copy del hero, de los encabezados de las secciones de la portada (Inicio) y del texto del pie de página.
+              Hero, secciones, equipo y pie de página de la portada (Inicio): textos, enlaces, imagen y visibilidad.
             </p>
           </div>
           <ViewPageLink href="/" label="Ver Inicio" />

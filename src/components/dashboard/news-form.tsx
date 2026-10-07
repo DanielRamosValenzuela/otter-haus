@@ -141,7 +141,7 @@ export function NewsForm({
               />
             </Field>
             <UploadImageButton
-              sizeHint="Tamaño recomendado: 1200 x 1200 px (cuadrada). En la lista de noticias se recorta al centro; dentro de la noticia se ve completa."
+              sizeHint="Tamaño recomendado: 1200 x 1200 px (cuadrada). La imagen se ve completa, sin recortes, en la lista y dentro de la noticia."
               onUploaded={(uploadedUrl, filename) => {
                 setCoverImageUrl(uploadedUrl);
                 setCoverImageAlt((prev) => prev || altFromFilename(filename));

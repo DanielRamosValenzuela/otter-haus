@@ -34,18 +34,20 @@ export function NewsCard({
         </div>
       </div>
 
-      <div className="scrim-scope relative aspect-square overflow-hidden bg-ink-800">
+      <div className="scrim-scope relative overflow-hidden bg-ink-800">
         {article.coverImage ? (
           <Image
             src={article.coverImage.url}
             alt={article.coverImage.alt}
-            fill
+            width={1200}
+            height={1200}
             priority={priority}
             sizes="(min-width: 640px) 470px, 100vw"
-            className="object-cover transition-transform duration-500 ease-lux group-hover:scale-105"
+            style={{ width: "100%", height: "auto" }}
+            className="transition-transform duration-500 ease-lux group-hover:scale-105"
           />
         ) : (
-          <div className="flex size-full items-center justify-center">
+          <div className="flex aspect-video items-center justify-center">
             <Newspaper className="size-10 text-muted-500" aria-hidden />
           </div>
         )}
@@ -56,7 +58,7 @@ export function NewsCard({
           <span className="font-semibold">{authorName}</span>{" "}
           <span className="text-cream-50/85">{article.title}</span>
         </p>
-        <p className="line-clamp-2 text-sm text-muted-400">{article.excerpt}</p>
+        <p className="whitespace-pre-line text-sm text-muted-400">{article.excerpt}</p>
       </div>
     </Link>
   );

@@ -176,7 +176,7 @@ export function AgentProfileForm({
           name="shortBio"
           label="Biografía corta"
           error={errors?.shortBio}
-          hint="Es el párrafo que aparece junto a tu foto en la portada y en la tarjeta lateral de Noticias"
+          hint="Es el párrafo que aparece junto a la foto en la portada y en la tarjeta lateral de Noticias"
           required
         >
           <Textarea

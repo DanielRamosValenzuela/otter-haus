@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowDown, ArrowUp, ImageOff, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import type { HomeContent, ValuePropIcon } from "@/lib/types/home-content";
@@ -387,10 +386,10 @@ export function HomeHeroForm({
         </p>
         <p className="rounded-lg border border-gold-500/30 bg-gold-500/5 p-3 text-xs text-cream-50/90">
           El párrafo de presentación de la corredora (por ejemplo &quot;Fundador de un nuevo
-          proyecto…&quot;) no se edita aquí: está en{" "}
-          <Link href="/dashboard/nosotros" className="font-medium text-gold-400 hover:text-gold-300">
-            Nosotros → Perfil del agente → Biografía corta
-          </Link>
+          proyecto…&quot;) se edita más abajo en esta misma página:{" "}
+          <a href="#perfil-corredora" className="font-medium text-gold-400 hover:text-gold-300">
+            Perfil de la corredora → Biografía corta
+          </a>
           .
         </p>
         {input("teamSingleEyebrow", "Texto pequeño sobre el título (una sola persona)")}
